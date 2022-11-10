@@ -6,12 +6,13 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:40:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/10 12:41:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:31:53 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
+	
 
 char	ft_uppercaseafter10(unsigned int i, char c)
 {
