@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:05:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/10 16:37:22 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:39:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ typedef struct	s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+t_list	*ft_lstnew(void *content);
 
 #endif
