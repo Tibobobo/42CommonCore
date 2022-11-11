@@ -6,8 +6,15 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:51:37 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/10 18:51:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:32:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
+t_list	*ft_lstlast(t_list *lst)
+{
+	while (lst != NULL && lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}
