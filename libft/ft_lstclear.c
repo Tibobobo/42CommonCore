@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:52:22 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/14 10:04:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:13:35 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	while (element != NULL)
 	{
 		next_element = element->next;
-		(*del)element->content;
+		(*del)(element->content);
 		free(element);
 		element = next_element;
 	}
