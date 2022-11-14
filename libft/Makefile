@@ -6,7 +6,7 @@
 #    By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 10:48:17 by tgrasset          #+#    #+#              #
-#    Updated: 2022/11/10 14:43:25 by tgrasset         ###   ########.fr        #
+#    Updated: 2022/11/14 11:49:20 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,12 +44,24 @@ SRCS	=	./ft_isalpha.c \
 			./ft_putstr_fd.c \
 			./ft_putendl_fd.c \
 			./ft_putnbr_fd.c \
+
+B_SRCS	=	./ft_lstnew.c \
+			./ft_lstadd_front.c \
+			./ft_lstsize.c \
+			./ft_lstlast.c \
+			./ft_lstadd_back.c \
+			./ft_lstdelone.c \
+			./ft_lstclear.c \
+			./ft_lstiter.c \
+			./ft_lstmap.c \
 		
 OBJS	=	$(SRCS:%.c=%.o)
 
+B_OBJS	=	$(B_SRCS:%.c=%.o)
+
 NAME	=	libft.a
 
-CC		=	gcc
+CC		=	cc
 
 CFLAGS	=	-Wall -Wextra -Werror
 
@@ -63,11 +75,17 @@ $(NAME):	$(OBJS)
 	ranlib $(NAME)
 
 clean:
-	rm -Rf $(OBJS)
+	rm -Rf $(OBJS) $(B_OBJS)
 
 fclean:		clean
 	rm -Rf $(NAME)
 
+bonus:		$(OBJS) $(B_OBJS)
+	ar rc $(NAME) $(OBJS) $(B_OBJS)
+	ranlib $(NAME)
+
 re:			fclean all
 
-.PHONY:		all clean fclean re
+rebonus:	fclean bonus
+
+.PHONY:		all clean fclean re bonus rebonus

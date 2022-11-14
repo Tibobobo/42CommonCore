@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:54:16 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/09 16:35:30 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:28:26 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strchr(const char *s, int c)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == c)
+		if (s[i] == (char)c)
 			return ((char *)&s[i]);
 		i++;
 	}
