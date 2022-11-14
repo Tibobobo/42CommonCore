@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 16:20:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/10 10:42:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:41:25 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,14 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	sign = 1;
-	if (nb < 0)
-	{
-		sign = -1;
-		nb = -nb;
-	}
 	res = malloc(sizeof(char) * (get_malloc_size(nb) + 1));
 	if (!res)
 		return (NULL);
+	if (nb < 0)
+	{
+		nb = -nb;
+		sign = -1;
+	}
 	res = place_digits(res, nb, sign);
 	return (strrev(res));
 }
