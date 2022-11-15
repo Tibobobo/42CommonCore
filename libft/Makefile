@@ -75,10 +75,10 @@ $(NAME):	$(OBJS)
 	ranlib $(NAME)
 
 clean:
-	rm -Rf $(OBJS) $(B_OBJS)
+	rm -f $(OBJS) $(B_OBJS)
 
 fclean:		clean
-	rm -Rf $(NAME)
+	rm -f $(NAME)
 
 bonus:		$(OBJS) $(B_OBJS)
 	ar rc $(NAME) $(OBJS) $(B_OBJS)
