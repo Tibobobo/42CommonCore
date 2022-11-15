@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 09:13:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/09 16:59:44 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:25:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	j;
 
 	i = 0;
+	if (big == little)
+		return ((char *)big);
 	if (little[0] == '\0')
 		return ((char *)big);
 	while (big[i] != '\0' && i < len)
