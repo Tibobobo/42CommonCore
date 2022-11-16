@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:46:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/16 13:14:20 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/16 16:52:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*keep_remainder(char *storage)
 		i++;
 	}
 	if (storage[i] == '\0')
-		return (NULL);
+		return (ft_strdup(""));
 	remainder = malloc(sizeof(char) * (ft_strlen(storage) - i + 1));
 	while (storage[i] != '\0')
 	{
@@ -74,23 +74,29 @@ char	*read_and_store(char *storage, int fd)
 	int		bytes_read;
 
 	bytes_read = 1;
-	while (bytes_read != 0 && ft_strchr(buffer, '\n') == NULL)
+	while (bytes_read != 0 && ft_strchr(storage, '\n') == NULL)
 	{ 
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		buffer[BUFFER_SIZE] = '\0';
+		buffer[bytes_read] = '\0';
 		storage = ft_strjoin(storage, buffer);
 	}
+	if (bytes_read == 0 && buffer[0] == '\0')
+		return (NULL);
 	return (storage);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*storage;
+	static char	*storage = "";
 	char		*next_line;
+	char		test[5];
 
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, test, 0) == -1)
+		return (NULL);
 	storage = read_and_store(storage, fd);
+	if (storage == NULL)
+		return (NULL);
 	next_line = extract_line(storage);
 	storage = keep_remainder(storage);
-//	free(storage);
 	return (next_line);
 }
