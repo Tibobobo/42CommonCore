@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:46:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/16 11:30:53 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/16 13:14:20 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ char	*extract_line(char *storage)
 
 char	*read_and_store(char *storage, int fd)
 {
-	char	buffer[BUFFER_SIZE];
+	char	buffer[BUFFER_SIZE + 1];
+	int		bytes_read;
 
-	while (read(fd, buffer, BUFFER_SIZE) > 0)
+	bytes_read = 1;
+	while (bytes_read != 0 && ft_strchr(buffer, '\n') == NULL)
 	{ 
-		buffer = read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[BUFFER_SIZE] = '\0';
 		storage = ft_strjoin(storage, buffer);
-		if (ft_strchr(buffer, '\n') != NULL)
-			break;
 	}
 	return (storage);
 }
@@ -90,6 +91,6 @@ char	*get_next_line(int fd)
 	storage = read_and_store(storage, fd);
 	next_line = extract_line(storage);
 	storage = keep_remainder(storage);
-	free(storage);
+//	free(storage);
 	return (next_line);
 }
