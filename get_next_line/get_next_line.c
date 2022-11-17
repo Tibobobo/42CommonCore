@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:46:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/17 11:28:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:06:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ char	*keep_remainder(char *storage)
 	while (storage[i] != '\0' && storage[i] != '\n')
 		i++;
 	if (storage[i] == '\0')
-		return (ft_strdup(""));
+	{
+		free(storage);
+		return (NULL);
+	}
 	i++;
 	remainder = malloc(sizeof(char) * (ft_strlen(storage) - i + 1));
+	if (!remainder)
+		return (NULL);
 	while (storage[i] != '\0')
 	{
 		remainder[j] = storage[i];
@@ -33,6 +38,7 @@ char	*keep_remainder(char *storage)
 		j++;
 	}
 	remainder[j] = '\0';
+	free(storage);
 	return (remainder);
 }
 
@@ -64,28 +70,59 @@ char	*extract_line(char *storage)
 
 char	*read_and_store(char *storage, int fd)
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	int		bytes_read;
 
 	bytes_read = 1;
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
 	while (bytes_read != 0 && ft_strchr(storage, '\n') == NULL)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
-		storage = ft_strjoin(storage, buffer);
+		storage = join_and_free(storage, buffer);
 	}
-	if (bytes_read == 0 && buffer[0] == '\0')
-		return (NULL);
+	free(buffer);
 	return (storage);
+}
+
+char	*join_and_free(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*res;
+
+	i = 0;
+	j = 0;
+	if (!s1)
+		return (ft_strdup(""));
+	if (!s1 || !s2)
+		return (NULL);
+	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+		return (NULL);
+	while (s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		res[i + j] = s2[j];
+		j++;
+	}
+	res[i + j] = '\0';
+	free(s1);
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*storage = "";
+	static char	*storage;
 	char		*next_line;
-	char		test[5];
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, test, 0) == -1)
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, NULL, 0) == -1)
 		return (NULL);
 	storage = read_and_store(storage, fd);
 	if (storage == NULL)
