@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:46:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/16 16:52:54 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:28:08 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,11 @@ char	*keep_remainder(char *storage)
 
 	i = 0;
 	j = 0;
-	while (storage[i] != '\0')
-	{
-		if (storage[i] == '\n')
-		{
-			i++;
-			break;
-		}
+	while (storage[i] != '\0' && storage[i] != '\n')
 		i++;
-	}
 	if (storage[i] == '\0')
 		return (ft_strdup(""));
+	i++;
 	remainder = malloc(sizeof(char) * (ft_strlen(storage) - i + 1));
 	while (storage[i] != '\0')
 	{
@@ -75,7 +69,7 @@ char	*read_and_store(char *storage, int fd)
 
 	bytes_read = 1;
 	while (bytes_read != 0 && ft_strchr(storage, '\n') == NULL)
-	{ 
+	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		buffer[bytes_read] = '\0';
 		storage = ft_strjoin(storage, buffer);
