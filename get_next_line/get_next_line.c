@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:46:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/17 19:06:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/18 11:37:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ char	*keep_remainder(char *storage)
 	if (!remainder)
 		return (NULL);
 	while (storage[i] != '\0')
-	{
-		remainder[j] = storage[i];
-		i++;
-		j++;
-	}
+		remainder[j++] = storage[i++];
 	remainder[j] = '\0';
 	free(storage);
 	return (remainder);
@@ -48,6 +44,8 @@ char	*extract_line(char *storage)
 	int		i;
 
 	i = 0;
+	if (storage[0] == '\0')
+		return (NULL);
 	while (storage[i] != '\n' && storage[i] != '\0')
 		i++;
 	line = malloc(sizeof(char) * (i + 2));
@@ -93,20 +91,17 @@ char	*join_and_free(char *s1, char *s2)
 	int		j;
 	char	*res;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	if (!s1)
-		return (ft_strdup(""));
+		s1 = empty_str();
 	if (!s1 || !s2)
 		return (NULL);
 	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!res)
 		return (NULL);
-	while (s1[i])
-	{
+	while (s1[++i])
 		res[i] = s1[i];
-		i++;
-	}
 	while (s2[j])
 	{
 		res[i + j] = s2[j];

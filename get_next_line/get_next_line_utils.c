@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:51:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/17 19:06:32 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/18 11:41:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,21 @@ size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*ft_strdup(char *s)
+char	*empty_str(void)
 {
 	char	*str;
-	int		i;
 
-	i = 0;
-	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	str = malloc(sizeof(char) * 1);
 	if (!str)
 		return (NULL);
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
+	str[0] = '\0';
 	return (str);
 }
