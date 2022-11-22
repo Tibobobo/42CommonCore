@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:24:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/22 11:24:19 by tgrasset         ###   ########.fr       */
+/*   Created: 2022/11/10 18:15:54 by tgrasset          #+#    #+#             */
+/*   Updated: 2022/11/10 18:27:00 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
+#include "libft.h"
 
-# define FT_PRINTF_H
-
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
-int	ft_printf(const char *, ...);
-
-#endif
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	new->next = *lst;
+	*lst = new;
+}

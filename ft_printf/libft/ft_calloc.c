@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:24:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/22 11:24:19 by tgrasset         ###   ########.fr       */
+/*   Created: 2022/11/08 10:31:31 by tgrasset          #+#    #+#             */
+/*   Updated: 2022/11/17 09:21:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
+#include "libft.h"
 
-# define FT_PRINTF_H
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*p;
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
-int	ft_printf(const char *, ...);
-
-#endif
+	if (nmemb > 0 && ((size_t) - 1) / nmemb < size)
+		return (NULL);
+	p = malloc(nmemb * size);
+	if (!p)
+		return (NULL);
+	ft_bzero(p, nmemb * size);
+	return (p);
+}

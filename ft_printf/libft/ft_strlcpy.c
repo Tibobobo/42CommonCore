@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:24:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/22 11:24:19 by tgrasset         ###   ########.fr       */
+/*   Created: 2022/11/07 15:02:19 by tgrasset          #+#    #+#             */
+/*   Updated: 2022/11/07 15:17:33 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
+#include "libft.h"
 
-# define FT_PRINTF_H
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
-int	ft_printf(const char *, ...);
-
-#endif
+	i = 0;
+	if (size == 0)
+		return (ft_strlen(src));
+	while (src[i] != '\0' && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
+}

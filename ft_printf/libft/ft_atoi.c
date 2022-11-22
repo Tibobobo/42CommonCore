@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:24:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/22 11:24:19 by tgrasset         ###   ########.fr       */
+/*   Created: 2022/11/08 09:29:55 by tgrasset          #+#    #+#             */
+/*   Updated: 2022/11/08 10:00:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
+int	ft_atoi(const char *nptr)
+{
+	int	i;
+	int	sign;
+	int	res;
 
-# define FT_PRINTF_H
-
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
-int	ft_printf(const char *, ...);
-
-#endif
+	i = 0;
+	sign = 1;
+	res = 0;
+	while (nptr[i] == ' ' || (nptr[i] > 8 && nptr[i] < 14))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		res = res * 10;
+		res = res + (nptr[i] - '0');
+		i++;
+	}
+	return (res * sign);
+}

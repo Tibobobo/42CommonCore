@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/22 11:23:59 by tgrasset          #+#    #+#             */
+/*   Updated: 2022/11/22 11:55:13 by tgrasset         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	print_conv(va_list args, char c)
@@ -9,7 +21,7 @@ int	print_conv(va_list args, char c)
 	else if (c == 's')
 		ret_value = print_str(args);
 	else if (c == 'p')
-		ret_value = print_void(args);
+		ret_value = print_ptr(args);
 	else if (c == 'd')
 		ret_value = print_dec(args);
 	else if (c == 'i')
@@ -21,7 +33,7 @@ int	print_conv(va_list args, char c)
 	else if (c == 'X')
 		ret_value = print_up_hex(args);
 	else if (c == '%')
-		ret_value = print_percent(args);
+		ret_value = print_percent();
 	return (ret_value);
 }
 
