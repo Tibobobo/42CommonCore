@@ -6,11 +6,12 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:33:09 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/22 11:37:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:30:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../includes/ft_printf.h"
+#include "../libft/libft.h"
 
 int	print_str(char *str)
 {

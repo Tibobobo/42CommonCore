@@ -6,16 +6,18 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:23:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/22 11:55:13 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:28:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "./includes/ft_printf.h"
+#include "./libft/libft.h"
 
 static int	print_conv(va_list args, char c)
 {
 	int	ret_value;
 
+	ret_value = 0;
 	if (c == 'c')
 		ret_value = print_char(va_arg(args, int));
 	else if (c == 's')
@@ -59,14 +61,14 @@ static int	conversion(va_list args, char c)
 	{
 		ft_putchar_fd('%', 1);
 		ft_putchar_fd(c, 1);
-		return (1);	
+		return (1);
 	}
 }
 
 int	ft_printf(const char *str, ...)
 {
-	va_list args;
-	int	char_count;
+	va_list	args;
+	int		char_count;
 
 	char_count = 0;
 	if (str == NULL)
@@ -79,13 +81,10 @@ int	ft_printf(const char *str, ...)
 			ft_putchar_fd(*str, 1);
 			char_count++;
 		}
-		else
+		else if (*(str + 1) != '\0')
 		{
-			if (*(str + 1) != '\0')
-			{
-				str++;
-				char_count = char_count + conversion(args, *str);
-			}
+			str++;
+			char_count = char_count + conversion(args, *str);
 		}
 		str++;
 	}
