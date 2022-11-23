@@ -12,12 +12,12 @@
 
 #include "ft_printf.h"
 
-int	print_int(va_list args)
+int	print_int(int n)
 {
     char    *str;
 
-    str = ft_itoa(va_arg, int);
-    ft_putstr_fd(str, 1);
+    str = ft_itoa(n);
+    print_str(str);
 	free(str);
     return (ft_strlen(str));
 }

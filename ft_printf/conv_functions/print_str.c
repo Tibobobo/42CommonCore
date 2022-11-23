@@ -12,11 +12,8 @@
 
 #include "ft_printf.h"
 
-int	print_str(va_list args)
+int	print_str(char *str)
 {
-	char *str;
-
-	str = va_arg(args, char *);
 	if (str == NULL)
 	{
 		ft_putstr_fd("(null)", 1);
@@ -24,5 +21,5 @@ int	print_str(va_list args)
 	}
 	else
 		ft_putstr_fd(str, 1);
-	return (ft_strlen(str);
+	return (ft_strlen(str));
 }

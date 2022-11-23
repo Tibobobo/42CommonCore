@@ -12,32 +12,32 @@
 
 #include "ft_printf.h"
 
-int	print_conv(va_list args, char c)
+static int	print_conv(va_list args, char c)
 {
 	int	ret_value;
 
 	if (c == 'c')
-		ret_value = print_char(args);
+		ret_value = print_char(va_arg(args, int));
 	else if (c == 's')
-		ret_value = print_str(args);
+		ret_value = print_str(va_arg(args, char *));
 	else if (c == 'p')
-		ret_value = print_ptr(args);
+		ret_value = print_ptr(va_arg(args, unsigned long long));
 	else if (c == 'd')
-		ret_value = print_dec(args);
+		ret_value = print_dec(va_arg(args, int));
 	else if (c == 'i')
-		ret_value = print_int(args);
+		ret_value = print_int(va_arg(args, int));
 	else if (c == 'u')
-		ret_value = print_unsigned_dec(args);
+		ret_value = print_unsigned_dec(va_arg(args, unsigned int));
 	else if (c == 'x')
-		ret_value = print_low_hex(args);
+		ret_value = print_low_hex(va_arg(args, unsigned int));
 	else if (c == 'X')
-		ret_value = print_up_hex(args);
+		ret_value = print_up_hex(va_arg(args, unsigned int));
 	else if (c == '%')
 		ret_value = print_percent();
 	return (ret_value);
 }
 
-int	is_placeholder(char c, char *set)
+static int	is_placeholder(char c, char *set)
 {
 	int	i;
 
@@ -51,25 +51,26 @@ int	is_placeholder(char c, char *set)
 	return (0);
 }
 
-int	conversion(va_list args, char c)
+static int	conversion(va_list args, char c)
 {
 	if (is_placeholder(c, "cspdiuxX%") == 1)
-		return (print_conv(args, c))
+		return (print_conv(args, c));
 	else
 	{
+		ft_putchar_fd('%', 1);
 		ft_putchar_fd(c, 1);
 		return (1);	
 	}
 }
 
-int	ft_printf(const char str*, ...)
+int	ft_printf(const char *str, ...)
 {
 	va_list args;
-	int	i;
 	int	char_count;
 
-	i = 0;
 	char_count = 0;
+	if (str == NULL)
+		return (-1);
 	va_start(args, str);
 	while (*str != '\0')
 	{
@@ -83,7 +84,7 @@ int	ft_printf(const char str*, ...)
 			if (*(str + 1) != '\0')
 			{
 				str++;
-				char_count = char_count + conversion(args, *str)
+				char_count = char_count + conversion(args, *str);
 			}
 		}
 		str++;

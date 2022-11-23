@@ -12,7 +12,12 @@
 
 #include "ft_printf.h"
 
-int	print_dec(va_list args)
+int	print_dec(int n)
 {
-    
+    char    *str;
+
+    str = ft_itoa(n);
+    print_str(str);
+	free(str);
+    return (ft_strlen(str));
 }
