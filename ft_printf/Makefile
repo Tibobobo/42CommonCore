@@ -6,7 +6,7 @@
 #    By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 14:51:27 by tgrasset          #+#    #+#              #
-#    Updated: 2022/11/23 17:55:51 by tgrasset         ###   ########.fr        #
+#    Updated: 2022/11/24 10:41:28 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ clean:
 	rm -f $(OBJS)
 
 fclean:		clean
-	make fclean -C ./libft
 	rm -f $(NAME)
+	rm -f ./libft/libft.a
 
 re:			fclean all
 

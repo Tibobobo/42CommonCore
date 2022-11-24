@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:47:29 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/23 16:29:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:27:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 int	print_int(int n)
 {
 	char	*str;
+	int		len;
 
 	str = ft_itoa(n);
 	print_str(str);
+	len = ft_strlen(str);
 	free(str);
-	return (ft_strlen(str));
+	return (len);
 }

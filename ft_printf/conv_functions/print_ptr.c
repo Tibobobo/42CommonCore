@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:46:00 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/23 16:30:35 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/24 10:06:33 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	put_address(unsigned long long n)
 		put_address(n / 16);
 		put_address(n % 16);
 	}
-	if (n < 10)
+	else if (n < 10)
 		ft_putchar_fd((n + '0'), 1);
 	else
 		ft_putchar_fd((n - 10 + 'a'), 1);
@@ -44,13 +44,10 @@ int	print_ptr(unsigned long long n)
 	int	len;
 
 	len = 0;
-	len = len + write(1, "0x", 2);
 	if (n == 0)
-		len = len + write(1, "0", 1);
-	else
-	{
-		put_address(n);
-		len = len + get_hexa_len(n);
-	}
+		return (print_str("(nil)"));
+	len = len + write(1, "0x", 2);
+	put_address(n);
+	len = len + get_hexa_len(n);
 	return (len);
 }

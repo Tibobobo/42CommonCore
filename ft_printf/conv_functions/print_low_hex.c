@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:48:41 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/23 16:30:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:44:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	put_low_hex(unsigned int n)
 		put_low_hex(n / 16);
 		put_low_hex(n % 16);
 	}
-	if (n < 10)
+	else if (n < 10)
 		ft_putchar_fd((n + '0'), 1);
 	else
 		ft_putchar_fd((n - 10 + 'a'), 1);
