@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:23:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/23 16:28:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/28 10:20:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	conversion(va_list args, char c)
 	{
 		ft_putchar_fd('%', 1);
 		ft_putchar_fd(c, 1);
-		return (1);
+		return (2);
 	}
 }
 
