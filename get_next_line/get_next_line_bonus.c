@@ -6,13 +6,13 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 15:55:49 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/18 16:13:22 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:05:22 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*keep_remainder(char *storage)
+static char	*keep_remainder(char *storage)
 {
 	char	*remainder;
 	int		i;
@@ -38,7 +38,7 @@ char	*keep_remainder(char *storage)
 	return (remainder);
 }
 
-char	*extract_line(char *storage)
+static char	*extract_line(char *storage)
 {
 	char	*line;
 	int		i;
@@ -66,7 +66,7 @@ char	*extract_line(char *storage)
 	return (line);
 }
 
-char	*read_and_store(char *storage, int fd)
+static char	*read_and_store(char *storage, int fd)
 {
 	char	*buffer;
 	int		bytes_read;
@@ -78,6 +78,8 @@ char	*read_and_store(char *storage, int fd)
 	while (bytes_read != 0 && ft_strchr(storage, '\n') == NULL)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (NULL);
 		buffer[bytes_read] = '\0';
 		storage = join_and_free(storage, buffer);
 	}
@@ -85,7 +87,7 @@ char	*read_and_store(char *storage, int fd)
 	return (storage);
 }
 
-char	*join_and_free(char *s1, char *s2)
+static char	*join_and_free(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -117,7 +119,7 @@ char	*get_next_line(int fd)
 	static char	*storage[1024];
 	char		*next_line;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, NULL, 0) == -1)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	storage[fd] = read_and_store(storage[fd], fd);
 	if (storage[fd] == NULL)
