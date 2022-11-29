@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 15:55:49 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/29 18:05:22 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:20:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,6 @@ static char	*extract_line(char *storage)
 	return (line);
 }
 
-static char	*read_and_store(char *storage, int fd)
-{
-	char	*buffer;
-	int		bytes_read;
-
-	bytes_read = 1;
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
-	while (bytes_read != 0 && ft_strchr(storage, '\n') == NULL)
-	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
-			return (NULL);
-		buffer[bytes_read] = '\0';
-		storage = join_and_free(storage, buffer);
-	}
-	free(buffer);
-	return (storage);
-}
-
 static char	*join_and_free(char *s1, char *s2)
 {
 	int		i;
@@ -112,6 +91,30 @@ static char	*join_and_free(char *s1, char *s2)
 	res[i + j] = '\0';
 	free(s1);
 	return (res);
+}
+
+static char	*read_and_store(char *storage, int fd)
+{
+	char	*buffer;
+	int		bytes_read;
+
+	bytes_read = 1;
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	while (bytes_read != 0 && ft_strchr(storage, '\n') == NULL)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		buffer[bytes_read] = '\0';
+		storage = join_and_free(storage, buffer);
+	}
+	free(buffer);
+	return (storage);
 }
 
 char	*get_next_line(int fd)
