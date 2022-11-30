@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:46:15 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/29 18:21:49 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/30 13:33:11 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ static char	*read_and_store(char *storage, int fd)
 		if (bytes_read == -1)
 		{
 			free(buffer);
+			if (storage != NULL)
+				free(storage);
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
