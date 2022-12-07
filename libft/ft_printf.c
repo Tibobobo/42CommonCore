@@ -6,12 +6,11 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:23:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/11/28 10:20:21 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/07 10:35:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 static int	print_conv(va_list args, char c)
 {
