@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:06 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/07 17:54:52 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:32:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ int	valid_args(char	**arg)
 	}
 	return (1);
 }
+int	is_sorted(int *a, int ac)
+{
+	int	i;
+
+	i = 0;
+	while (i < ac - 1)	//probleme de tri, marche dans certains cas (negatifs) mais pas d'autres
+	{
+		if (a[i] > a[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	no_doubles(char **arg)
 {
@@ -57,32 +70,33 @@ int	no_doubles(char **arg)
 	return (1);
 }
 
-void	push_swap(int ac, char **av)
+void	init_stacks(int ac, char **av, int *a, int *b)
 {
-	int	*a;
-	int	*b;
 	int	i;
 
-	a = malloc(sizeof(int) * (ac - 1));
-	if (!a)
-		return ;
-	b = malloc(sizeof(int) * (ac - 1));
-	if (!b)
-	{
-		free(a);
-		return ;
-	}
+//	a = (int *)malloc(sizeof(int) * (ac - 1));
+//	if (!a)
+//		return ;
+//	b =(int *) malloc(sizeof(int) * (ac - 1));
+//	if (!b)
+//	{
+//		free(a);
+//		return ;
+//	}
 	i = 0;
-	while (i < ac)
+	while (i < ac - 1)
 	{
 		a[i] = ft_atoi(av[i + 1]);
-		b[i] = 0;  //Probleme avec 0 qui est un nombre, faudrait mettre autre chose...
+		b[i] = 0;  //Probleme avec 0 qui est un nombre, faudrait mettre autre chose mais quoi...
 		i++;
 	}
 }
 
 int	main(int ac, char **av)
 {
+	int	*a;
+	int	*b;
+
 	if (ac == 1)
 		return (1);
 	if (valid_args(av) == 0 || no_doubles(av) == 0)
@@ -90,7 +104,26 @@ int	main(int ac, char **av)
 		ft_putstr_fd("Error\n", 2);
 		return (-1);
 	}
+	a = (int *)malloc(sizeof(int) * (ac - 1));
+	if (!a)
+		return (-1);
+	b =(int *) malloc(sizeof(int) * (ac - 1));
+	if (!b)
+	{
+		free(a);
+		return (-1);
+	}
+
+	init_stacks(ac, av, a, b);
+	int i = 0;
+	while (i < ac - 1)
+	{
+		ft_printf("%d\n", a[i]);
+		i++;
+	}
+	if (is_sorted(a, ac) == 0)
+		ft_printf("not sorted :(\n");
 	else
-		push_swap(ac, av);
+		ft_printf("sorted! =)\n");
 	return (0);
 }
