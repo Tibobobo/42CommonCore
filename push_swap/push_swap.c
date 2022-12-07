@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:06 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/07 16:16:33 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/07 17:54:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,30 @@ int	no_doubles(char **arg)
 	return (1);
 }
 
+void	push_swap(int ac, char **av)
+{
+	int	*a;
+	int	*b;
+	int	i;
+
+	a = malloc(sizeof(int) * (ac - 1));
+	if (!a)
+		return ;
+	b = malloc(sizeof(int) * (ac - 1));
+	if (!b)
+	{
+		free(a);
+		return ;
+	}
+	i = 0;
+	while (i < ac)
+	{
+		a[i] = ft_atoi(av[i + 1]);
+		b[i] = 0;  //Probleme avec 0 qui est un nombre, faudrait mettre autre chose...
+		i++;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	if (ac == 1)
@@ -67,6 +91,6 @@ int	main(int ac, char **av)
 		return (-1);
 	}
 	else
-		ft_printf("OK");
+		push_swap(ac, av);
 	return (0);
 }
