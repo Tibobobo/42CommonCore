@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:05:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/07 10:29:25 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:50:56 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdarg.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -69,19 +64,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-int	ft_printf(const char *str, ...);
-int	print_char(int c);
-int	print_dec(int n);
-int	print_int(int n);
-int	print_up_hex(unsigned int n);
-int	print_percent(void);
-int	print_ptr(unsigned long long n);
-int	print_str(char *str);
-int	print_unsigned_dec(unsigned int n);
-int	print_low_hex(unsigned int n);
-char		*get_next_line(int fd);
-char		*ft_strchr_gnl(char *s, char c);
-size_t		ft_strlen_gnl(char *s);
-char		*empty_str(void);
 
 #endif

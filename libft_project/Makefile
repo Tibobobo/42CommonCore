@@ -44,19 +44,8 @@ SRCS	=	./ft_isalpha.c \
 			./ft_putstr_fd.c \
 			./ft_putendl_fd.c \
 			./ft_putnbr_fd.c \
-			./ft_printf.c \
-			./ft_printf_utils/print_char.c \
-			./ft_printf_utils/print_dec.c \
-			./ft_printf_utils/print_int.c \
-			./ft_printf_utils/print_low_hex.c \
-			./ft_printf_utils/print_percent.c \
-			./ft_printf_utils/print_ptr.c \
-			./ft_printf_utils/print_str.c \
-			./ft_printf_utils/print_unsigned_dec.c \
-			./ft_printf_utils/print_up_hex.c \
-			./get_next_line.c \
-			./get_next_line_utils.c \
-			./ft_lstnew.c \
+
+B_SRCS	=	./ft_lstnew.c \
 			./ft_lstadd_front.c \
 			./ft_lstsize.c \
 			./ft_lstlast.c \
@@ -67,6 +56,8 @@ SRCS	=	./ft_isalpha.c \
 			./ft_lstmap.c \
 		
 OBJS	=	$(SRCS:%.c=%.o)
+
+B_OBJS	=	$(B_SRCS:%.c=%.o)
 
 NAME	=	libft.a
 
@@ -89,6 +80,12 @@ clean:
 fclean:		clean
 	rm -f $(NAME)
 
+bonus:		$(OBJS) $(B_OBJS)
+	ar rc $(NAME) $(OBJS) $(B_OBJS)
+	ranlib $(NAME)
+
 re:			fclean all
 
-.PHONY:		all clean fclean re
+rebonus:	fclean bonus
+
+.PHONY:		all clean fclean re bonus rebonus
