@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:06 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/07 15:41:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/07 16:16:33 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	valid_args(char	**arg)
 	while (arg[i] != NULL)
 	{
 		j = 0;
+		if (arg[i][j] == '+' || arg[i][j] == '-')
+			j++;
 		while (arg[i][j] != '\0')
 		{
 			if (!(arg[i][j] >= '0' && arg[i][j] <= '9'))
@@ -40,7 +42,7 @@ int	no_doubles(char **arg)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (arg[i + 1] != NULL)
 	{
 		j = i + 1;
