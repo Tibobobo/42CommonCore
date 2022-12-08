@@ -62,34 +62,3 @@ int	arg_error(void)
 	ft_putstr_fd("Error\n", 2);
 	return (1);
 }
-
-t_stack	*new_elem(int number)
-{
-	t_stack	*element;
-
-	element = malloc(sizeof(t_stack));
-	if (!element)
-		return (NULL);
-	element->num = number;
-	element->next = NULL;
-	return (element);
-}
-
-t_stack   *init_stack_a(t_stack *a, int ac, char **av)
-{
-    int i;
-    t_stack *begin;
-
-    i = 1;
-    a = new_elem(ft_atoi(av[i]));
-    begin = a;
-    i++;
-    while (i < ac)
-    {
-        a->next = new_elem(ft_atoi(av[i]));
-        a = a->next;
-        i++;
-    }
-    a->next = NULL;
-    return (begin);
-}

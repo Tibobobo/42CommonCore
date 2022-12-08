@@ -22,11 +22,14 @@ typedef struct s_stack
 	int				num;
 	struct s_stack	*next;
 }					t_stack;
+
 long int	ft_atol(const char *nptr);
 int			valid_args(char	**arg);
 int			no_doubles(char **arg);
 int			arg_error(void);
 t_stack		*init_stack_a(t_stack *a, int ac, char **av);
 t_stack		*new_elem(int num);
+int			is_sorted(t_stack *stack);
+int free_stack(t_stack *stack);
 
 #endif

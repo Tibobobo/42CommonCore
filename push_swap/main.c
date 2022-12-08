@@ -13,20 +13,6 @@
 #include "push_swap.h"
 #include "./libft/libft.h"
 
-int	is_sorted(int *a, int ac)
-{
-	int	i;
-
-	i = 0;
-	while (i < ac - 1)
-	{
-		if (a[i] > a[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	main(int ac, char **av)
 {
 	t_stack	*a;
@@ -34,15 +20,20 @@ int	main(int ac, char **av)
 
 	a = NULL;
 	b = NULL;
-	if (ac == 1)
+	if (ac < 2)
 		return (1);
 	if (valid_args(av) == 0 || no_doubles(av) == 0)
 		return (arg_error());
 	a = init_stack_a(a, ac, av);
-	while (a != NULL)
+	if (a == NULL)
+		return (-1);
+	if (is_sorted(a))
 	{
-		ft_printf("%d\n", a->num);
-		a = a->next;
+		free_stack(a);
+		return (0);
 	}
+	sort(a, b);
+	free_stack(a);
+	free_stack(b);
 	return (0);
 }
