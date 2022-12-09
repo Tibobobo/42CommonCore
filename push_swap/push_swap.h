@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:24 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/09 17:15:05 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:23:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ void		pb(t_stack **a, t_stack **b);
 int			rotate(t_stack **stack);
 void		ra(t_stack **a);
 void		rb(t_stack **b);
+void		rr(t_stack **a, t_stack **b);
 int			r_rotate(t_stack **stack);
 void		rra(t_stack **a);
 void		rrb(t_stack **b);
+void		rrr(t_stack **a, t_stack **b);
 t_stack		*del_first(t_stack *first);
 void		add_front(t_stack **stack, t_stack *new);
 

@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:20:51 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/09 17:10:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:22:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,10 @@ void	rrb(t_stack **b)
 {
 	if (r_rotate(b) == 1)
 		ft_printf("rrb\n");
+}
+
+void	rrr(t_stack **a, t_stack **b)
+{
+	if (r_rotate(a) == 1 && r_rotate(b) == 1)
+		ft_printf("rrr\n");
 }
