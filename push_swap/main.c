@@ -32,7 +32,26 @@ int	main(int ac, char **av)
 		free_stack(a);
 		return (0);
 	}
-	sort(a, b);
+//	sort(a, b);
+//	sa(&a);
+//	pb(&a, &b);
+//	pb(&a, &b);
+//	sb(&b);
+//	ss(&a, &b);
+	rra(&a);
+	rrb(&b);
+	ft_printf("stack a:\n");
+	while (a != NULL)
+	{
+		ft_printf("%d\n", a->num);
+		a = a->next;
+	}
+	ft_printf("stack b:\n");
+	while (b != NULL)
+	{
+		ft_printf("%d\n", b->num);
+		b = b->next;
+	}
 	free_stack(a);
 	free_stack(b);
 	return (0);

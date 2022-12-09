@@ -24,6 +24,8 @@ int	valid_args(char	**arg)
 		j = 0;
 		if (arg[i][j] == '+' || arg[i][j] == '-')
 			j++;
+		if (arg[i][j] == '\0')
+			return (0);
 		while (arg[i][j] != '\0')
 		{
 			if (!(arg[i][j] >= '0' && arg[i][j] <= '9'))

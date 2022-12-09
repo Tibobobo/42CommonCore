@@ -77,3 +77,16 @@ int free_stack(t_stack *stack)
 	stack = NULL;
     return (0);
 }
+
+int stack_size(t_stack *stack)
+{
+    int i;
+
+    i = 0;
+    while (stack != NULL)
+    {
+        stack = stack->next;
+        i++;
+    }
+    return (i);
+}
