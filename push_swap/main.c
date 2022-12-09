@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:11:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/08 12:43:52 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:13:20 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ int	main(int ac, char **av)
 		free_stack(a);
 		return (0);
 	}
-//	sort(a, b);
-//	sa(&a);
-//	pb(&a, &b);
-//	pb(&a, &b);
-//	sb(&b);
-//	ss(&a, &b);
 	rra(&a);
 	rrb(&b);
 	ft_printf("stack a:\n");

@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:58:10 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/08 14:58:12 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:59:56 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,35 @@ t_stack	*new_elem(int number)
 	return (element);
 }
 
-t_stack   *init_stack_a(t_stack *a, int ac, char **av)
+t_stack	*init_stack_a(t_stack *a, int ac, char **av)
 {
-    int i;
-    t_stack *begin;
+	int		i;
+	t_stack	*begin;
 
-    i = 1;
-    a = new_elem(ft_atoi(av[i]));
-    if (a == NULL)
-        return (NULL);
-    begin = a;
-    i++;
-    while (i < ac)
-    {
-        a->next = new_elem(ft_atoi(av[i]));
-        if (a->next == NULL)
-        {
-            free_stack(begin);
-            return (NULL);
-        }
-        a = a->next;
-        i++;
-    }
-    a->next = NULL;
-    return (begin);
+	i = 1;
+	a = new_elem(ft_atoi(av[i]));
+	if (a == NULL)
+		return (NULL);
+	begin = a;
+	i++;
+	while (i < ac)
+	{
+		a->next = new_elem(ft_atoi(av[i]));
+		if (a->next == NULL)
+		{
+			free_stack(begin);
+			return (NULL);
+		}
+		a = a->next;
+		i++;
+	}
+	a->next = NULL;
+	return (begin);
 }
 
-int free_stack(t_stack *stack)
+int	free_stack(t_stack *stack)
 {
-    t_stack	*element;
+	t_stack	*element;
 	t_stack	*next_element;
 
 	element = stack;
@@ -75,18 +75,18 @@ int free_stack(t_stack *stack)
 		element = next_element;
 	}
 	stack = NULL;
-    return (0);
+	return (0);
 }
 
-int stack_size(t_stack *stack)
+int	stack_size(t_stack *stack)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (stack != NULL)
-    {
-        stack = stack->next;
-        i++;
-    }
-    return (i);
+	i = 0;
+	while (stack != NULL)
+	{
+		stack = stack->next;
+		i++;
+	}
+	return (i);
 }
