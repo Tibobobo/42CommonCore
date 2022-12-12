@@ -66,5 +66,7 @@ int	get_position(t_stack **stack, int target)
 		elem = elem->next;
 		pos++;
 	}
+	if (elem == NULL)
+		return (0);
 	return (pos);
 }

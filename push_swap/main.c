@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 	while (a != NULL)
 	{
 		ft_printf("%d\n", a->num);
-		ft_printf("%d\n", a->index);
+	//	ft_printf("%d\n", a->index);
 		a = a->next;
 	}
 	ft_printf("stack b:\n");

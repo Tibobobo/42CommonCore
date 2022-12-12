@@ -26,9 +26,9 @@ void    sort(t_stack **a, t_stack **b)
         sort_4(a, b);
     else if (size == 5)
        sort_5(a, b);
-    /*else if (size <= 100)
+    else if (size <= 100)
         sort_100(a, b);
-    else if (size <= 500)
+    /*else if (size <= 500)
         sort_500(a, b);
     else 
         sort_osef(*a, *b);*/
