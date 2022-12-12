@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:11:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/09 17:24:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:48:40 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,9 @@ int	main(int ac, char **av)
 		free_stack(a);
 		return (0);
 	}
-	pa(&a, &b);
-	pb(&a, &b);
-	pb(&a, &b);
-	pb(&a, &b);
-	rra(&a);
-	rrb(&b);
-	ss(&a, &b);
-	rr(&a, &b);
-	rr(&a, &b);
-	rrr(&a, &b);
-	ft_printf("stack a:\n");
+	index_a(&a, ac - 1);
+	sort(&a, &b);
+/*	ft_printf("stack a:\n");
 	while (a != NULL)
 	{
 		ft_printf("%d\n", a->num);
@@ -53,7 +45,7 @@ int	main(int ac, char **av)
 	{
 		ft_printf("%d\n", b->num);
 		b = b->next;
-	}
+	}*/
 	free_stack(a);
 	free_stack(b);
 	return (0);

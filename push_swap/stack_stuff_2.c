@@ -37,3 +37,34 @@ void	add_front(t_stack **stack, t_stack *new)
 	}
 	temp->next = (*stack);
 }
+
+int	get_smallest(t_stack **stack)
+{
+	t_stack	*elem;
+	int		smallest;
+
+	smallest = 2147483647;
+	elem = *stack;
+	while (elem != NULL)
+	{
+		if (elem->num < smallest)
+			smallest = elem->num;
+		elem = elem->next;
+	}
+	return smallest;
+}
+
+int	get_position(t_stack **stack, int target)
+{
+	t_stack *elem;
+	int		pos;
+
+	elem = *stack;
+	pos = 1;
+	while (elem != NULL && elem->num != target)
+	{
+		elem = elem->next;
+		pos++;
+	}
+	return (pos);
+}

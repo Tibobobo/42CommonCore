@@ -6,7 +6,7 @@
 #    By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2022/12/07 10:44:34 by tgrasset         ###   ########.fr        #
+#    Updated: 2022/12/12 10:35:15 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ SRCS	=	./main.c \
 			./rotate_actions.c \
 			./stack_stuff.c \
 			./stack_stuff_2.c \
+			./stack_stuff_3.c \
 			./swap_actions.c \
+			./sort.c \
 			
 OBJS	=	$(SRCS:%.c=%.o)
 

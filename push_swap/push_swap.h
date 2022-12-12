@@ -20,6 +20,7 @@
 typedef struct s_stack
 {
 	int				num;
+	int				index;
 	struct s_stack	*next;
 }					t_stack;
 
@@ -32,6 +33,10 @@ t_stack		*new_elem(int num);
 int			is_sorted(t_stack *stack);
 int			free_stack(t_stack *stack);
 int			stack_size(t_stack *stack);
+t_stack		*sorted_stack(t_stack *a);
+void		index_a(t_stack **a, int size);
+int			get_smallest(t_stack **stack);
+int			get_position(t_stack **stack, int target);
 int			swap(t_stack **stack);
 void		sa(t_stack **a);
 void		sb(t_stack **b);
@@ -49,5 +54,9 @@ void		rrb(t_stack **b);
 void		rrr(t_stack **a, t_stack **b);
 t_stack		*del_first(t_stack *first);
 void		add_front(t_stack **stack, t_stack *new);
+void		sort(t_stack **a, t_stack **b);
+void		sort_3(t_stack **a);
+void		sort_4(t_stack **a, t_stack **b);
+void		sort_5(t_stack **a, t_stack **b);
 
 #endif

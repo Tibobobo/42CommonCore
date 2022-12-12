@@ -32,6 +32,7 @@ t_stack	*new_elem(int number)
 	if (element == NULL)
 		return (NULL);
 	element->num = number;
+	element->index = 0;
 	element->next = NULL;
 	return (element);
 }
