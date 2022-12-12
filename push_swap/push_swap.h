@@ -36,6 +36,7 @@ int			stack_size(t_stack *stack);
 t_stack		*sorted_stack(t_stack *a);
 void		index_a(t_stack **a, int size);
 int			get_smallest(t_stack **stack);
+int			get_biggest(t_stack **stack);
 int			get_position(t_stack **stack, int target);
 int			swap(t_stack **stack);
 void		sa(t_stack **a);

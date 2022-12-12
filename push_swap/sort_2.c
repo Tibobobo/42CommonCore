@@ -32,6 +32,8 @@ void    sort_100(t_stack **a, t_stack **b)
         }
         chunk_end = chunk_end + 20;
     }
+    while ((*b)->num != get_biggest(b))
+        rb(b);          //A OPTI ET MARCHE PAS
     while (*b != NULL)
         pa(a, b);
 }
@@ -51,18 +53,13 @@ void    smart_rotate(t_stack **a, int start, int end)
 
 void    smart_push(t_stack **a, t_stack **b)
 {
-    int smallest_pos;
-
-    if (*b != NULL)
+    if (stack_size(*b) < 2 && *a != NULL)
     {
-        smallest_pos = get_position(b, get_smallest(b));
-        if (smallest_pos < stack_size(*b) / 2)
-            while((*b)->num != get_smallest(b))
-                rb(b);
-        else
-            while((*b)->num != get_smallest(b))
-                rrb(b);
+        pb(a, b);
+        return ;
     }
+    while ((*a) != NULL && (*a)->index < (*b)->index)
+        rb(b);              //A OPTI ET MARCHE PAS
     if (*a != NULL)
         pb(a, b);
 }

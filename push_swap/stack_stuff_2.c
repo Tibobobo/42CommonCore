@@ -54,6 +54,22 @@ int	get_smallest(t_stack **stack)
 	return smallest;
 }
 
+int	get_biggest(t_stack **stack)
+{
+	t_stack	*elem;
+	int		biggest;
+
+	biggest = -2147483648;
+	elem = *stack;
+	while (elem != NULL)
+	{
+		if (elem->num > biggest)
+			biggest = elem->num;
+		elem = elem->next;
+	}
+	return biggest;
+}
+
 int	get_position(t_stack **stack, int target)
 {
 	t_stack *elem;
