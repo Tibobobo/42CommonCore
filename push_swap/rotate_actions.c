@@ -16,19 +16,24 @@
 int	rotate(t_stack **stack)
 {
 	int		temp;
+	int		i_temp;
 	t_stack	*elem;
 
 	if (*stack == NULL || (*stack)->next == NULL)
 		return (0);
 	elem = (*stack);
 	temp = elem->num;
+	i_temp = elem->index;
 	while (elem->next != NULL)
 	{	
 		elem->num = elem->next->num;
+		elem->index = elem->next->index;
 		elem = elem->next;
 	}
 	elem->num = temp;
+	elem->index = i_temp;
 	return (1);
+
 }
 
 void	ra(t_stack **a)

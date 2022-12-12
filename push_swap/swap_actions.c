@@ -16,12 +16,16 @@
 int	swap(t_stack **stack)
 {
 	int	temp;
+	int	i_temp;
 
 	if (*stack == NULL || (*stack)->next == NULL)
 		return (0);
 	temp = (*stack)->num;
+	i_temp = (*stack)->index;
 	(*stack)->num = (*stack)->next->num;
+	(*stack)->index = (*stack)->next->index;
 	(*stack)->next->num = temp;
+	(*stack)->next->index = i_temp;
 	return (1);
 }
 
