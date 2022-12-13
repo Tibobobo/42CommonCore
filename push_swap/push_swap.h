@@ -62,6 +62,7 @@ void		sort_3(t_stack **a);
 void		sort_4(t_stack **a, t_stack **b);
 void		sort_5(t_stack **a, t_stack **b);
 void		sort_100(t_stack **a, t_stack **b);
+void		sort_500(t_stack **a, t_stack **b);
 int			get_smartest_rotation(t_stack *a, int c_start, int c_end);
 void		smart_push(t_stack **a, t_stack **b);
 void		smart_rotate_a(t_stack **a, int start, int end);

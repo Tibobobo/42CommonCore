@@ -25,6 +25,7 @@ SRCS	=	./main.c \
 			./swap_actions.c \
 			./sort.c \
 			./sort_2.c \
+			./sort_3.c \
 			
 OBJS	=	$(SRCS:%.c=%.o)
 
