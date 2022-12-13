@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:54:39 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/09 17:21:21 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:43:05 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	rotate(t_stack **stack)
 	elem->num = temp;
 	elem->index = i_temp;
 	return (1);
-
 }
 
 void	ra(t_stack **a)

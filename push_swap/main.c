@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 	}
 	index_a(&a, ac - 1);
 	sort(&a, &b);
-	ft_printf("stack a:\n");
+/*	ft_printf("stack a:\n");
 	while (a != NULL)
 	{
 		ft_printf("%d\n", a->num);
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	{
 		ft_printf("%d\n", b->num);
 		b = b->next;
-	}
+	} */
 	free_stack(a);
 	free_stack(b);
 	return (0);

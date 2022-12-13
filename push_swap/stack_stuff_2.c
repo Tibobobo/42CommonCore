@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:45:05 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/09 17:07:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/13 10:44:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	get_smallest(t_stack **stack)
 			smallest = elem->num;
 		elem = elem->next;
 	}
-	return smallest;
+	return (smallest);
 }
 
 int	get_biggest(t_stack **stack)
@@ -67,12 +67,12 @@ int	get_biggest(t_stack **stack)
 			biggest = elem->num;
 		elem = elem->next;
 	}
-	return biggest;
+	return (biggest);
 }
 
 int	get_position(t_stack **stack, int target)
 {
-	t_stack *elem;
+	t_stack	*elem;
 	int		pos;
 
 	elem = *stack;
