@@ -87,6 +87,8 @@ int	stack_last(t_stack **stack)
 	t_stack	*elem;
 
 	elem = *stack;
+	if (elem == NULL)
+		return (2147483647);
 	while (elem->next != NULL)
 		elem = elem->next;
 	return (elem->num);

@@ -19,26 +19,32 @@ void	sort_100(t_stack **a, t_stack **b)
 	int		i;
 
 	chunk_end = 20;
-	i = 1;
+	i = 0;
 	while (*a != NULL)
 	{
-		while (i <= chunk_end)
+		while (i < chunk_end)
 		{
 			smart_rotate_a(a, chunk_end -19, chunk_end);
-			smart_push(a, b);
+			pb(a, b);
+			if (stack_size(*b) > 1 && (*b)->index < chunk_end -10)
+				rb(b);
 			i++;
 		}
 		chunk_end = chunk_end + 20;
 	}
-	smart_rotate_b(b, get_biggest(b));
 	while (*b != NULL)
+	{
+		smart_rotate_b(b, get_biggest(b));
 		pa(a, b);
+	}
 }
 
 void	smart_rotate_a(t_stack **a, int start, int end)
 {
 	if (*a != NULL)
 	{
+		if ((*a)->index >= start && (*a)->index <= end)
+			return ;
 		if (get_smartest_rotation(*a, start, end) == 1)
 			while ((*a)->index < start || (*a)->index > end)
 				ra(a);
@@ -50,6 +56,8 @@ void	smart_rotate_a(t_stack **a, int start, int end)
 
 void	smart_rotate_b(t_stack **b, int target)
 {
+	if ((*b)->num == target)
+		return ;
 	if (get_position(b, target) <= stack_size(*b) / 2)
 		while ((*b)->num != target)
 			rb(b);
