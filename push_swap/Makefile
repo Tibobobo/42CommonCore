@@ -14,7 +14,7 @@
 ########### VARIABLES
 
 SRCS	=	./main.c \
-			./ft_atol.c \
+			./utils.c \
 			./arg_check.c \
 			./push_actions.c \
 			./r_rotate_actions.c \
@@ -44,12 +44,11 @@ $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) ./libft/libft.a -o $(NAME)
 
 clean:
-	make clean -C ./libft
+	make fclean -C ./libft
 	rm -f $(OBJS)
 
 fclean:		clean
 	rm -f $(NAME)
-	rm -f ./libft/libft.a
 
 re:			fclean all
 
