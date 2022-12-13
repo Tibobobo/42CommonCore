@@ -19,16 +19,16 @@ void	sort_500(t_stack **a, t_stack **b)
 	int		i;
 
 	chunk_end = 46;
-	i = 1;
+	i = 0;
 	while (*a != NULL)
 	{
-		while (i <= chunk_end)
+		while (i < chunk_end)
 		{
-			smart_rotate_a(a, chunk_end -45, chunk_end);
+			smart_rotate_a(a, chunk_end - 45, chunk_end);
 			smart_push(a, b);
 			i++;
 		}
-		chunk_end = chunk_end + 46;
+		chunk_end = chunk_end + 45;
 	}
 	smart_rotate_b(b, get_biggest(b));
 	while (*b != NULL)
