@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 14:00:54 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/13 13:47:18 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/14 16:25:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	smarter_rotate(t_stack **a, t_stack **b)
 	else
 		while (!((*a)->num > (*b)->num && (*a)->num < stack_last(b)))
 		{
-			if (get_position(b, get_closest((*a)->num, *b)) <= stack_size(*b) / 2)
+			if (get_position(b, get_close((*a)->num, *b)) <= stack_size(*b) / 2)
 				rb(b);
 			else
 				rrb(b);
 		}
 }
 
-int	get_closest(int target, t_stack *b)
+int	get_close(int target, t_stack *b)
 {
 	t_stack	*elem;
 	int		closest;

@@ -35,7 +35,7 @@ void	sort_500(t_stack **a, t_stack **b)
 	i = 0;
 	smart_rotate_b(b, get_biggest(b));
 	pa(a, b);
-	while (*b != NULL) // || i > 0)
+	while (*b != NULL)
 	{
 		if (next_number_pos(*b, (*a)->index - 1) != -1)
 		{
