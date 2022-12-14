@@ -26,33 +26,98 @@ void	sort_500(t_stack **a, t_stack **b)
 		{
 			smart_rotate_a(a, chunk_end - 45, chunk_end);
 			pb(a, b);
-			if (stack_size(*b) > 1 && (*b)->index < chunk_end -23)
+			if (stack_size(*b) > 1 && (*b)->index < chunk_end -23 && *a != NULL)
 				rb(b);
 			i++;
 		}
 		chunk_end = chunk_end + 45;
 	}
 	i = 0;
-//	pa(a, b);
-//	pa(a, b);
-//	if ((*a)->num > (*a)->next->num)
-//		sa(a);
-	while (*b != NULL || i > 0)
+	smart_rotate_b(b, get_biggest(b));
+	pa(a, b);
+	while (*b != NULL) // || i > 0)
 	{
-		if ((*b)->num == get_biggest(b))
-			pa(a, b);
-		else if (i == 0 || (*b)->num > stack_last(a))
+		if (next_number_pos(*b, (*a)->index - 1) != -1)
 		{
-			pa(a, b);   // OU INCREMENTER i ??? ON Y EST PRESQUE BORDEL !
-			ra(a);
+			if ((*b)->index == (*a)->index - 1)
+				pa(a, b);
+			else if (i == 0 || (*b)->num > stack_last(a))
+			{
+				pa(a, b);
+				ra(a);
+				i++;
+			}
+			else
+			{
+				smart_rotate_b(b, next_number(*b, (*a)->index - 1));
+			}
 		}
 		else
 		{
-			smart_rotate_b(b, get_biggest(b));
+			while ((*b) != NULL && (*b)->num < stack_last(a) && i > 0)
+			{
+				rra(a);
+				i--;
+			}
 			pa(a, b);
+			while (check_sequence(*a, i) == 0)
+			{
+				ra(a);
+				i++;
+			}
 		}
+	}
+	smart_rotate_aa(a, get_smallest(a));
+}
 
-//		smart_rotate_b(b, get_biggest(b));
-//		pa(a, b);
-	}	
+int	check_sequence(t_stack *a, int bottom)
+{
+	int	count;
+	int	size;
+
+	count = 0;
+	size = stack_size(a);
+	size = size - bottom;
+	while (a->next->next != NULL && a->index == a->next->index - 1 && count < size)
+	{
+		count++;
+		a = a->next;
+	}
+	if (count == size - 1)
+		return (1);
+	return (0);
+}
+
+int	next_number(t_stack *b, int index)
+{
+	while (b->index != index)
+		b = b->next;
+	return (b->num);
+}
+
+int	next_number_pos(t_stack *b,  int target_index)
+{
+	int	i;
+
+	i = 1;
+	while (b != NULL)
+	{
+		if (b->index == target_index)
+			return (i);
+		b = b->next;
+		i++;
+	}
+	return (-1);
+}
+
+void	smart_rotate_aa(t_stack **a, int target)
+{
+	if ((*a)->num == target)
+		return ;
+	if (get_position(a, target) <= stack_size(*a) / 2)
+		while ((*a)->num != target)
+			ra(a);
+	else
+		while ((*a)->num != target)
+			rra(a);
 }

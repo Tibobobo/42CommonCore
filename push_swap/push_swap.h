@@ -70,4 +70,13 @@ void		smart_rotate_b(t_stack **b, int target);
 void		smarter_rotate(t_stack **a, t_stack **b);
 int			get_closest(int target, t_stack *b);
 
+
+//int	get_closest_2(int target, t_stack *a);
+void	smart_rotate_aa(t_stack **a, int target);
+int	next_number_pos(t_stack *b,  int target_index);
+int	next_number(t_stack *b, int index);
+int	check_sequence(t_stack *a, int bottom);
+//void	smarter_rotate_a(t_stack **a, t_stack **b);
+//void	smart_push_a(t_stack **a, t_stack **b);
+
 #endif
