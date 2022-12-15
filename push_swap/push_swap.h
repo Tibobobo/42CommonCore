@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:24 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/14 16:22:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:36:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int			arg_error(void);
 t_stack		*init_stack_a(t_stack *a, int ac, char **av);
 t_stack		*new_elem(int num);
 int			is_sorted(t_stack *stack);
-int			is_rev_sorted(t_stack *stack);
 int			free_stack(t_stack *stack);
 int			stack_size(t_stack *stack);
 int			stack_last(t_stack **stack);
@@ -55,8 +54,6 @@ int			r_rotate(t_stack **stack);
 void		rra(t_stack **a);
 void		rrb(t_stack **b);
 void		rrr(t_stack **a, t_stack **b);
-t_stack		*del_first(t_stack *first);
-void		add_front(t_stack **stack, t_stack *new);
 void		sort(t_stack **a, t_stack **b);
 void		sort_3(t_stack **a);
 void		sort_4(t_stack **a, t_stack **b);
@@ -64,12 +61,9 @@ void		sort_5(t_stack **a, t_stack **b);
 void		sort_100(t_stack **a, t_stack **b);
 void		sort_500(t_stack **a, t_stack **b);
 int			get_smartest_rotation(t_stack *a, int c_start, int c_end);
-void		smart_push(t_stack **a, t_stack **b);
 void		smart_rotate_a(t_stack **a, int start, int end);
 void		smart_rotate_b(t_stack **b, int target);
-void		smarter_rotate(t_stack **a, t_stack **b);
-int			get_close(int target, t_stack *b);
-void		smart_rotate_aa(t_stack **a, int target);
+void		final_rotation(t_stack **a, int target);
 int			next_number_pos(t_stack *b, int target_index);
 int			next_number(t_stack *b, int index);
 int			check_sequence(t_stack *a, int bottom);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:42:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/13 15:43:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:25:10 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	sort_500(t_stack **a, t_stack **b)
 			}
 		}
 	}
-	smart_rotate_aa(a, get_smallest(a));
+	final_rotation(a, get_smallest(a));
 }
 
 int	check_sequence(t_stack *a, int bottom)
@@ -110,7 +110,7 @@ int	next_number_pos(t_stack *b,  int target_index)
 	return (-1);
 }
 
-void	smart_rotate_aa(t_stack **a, int target)
+void	final_rotation(t_stack **a, int target)
 {
 	if ((*a)->num == target)
 		return ;

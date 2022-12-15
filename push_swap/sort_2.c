@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:35:43 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/13 10:52:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:26:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,28 +64,6 @@ void	smart_rotate_b(t_stack **b, int target)
 	else
 		while ((*b)->num != target)
 			rrb(b);
-}
-
-void	smart_push(t_stack **a, t_stack **b)
-{
-	if (stack_size(*b) < 2 && *a != NULL)
-	{
-		pb(a, b);
-		return ;
-	}
-	while ((*a) != NULL)
-	{
-		if (is_rev_sorted(*b) && (*a)->num > get_biggest(b))
-			break ;
-		else if (is_rev_sorted(*b) && (*a)->num < get_smallest(b))
-			break ;
-		else if ((*a)->num > (*b)->num && (*a)->num < stack_last(b))
-			break ;
-		else
-			smarter_rotate(a, b);
-	}
-	if (*a != NULL)
-		pb(a, b);
 }
 
 int	get_smartest_rotation(t_stack *a, int c_start, int c_end)

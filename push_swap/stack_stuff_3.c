@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_stuff_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 17:37:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/13 10:58:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:34:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,4 @@ int	stack_last(t_stack **stack)
 	while (elem->next != NULL)
 		elem = elem->next;
 	return (elem->num);
-}
-
-int	is_rev_sorted(t_stack *stack)
-{
-	while (stack->next != NULL)
-	{
-		if (stack->num < stack->next->num)
-			return (0);
-		stack = stack->next;
-	}
-	return (1);
 }

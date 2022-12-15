@@ -3,40 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   stack_stuff_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:45:05 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/13 10:44:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:36:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "./libft/libft.h"
-
-t_stack	*del_first(t_stack *first)
-{
-	t_stack	*temp;
-
-	if (!first)
-		return (NULL);
-	temp = first;
-	first = first->next;
-	free(temp);
-	return (first);
-}
-
-void	add_front(t_stack **stack, t_stack *new)
-{
-	t_stack	*temp;
-
-	temp = new;
-	if ((*stack) == NULL)
-	{
-		temp->next = NULL;
-		*stack = temp;
-	}
-	temp->next = (*stack);
-}
 
 int	get_smallest(t_stack **stack)
 {

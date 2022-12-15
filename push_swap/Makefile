@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2022/12/12 10:35:15 by tgrasset         ###   ########.fr        #
+#    Updated: 2022/12/15 13:53:01 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@
 ########### VARIABLES
 
 SRCS	=	./main.c \
-			./utils.c \
 			./arg_check.c \
 			./push_actions.c \
 			./r_rotate_actions.c \
