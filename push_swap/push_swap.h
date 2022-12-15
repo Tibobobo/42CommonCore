@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:24 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/15 13:36:39 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:40:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int			free_stack(t_stack *stack);
 int			stack_size(t_stack *stack);
 int			stack_last(t_stack **stack);
 t_stack		*sorted_stack(t_stack *a);
+t_stack		*sorted_stack_2(t_stack *sorted, t_stack *a, int previous, int i);
 void		index_a(t_stack **a, int size);
 int			get_smallest(t_stack **stack);
 int			get_biggest(t_stack **stack);
@@ -68,4 +69,5 @@ int			next_number_pos(t_stack *b, int target_index);
 int			next_number(t_stack *b, int index);
 int			check_sequence(t_stack *a, int bottom);
 
+void	fill_a(t_stack **a, t_stack **b, int i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 17:37:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/15 13:34:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:18:10 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	add_back(t_stack **stack, t_stack *new)
 {
 	t_stack	*elem;
 
+	if (new == NULL)
+		return ;
 	if (*stack == NULL)
 		*stack = new;
 	else
@@ -33,13 +35,21 @@ t_stack	*sorted_stack(t_stack *a)
 	t_stack	*sorted;
 	int		i;
 	int		previous;
-	int		temp;
-	t_stack	*elem;
 
 	sorted = NULL;
 	i = 1;
-	add_back(&sorted, new_elem(get_smallest(&a)));//MALLOC A PROTEGER
+	add_back(&sorted, new_elem(get_smallest(&a)));
+	if (sorted == NULL)
+		return (NULL);
 	previous = get_smallest(&a);
+	return (sorted_stack_2(sorted, a, previous, i));
+}
+
+t_stack	*sorted_stack_2(t_stack *sorted, t_stack *a, int previous, int i)
+{
+	int		temp;
+	t_stack	*elem;
+
 	while (i <= stack_size(a))
 	{
 		temp = 2147483647;
@@ -51,6 +61,11 @@ t_stack	*sorted_stack(t_stack *a)
 			elem = elem->next;
 		}
 		add_back(&sorted, new_elem(temp));
+		if (stack_size(sorted) != i + 1)
+		{
+			free_stack(sorted);
+			return (NULL);
+		}
 		previous = temp;
 		i++;
 	}
@@ -66,6 +81,8 @@ void	index_a(t_stack **a, int size)
 
 	i = 1;
 	sorted = sorted_stack(*a);
+	if (sorted == NULL)
+		return ;
 	begin = sorted;
 	while (i <= size)
 	{

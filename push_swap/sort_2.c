@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:35:43 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/15 13:26:27 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:21:11 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,27 @@ int	get_smartest_rotation(t_stack *a, int c_start, int c_end)
 		begin_count++;
 		elem = elem->next;
 	}
-	elem = a;
-	while (elem != NULL && end_count < 20)
+	while (a != NULL && end_count < 20)
 	{
-		if (elem->index >= c_start && elem->index <= c_end)
+		if (a->index >= c_start && a->index <= c_end)
 			end_count++;
-		elem = elem->next;
+		a = a->next;
 		total_count++;
 	}
 	end_count = stack_size(a) - total_count;
 	if (begin_count <= end_count)
 		return (1);
+	return (-1);
+}
+
+void	final_rotation(t_stack **a, int target)
+{
+	if ((*a)->num == target)
+		return ;
+	if (get_position(a, target) <= stack_size(*a) / 2)
+		while ((*a)->num != target)
+			ra(a);
 	else
-		return (-1);
+		while ((*a)->num != target)
+			rra(a);
 }
