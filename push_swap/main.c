@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:11:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/15 16:45:06 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:58:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@ int	main(int ac, char **av)
 	if (a->index == 0)
 		return (-1);
 	sort(&a, &b);
-	// ft_printf("stack a:\n");
-	// while (a != NULL)
-	// {
-	// 	ft_printf("%d\n", a->num);
-	// //	ft_printf("%d\n", a->index);
-	// 	a = a->next;
-	// }
-	// ft_printf("stack b:\n");
-	// while (b != NULL)
-	// {
-	// 	ft_printf("%d\n", b->num);
-	// 	b = b->next;
-	// }
 	free_stack(a);
 	free_stack(b);
 	return (0);

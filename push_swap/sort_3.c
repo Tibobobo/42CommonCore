@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:42:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/15 16:44:12 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:56:09 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,6 @@ void	sort_500(t_stack **a, t_stack **b)
 	smart_rotate_b(b, get_biggest(b));
 	pa(a, b);
 	fill_a(a, b, i);
-	// while (*b != NULL)
-	// {
-	// 	if (next_number_pos(*b, (*a)->index - 1) != -1)
-	// 	{
-	// 		if ((*b)->index == (*a)->index - 1)
-	// 			pa(a, b);
-	// 		else if (i == 0 || (*b)->num > stack_last(a))
-	// 		{
-	// 			pa(a, b);
-	// 			ra(a);
-	// 			i++;
-	// 		}
-	// 		else
-	// 			smart_rotate_b(b, next_number(*b, (*a)->index - 1));
-	// 	}
-	// 	else
-	// 	{
-	// 		while ((*b) != NULL && (*b)->num < stack_last(a) && i > 0)
-	// 		{
-	// 			rra(a);
-	// 			i--;
-	// 		}
-	// 		pa(a, b);
-	// 		while (check_sequence(*a, i) == 0)
-	// 		{
-	// 			ra(a);
-	// 			i++;
-	// 		}
-	// 	}
-	// }
 	final_rotation(a, get_smallest(a));
 }
 
@@ -78,11 +48,7 @@ void	fill_a(t_stack **a, t_stack **b, int i)
 			if ((*b)->index == (*a)->index - 1)
 				pa(a, b);
 			else if (i == 0 || (*b)->num > stack_last(a))
-			{
-				pa(a, b);
-				ra(a);
-				i++;
-			}
+				i = i + push_to_bottom(a, b);
 			else
 				smart_rotate_b(b, next_number(*b, (*a)->index - 1));
 		}
@@ -95,12 +61,22 @@ void	fill_a(t_stack **a, t_stack **b, int i)
 			}
 			pa(a, b);
 			while (check_sequence(*a, i) == 0)
-			{
-				ra(a);
-				i++;
-			}
+				i = i + back_to_sequence(a);
 		}
 	}
+}
+
+int	push_to_bottom(t_stack **a, t_stack **b)
+{
+	pa(a, b);
+	ra(a);
+	return (1);
+}
+
+int	back_to_sequence(t_stack **a)
+{
+	ra(a);
+	return (1);
 }
 
 int	check_sequence(t_stack *a, int bottom)
@@ -120,26 +96,4 @@ int	check_sequence(t_stack *a, int bottom)
 	if (count == size - 1)
 		return (1);
 	return (0);
-}
-
-int	next_number(t_stack *b, int index)
-{
-	while (b->index != index)
-		b = b->next;
-	return (b->num);
-}
-
-int	next_number_pos(t_stack *b, int target_index)
-{
-	int	i;
-
-	i = 1;
-	while (b != NULL)
-	{
-		if (b->index == target_index)
-			return (i);
-		b = b->next;
-		i++;
-	}
-	return (-1);
 }

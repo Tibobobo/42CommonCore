@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:45:24 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/15 16:40:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:57:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void		final_rotation(t_stack **a, int target);
 int			next_number_pos(t_stack *b, int target_index);
 int			next_number(t_stack *b, int index);
 int			check_sequence(t_stack *a, int bottom);
+void		fill_a(t_stack **a, t_stack **b, int i);
+int			push_to_bottom(t_stack **a, t_stack **b);
+int			back_to_sequence(t_stack **a);
 
-void	fill_a(t_stack **a, t_stack **b, int i);
 #endif
