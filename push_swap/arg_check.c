@@ -6,7 +6,7 @@
 /*   By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:11:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/09 17:12:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/15 11:22:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	valid_args(char	**arg)
 				return (0);
 			j++;
 		}
+		if (ft_strlen(arg[i] > 11)
+			return (0);
 		if (ft_atol(arg[i]) > 2147483647 || ft_atol(arg[i]) < -2147483648)
 			return (0);
 		i++;
