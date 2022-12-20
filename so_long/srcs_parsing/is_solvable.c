@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:19 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 18:22:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:31:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int solve(t_map map)
         return (1);
     while (d <= 4)
     {
-        move(&map, d)
+        move(&map, d);
         d++;
     }
+    return (1);
 }

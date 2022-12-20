@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 18:06:12 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:29:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char    **parse_map(char *path);
 void	ft_error(int num);
 char    **free_map(char **map);
 int is_valid_map(t_map *map);
+int solve(t_map map);
 
 
 #endif

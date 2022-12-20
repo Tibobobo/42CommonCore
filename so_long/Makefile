@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2022/12/20 14:52:52 by tgrasset         ###   ########.fr        #
+#    Updated: 2022/12/20 18:30:04 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS	=	./main.c \
 			./srcs_parsing/map_pre_check.c \
 			./srcs_parsing/parse_map.c \
 			./srcs_parsing/map_check.c \
+			./srcs_parsing/is_solvable.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 
