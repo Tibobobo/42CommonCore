@@ -6,12 +6,12 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:44:00 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 11:55:20 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:51:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include "./libft/libft.h"
+#include "../so_long.h"
+#include "../libft/libft.h"
 
 void	ft_error(int num)
 {

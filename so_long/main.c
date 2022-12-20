@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 13:43:10 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:47:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ int	main(int ac, char **av)
 		ft_printf("%s\n", map[i]);
 		i++;
 	}
-	//TRUCS GRAPHIQUES
 	return (0);
 }

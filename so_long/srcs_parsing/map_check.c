@@ -6,12 +6,12 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 13:42:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:51:32 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include "./libft/libft.h"
+#include "../so_long.h"
+#include "../libft/libft.h"
 
 static int  is_rectangular(char **map)
 {

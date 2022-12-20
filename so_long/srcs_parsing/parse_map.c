@@ -6,12 +6,12 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:29:27 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 12:43:27 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:51:45 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include "./libft/libft.h"
+#include "../so_long.h"
+#include "../libft/libft.h"
 
 char    **free_map(char **map)
 {

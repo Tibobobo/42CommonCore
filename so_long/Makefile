@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2022/12/20 12:07:23 by tgrasset         ###   ########.fr        #
+#    Updated: 2022/12/20 14:52:52 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@
 ########### VARIABLES
 
 SRCS	=	./main.c \
-			./map_pre_check.c \
-			./parse_map.c \
-			./map_check.c \
+			./srcs_parsing/map_pre_check.c \
+			./srcs_parsing/parse_map.c \
+			./srcs_parsing/map_check.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 
