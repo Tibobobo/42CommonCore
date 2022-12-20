@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 16:35:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:06:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_map
 	int		c;
 	int		width;
 	int		height;
+	int		px;
+	int		py;
 }				t_map;
 
 typedef struct s_img

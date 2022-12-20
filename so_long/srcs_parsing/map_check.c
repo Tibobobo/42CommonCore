@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 16:34:37 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:06:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ static void assign_values(t_map *map, int i, int j, int c)
         {
             if (map->grid[i][j] == 'C')
                 c++;
+            if (map->grid[i][j] == 'P')
+            {
+                map->px = j;
+                map->py = i;
+            }
             j++;
         }
         i++;
@@ -106,7 +111,7 @@ int is_valid_map(t_map *map)
     if (is_closed(map->grid, 0, 0, 0, 0) == 0)
         return (0);
     assign_values(map, 0, 0, 0);
-    // if (is_solvable(*map) == 0)
-    //     return (0);
+    if (solve(*map) == 0)
+        return (0);
     return (1);
 }
