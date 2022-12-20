@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 16:13:53 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:32:19 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@
 int	main(int ac, char **av)
 {
 	// t_data	game;
-	t_board	board;
+	t_map	map;
 	int		i;
 	
 	i = 0;
 	map_pre_check(ac, av);
-	board.map = parse_map(av[1]);
-	if (board.map == NULL)
+	map.grid = parse_map(av[1]);
+	if (map.grid == NULL)
 		ft_error(3);
-	if (is_valid_map(&board) == 0)
+	if (is_valid_map(&map) == 0)
 	{
-		free_map(board.map);
+		free_map(map.grid);
 		ft_error(4);
 	}
-	while (board.map[i] != NULL)
+	while (map.grid[i] != NULL)
 	{
-		ft_printf("%s\n", board.map[i]);
+		ft_printf("%s\n", map.grid[i]);
 		i++;
 	}
-	ft_printf("%d\n%d\n%d\n", board.height, board.width, board.c);
+	ft_printf("%d\n%d\n%d\n", map.height, map.width, map.c);
 	return (0);
 }

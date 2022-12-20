@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 15:57:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:35:14 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 # include <stdio.h>
 # include <string.h>
 
-typedef struct s_board
+typedef struct s_map
 {
-	char	**map;
+	char	**grid;
 	int		c;
 	int		width;
 	int		height;
-}				t_board;
+}				t_map;
 
 typedef struct s_img
 {
@@ -48,7 +48,7 @@ void map_pre_check(int ac, char **av);
 char    **parse_map(char *path);
 void	ft_error(int num);
 char    **free_map(char **map);
-int is_valid_map(t_board *board);
+int is_valid_map(t_map *map);
 
 
 #endif

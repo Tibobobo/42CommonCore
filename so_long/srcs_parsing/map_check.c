@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 16:12:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:34:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,37 +76,37 @@ static int  is_closed(char **map, int i, int width, int height, int j)
     return (1);
 }
 
-static void assign_values(t_board *board, int i, int j, int c)
+static void assign_values(t_map *map, int i, int j, int c)
 {
-    board->width = ft_strlen(board->map[0]);
-    while (board->map[i] != NULL)
+    map->width = ft_strlen(map->grid[0]);
+    while (map->grid[i] != NULL)
         i++;
-    board->height = i;
+    map->height = i;
     i = 0;
-    while (board->map[i] != NULL)
+    while (map->grid[i] != NULL)
     {
         j = 0;
-        while (board->map[i][j] != '\0')
+        while (map->grid[i][j] != '\0')
         {
-            if (board->map[i][j] == 'C')
+            if (map->grid[i][j] == 'C')
                 c++;
             j++;
         }
         i++;
     }
-    board->c = c;
+    map->c = c;
 }
 
-int is_valid_map(t_board *board)
+int is_valid_map(t_map *map)
 {
-    if (is_rectangular(board->map) == 0)
+    if (is_rectangular(map->grid) == 0)
         return (0);
-    if (char_check(board->map, 0, 0, 0, 0) == 0)
+    if (char_check(map->grid, 0, 0, 0, 0) == 0)
         return (0);
-    if (is_closed(board->map, 0, 0, 0, 0) == 0)
+    if (is_closed(map->grid, 0, 0, 0, 0) == 0)
         return (0);
-    assign_values(board, 0, 0, 0);
-    // if (is_possible(board) == 0)
+    assign_values(map, 0, 0, 0);
+    // if (is_solvable(*map) == 0)
     //     return (0);
     return (1);
 }
