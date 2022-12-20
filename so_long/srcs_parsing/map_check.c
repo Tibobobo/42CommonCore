@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 14:51:32 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:12:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,37 @@ static int  is_closed(char **map, int i, int width, int height, int j)
     return (1);
 }
 
-int is_valid_map(char **map)
+static void assign_values(t_board *board, int i, int j, int c)
 {
-    if (is_rectangular(map) == 0)
+    board->width = ft_strlen(board->map[0]);
+    while (board->map[i] != NULL)
+        i++;
+    board->height = i;
+    i = 0;
+    while (board->map[i] != NULL)
+    {
+        j = 0;
+        while (board->map[i][j] != '\0')
+        {
+            if (board->map[i][j] == 'C')
+                c++;
+            j++;
+        }
+        i++;
+    }
+    board->c = c;
+}
+
+int is_valid_map(t_board *board)
+{
+    if (is_rectangular(board->map) == 0)
         return (0);
-    if (char_check(map, 0, 0, 0, 0) == 0)
+    if (char_check(board->map, 0, 0, 0, 0) == 0)
         return (0);
-    if (is_closed(map, 0, 0, 0, 0) == 0)
+    if (is_closed(board->map, 0, 0, 0, 0) == 0)
         return (0);
-    // if (is_possible(map) == 0)
+    assign_values(board, 0, 0, 0);
+    // if (is_possible(board) == 0)
     //     return (0);
     return (1);
 }
