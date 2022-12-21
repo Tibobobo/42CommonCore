@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 13:32:51 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:45:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,8 @@ static t_map	full_check(int ac, char **av, t_map *map)
 
 int	main(int ac, char **av)
 {
-	t_map	map;
-	int		i;
+	t_var	var;
 
-	i = 0;
-	map = full_check(ac, av, &map);
-	while (map.grid[i] != NULL)
-	{
-		ft_printf("%s\n", map.grid[i]);
-		i++;
-	}
-	ft_printf("%d\n%d\n%d\n%d\n%d\n", map.height, map.width, map.c, map.px, map.py);
-	free_map(map.grid);
+	var.map = full_check(ac, av, &var.map);
 	return (0);
 }

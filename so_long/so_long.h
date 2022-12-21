@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 11:29:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:41:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ typedef struct s_img
 	int		endian;
 }				t_img;
 
-typedef struct s_data
+typedef struct s_var
 {
+	t_map	map;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;
-	int		cur_img;
-}				t_data;
+}				t_var;
 
 void	map_pre_check(int ac, char **av);
 char	**parse_map(char *path);

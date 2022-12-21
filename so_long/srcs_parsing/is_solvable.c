@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:19 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 13:20:49 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:39:13 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ static int	try_move(char **copy, t_find **move, int *vx, int *vy)
 {
 	t_find	*temp;
 
-	copy[*vy][*vx] = 'S';
-	if (copy[*vy][*vx + 1] != '1' && copy[*vy][*vx + 1] != 'S')
+	copy[*vy][*vx] = 'V';
+	if (copy[*vy][*vx + 1] != '1' && copy[*vy][*vx + 1] != 'V')
 		new_move(move, ++(*vx), *vy);
-	else if (copy[*vy + 1][*vx] != '1' && copy[*vy + 1][*vx] != 'S')
+	else if (copy[*vy + 1][*vx] != '1' && copy[*vy + 1][*vx] != 'V')
 		new_move(move, *vx, ++(*vy));
-	else if (copy[*vy][*vx - 1] != '1' && copy[*vy][*vx - 1] != 'S' )
+	else if (copy[*vy][*vx - 1] != '1' && copy[*vy][*vx - 1] != 'V' )
 		new_move(move, --(*vx), *vy);
-	else if (copy[*vy - 1][*vx] != '1' && copy[*vy - 1][*vx] != 'S')
+	else if (copy[*vy - 1][*vx] != '1' && copy[*vy - 1][*vx] != 'V')
 		new_move(move, *vx, --(*vy));
 	else
 	{
