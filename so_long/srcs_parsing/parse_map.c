@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:29:27 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 10:59:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:25:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static char **fill_map(char **map, char *path, int height)
             return (free_map(map));
         i++;
     }
-    map[i] = NULL;
+    map[i] = get_next_line(fd);
+    close(fd);
     return (map);
 }
 
@@ -67,7 +68,7 @@ static char **clean_nl(char **map)
     return (map);
 }
 
-static char **split_map(char *path)
+char **parse_map(char *path)
 {
     int     fd;
     int     height;
@@ -95,14 +96,4 @@ static char **split_map(char *path)
     if (map == NULL)
         return (NULL);
     return (clean_nl(map));
-}
-
-char    **parse_map(char *path)
-{
-   char **map;
-
-   map = split_map(path);
-   if (map == NULL)
-        return (NULL);
-    return (map);
 }
