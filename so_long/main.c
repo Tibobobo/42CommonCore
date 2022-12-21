@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 10:57:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 12:20:00 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 
 int	main(int ac, char **av)
 {
-	// t_data	game;
 	t_map	map;
 	int		i;
-	
+
 	i = 0;
 	map_pre_check(ac, av);
 	map.grid = parse_map(av[1]);
@@ -39,7 +38,7 @@ int	main(int ac, char **av)
 		ft_printf("%s\n", map.grid[i]);
 		i++;
 	}
-	ft_printf("%d\n%d\n%d\n", map.height, map.width, map.c);
+	ft_printf("%d\n%d\n%d\n%d\n%d\n", map.height, map.width, map.c, map.px, map.py);
 	free_map(map.grid);
 	return (0);
 }

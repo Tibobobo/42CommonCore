@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 10:50:09 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:29:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ typedef struct s_data
 	int		cur_img;
 }				t_data;
 
-void map_pre_check(int ac, char **av);
-char    **parse_map(char *path);
+void	map_pre_check(int ac, char **av);
+char	**parse_map(char *path);
 void	ft_error(int num);
-char    **free_map(char **map);
-int is_valid_map(t_map *map);
-void solve(t_map map, char *path, int vx, int vy);
-
+char	**free_map(char **map);
+int		is_valid_map(t_map *map);
+void	solve(t_map map, char *path, int vx, int vy);
 
 #endif
