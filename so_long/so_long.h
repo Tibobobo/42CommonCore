@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 16:41:58 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:53:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+
+# define CELL_SIZE 50
 
 typedef struct s_map
 {
@@ -59,5 +61,7 @@ void	ft_error(int num);
 char	**free_map(char **map);
 int		is_valid_map(t_map *map);
 void	solve(t_map map, char *path, int vx, int vy);
+void    game_init(t_var *var);
+void    game_quit(t_var *var);
 
 #endif
