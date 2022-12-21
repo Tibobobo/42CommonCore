@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:28:19 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 12:17:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 13:20:49 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,50 @@ static void	free_solve(t_find **head, char **copy)
 	free_map(copy);
 }
 
+static int	try_move(char **copy, t_find **move, int *vx, int *vy)
+{
+	t_find	*temp;
+
+	copy[*vy][*vx] = 'S';
+	if (copy[*vy][*vx + 1] != '1' && copy[*vy][*vx + 1] != 'S')
+		new_move(move, ++(*vx), *vy);
+	else if (copy[*vy + 1][*vx] != '1' && copy[*vy + 1][*vx] != 'S')
+		new_move(move, *vx, ++(*vy));
+	else if (copy[*vy][*vx - 1] != '1' && copy[*vy][*vx - 1] != 'S' )
+		new_move(move, --(*vx), *vy);
+	else if (copy[*vy - 1][*vx] != '1' && copy[*vy - 1][*vx] != 'S')
+		new_move(move, *vx, --(*vy));
+	else
+	{
+		if ((*move)->prev == NULL)
+		{
+			free_solve(move, copy);
+			return (-1);
+		}
+		temp = *move;
+		*move = (*move)->prev;
+		free(temp);
+		*vy = (*move)->y;
+		*vx = (*move)->x;
+	}
+	return (1);
+}
+
+void	solve_error(char **original_map, int num)
+{
+	free_map(original_map);
+	ft_error(num);
+}
+
 void	solve(t_map map, char *path, int vx, int vy)
 {
 	t_find	*move;
-	t_find	*temp;
 	int		c;
 	char	**copy;
 
 	copy = parse_map(path);
 	if (copy == NULL)
-	{
-		free_map(map.grid);
-		ft_error(3);
-	}
+		solve_error(map.grid, 3);
 	move = NULL;
 	c = map.c;
 	new_move(&move, vx, vy);
@@ -71,28 +102,7 @@ void	solve(t_map map, char *path, int vx, int vy)
 			free_solve(&move, copy);
 			return ;
 		}
-		copy[vy][vx] = 'S';
-		if (copy[vy][vx + 1] != '1' && copy[vy][vx + 1] != 'S')
-			new_move(&move, ++vx, vy);
-		else if (copy[vy + 1][vx] != '1' && copy[vy + 1][vx] != 'S')
-			new_move(&move, vx, ++vy);
-		else if (copy[vy][vx - 1] != '1' && copy[vy][vx - 1] != 'S' )
-			new_move(&move, --vx, vy);
-		else if (copy[vy - 1][vx] != '1' && copy[vy - 1][vx] != 'S')
-			new_move(&move, vx, --vy);
-		else
-		{
-			if (move->prev == NULL)
-			{
-				free_solve(&move, copy);
-				free_map(map.grid);
-				ft_error(5);
-			}
-			temp = move;
-			move = move->prev;
-			free(temp);
-			vy = move->y;
-			vx = move->x;
-		}
+		if (try_move(copy, &move, &vx, &vy) == -1)
+			solve_error(map.grid, 5);
 	}
 }
