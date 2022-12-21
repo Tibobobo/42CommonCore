@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 18:34:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:49:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,5 @@ int is_valid_map(t_map *map)
     if (is_closed(map->grid, 0, 0, 0, 0) == 0)
         return (0);
     assign_values(map, 0, 0, 0);
-    if (solve(*map) == 0)  //modifie la map d'origine...
-        return (0);
     return (1);
 }

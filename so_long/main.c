@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 16:32:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:57:14 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ int	main(int ac, char **av)
 		free_map(map.grid);
 		ft_error(4);
 	}
+	solve(map, av[1], map.px, map.py);
 	while (map.grid[i] != NULL)
 	{
 		ft_printf("%s\n", map.grid[i]);
 		i++;
 	}
 	ft_printf("%d\n%d\n%d\n", map.height, map.width, map.c);
+	free_map(map.grid);
 	return (0);
 }

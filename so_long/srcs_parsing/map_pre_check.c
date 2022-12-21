@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:44:00 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 14:51:38 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:51:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,17 @@ void	ft_error(int num)
     }
     if (num == 3)
     {
-        ft_putstr_fd("Error\nMap couldn't be read\n", 2);
+        ft_putstr_fd("Error\nMap couldn't be read or file doesn't exist\n", 2);
 		exit(1);
     }
     if (num == 4)
     {
         ft_putstr_fd("Error\nMap content invalid\n", 2);
+		exit(1);
+    }
+    if (num == 5)
+    {
+        ft_putstr_fd("Error\nMap is impossible to finish\n", 2);
 		exit(1);
     }
 }
@@ -45,8 +50,8 @@ static int valid_extension(char *file)
     while (file[i] != '\0')
         i++;
     i--;
-    if (file[i] != 'r' || file[i - 1] != 'e'
-        || file[i - 2] != 'b' || file[i -3] != '.')
+    if (ft_strlen(file) < 5 || file[i] != 'r' || file[i - 1] != 'e'
+        || file[i - 2] != 'b' || file[i - 3] != '.' || file[i - 4] == '/')
         return (0);
     return (1);
 }

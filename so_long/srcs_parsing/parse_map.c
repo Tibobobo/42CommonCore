@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:29:27 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/20 14:51:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/21 10:59:50 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char **clean_nl(char **map)
     return (map);
 }
 
-static char **split_map(char * path)
+static char **split_map(char *path)
 {
     int     fd;
     int     height;
