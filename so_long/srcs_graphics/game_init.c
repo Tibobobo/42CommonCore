@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 18:54:38 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/28 17:35:49 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,88 @@
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
 
-void    mlx_error(t_var *var)
+void	img_pix_put(t_img *img, int x, int y, int color)
 {
-    if (var->mlx_ptr != NULL)
-    {
-        mlx_destroy_display(var->mlx_ptr);
-        free(var->mlx_ptr);
-    }
-    free(var->map.grid);
-    ft_putstr_fd("Error\nMLX couldn't render map\n", 2);
-    exit (2);
+	char    *pixel;
+
+    pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	*(int *)pixel = color;
 }
 
-void    img_pix_put(t_var *var, int x, int y, int color)
-{
-    char    *pix;
-	
-    ft_printf("DEBUG\n");
-    pix = var->img.addr + (y * var->img.line_len + x * (var->img.bpp / 8));
-    ft_printf("DEBUG\n");
-    *(unsigned int *)pix = color;    //SEGFAUUUUULT 
-    ft_printf("DEBUG\n");
-}
+// void    draw_sprite(t_img *scr, t_img *sprite, int y, int x)
+// {
+    
+// }
 
-void    render_background(t_var *var, int color)
+int render_background(t_var *var)
 {
     int i;
     int j;
-
+    
+    var->scr.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, "./sprites/floor.xpm", &var->map.width, &var->map.height);
     i = 0;
     while (i < CELL_SIZE * var->map.height)
     {
         j = 0;
         while (j < CELL_SIZE * var->map.width)
         {
-            img_pix_put(var, j, i, color);
+            mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->scr.mlx_img, j, i);
+            j += CELL_SIZE;
+        }
+        i += CELL_SIZE;
+    }
+    
+    return (0);
+}
+
+void    load_sprites(t_var *var, t_sprites *sprites)
+{
+    int width;
+    int height;
+
+    width = CELL_SIZE;     //OSEF ?
+    height = CELL_SIZE;
+    sprites->floor.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, ".sprites/floor.xpm", &width, &height);
+    sprites->c.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, "./sprites/chest.xpm", &width, &height);
+    sprites->e.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, "./sprites/chest.xpm", &width, &height);
+    sprites->wall.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, "./sprites/tree.xpm", &width, &height);
+    sprites->p.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, "./sprites/player_down.xpm", &width, &height);
+}
+
+void    level_init(t_var *var, t_sprites *sprites)
+{
+    int i;
+    int j;
+
+    load_sprites(var, sprites);
+    i = 0;
+    while (var->map.grid[i] != NULL)
+    {
+        j = 0;
+        while (var->map.grid[i][j] != '\0')
+        {
+            if (var->map.grid[i][j] == '1')
+                // draw_sprite(&var->scr, &sprites->wall, i, j);
+                mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, sprites->wall.mlx_img, j * CELL_SIZE, i * CELL_SIZE);
+            else if (var->map.grid[i][j] == 'P')
+                // draw_sprite(&var->scr, &sprites->p, i, j);
+                mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, sprites->p.mlx_img, j * CELL_SIZE + 10 , i * CELL_SIZE + 10);
+            // else if (var->map.grid[i][j] == 'E')
+            //     render_exit(var, i, j);
+            else if (var->map.grid[i][j] == 'C')
+                // draw_sprite(&var->scr, &sprites->c, i, j);
+                 mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, sprites->c.mlx_img, j * CELL_SIZE + 10, i * CELL_SIZE + 10);
             j++;
         }
         i++;
     }
-}
-
-int display(t_var *var)
-{
-    if (var->win_ptr == NULL)
-        return (1);
-    render_background(var, 0x00FF00);
-    mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->img.mlx_img, 0, 0);
-    return (0);
+    // mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->scr.mlx_img, 0, 0);
 }
 
 void    game_init(t_var *var)
 {
+    t_sprites   sprites;
+    
     var->mlx_ptr = mlx_init();
     if (var->mlx_ptr == NULL)
         mlx_error(var);
@@ -73,10 +103,9 @@ void    game_init(t_var *var)
         var->map.height * CELL_SIZE, "so_long");
     if (var->win_ptr == NULL)
         mlx_error(var);
-    var->img.mlx_img = mlx_new_image(var->mlx_ptr, var->map.width * CELL_SIZE,
-        var->map.height * CELL_SIZE);
-    var->img.addr = mlx_get_data_addr(&var->img.mlx_img, &var->img.bpp,
-        &var->img.line_len, &var->img.endian);
-    display(var);
+    render_background(var);
+    level_init(var, &sprites);
+    // mlx_loop_hook(var->mlx_ptr, game, var);
+    mlx_hook(var->win_ptr, 2, 1L<<0, &keypress, &var);
     mlx_loop(var->mlx_ptr);
 }
