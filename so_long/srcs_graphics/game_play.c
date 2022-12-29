@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/28 17:10:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:54:26 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,68 @@
 
 int move_right(t_var *var)
 {
-    ft_printf("%p\n", var->scr.addr);
-    ft_printf("RIGHT\n");
+    if (var->map.grid[var->map.py][var->map.px + 1] == '1')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    else
+    {
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, (var->map.px + 1) * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+        var->map.px++;
+        var->move++;
+        ft_printf("You made %d moves.\n", var->move);
+    }
     return (0);
 }
 
 int move_down(t_var *var)
 {
-    ft_printf("%p\n", var->scr.addr);
-    ft_printf("DOWN\n");
+    if (var->map.grid[var->map.py + 1][var->map.px] == '1')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    else
+    {
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, var->map.px * CELL_SIZE + 10, (var->map.py + 1) * CELL_SIZE + 10);
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+        var->map.py++;
+        var->move++;
+        ft_printf("You made %d moves.\n", var->move);
+    }
     return (0);
 }
 
 int move_left(t_var *var)
 {
-    ft_printf("%p\n", var->scr.addr);
-    ft_printf("LEFT\n");
+    if (var->map.grid[var->map.py][var->map.px - 1] == '1')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    else
+    {
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, (var->map.px - 1) * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+        var->map.px--;
+        var->move++;
+        ft_printf("You made %d moves.\n", var->move);
+    }
     return (0);
 }
 
 int move_up(t_var *var)
 {
-    ft_printf("%p\n", var->scr.addr);
-    ft_printf("UP\n");
+   if (var->map.grid[var->map.py - 1][var->map.px] == '1')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    else
+    {
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, var->map.px * CELL_SIZE + 10, (var->map.py - 1) * CELL_SIZE + 10);
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+        var->map.py--;
+        var->move++;
+        ft_printf("You made %d moves.\n", var->move);
+    }
     return (0);
 }
 
 int keypress(int key, t_var *var)
 {
     if (key == 0xff1b)
-    {
         game_quit(var);
-        exit (0);
-    }
     else if (key == 0x0064)
         move_right(var);
     else if (key == 0x0073)

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/28 17:09:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/29 17:04:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		w;
+	int		h;
 }				t_img;
 
 typedef struct s_var
@@ -53,16 +55,17 @@ typedef struct s_var
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	scr;
-}				t_var;
-
-typedef struct s_sprites
-{
 	t_img	floor;
 	t_img	wall;
 	t_img	e;
 	t_img	c;
-	t_img	p;
-}				t_sprites;
+	t_img	p_d;
+	t_img	p_r;
+	t_img	p_l;
+	t_img	p_u;
+	int		move;
+	char	dir;
+}				t_var;
 
 void	map_pre_check(int ac, char **av);
 char	**parse_map(char *path);
@@ -73,7 +76,6 @@ void	solve(t_map map, char *path, int vx, int vy);
 void    game_init(t_var *var);
 int		game_quit(t_var *var);
 void    mlx_error(t_var *var);
-int keypress(int key, t_var *var);
-
+int		keypress(int key, t_var *var);
 
 #endif

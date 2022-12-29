@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/28 14:12:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:58:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@ void    mlx_error(t_var *var)
 
 int    game_quit(t_var *var)
 {
-    mlx_destroy_image(var->mlx_ptr, var->bg.mlx_img); //SEGFAULT!
+    mlx_destroy_image(var->mlx_ptr, var->c.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->e.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->floor.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->p_d.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->p_u.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->p_l.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->p_r.mlx_img);
+    mlx_destroy_image(var->mlx_ptr, var->wall.mlx_img);
     mlx_destroy_window(var->mlx_ptr, var->win_ptr);
     mlx_destroy_display(var->mlx_ptr);
-    free(var->map.grid);
+    free_map(var->map.grid);
     free(var->mlx_ptr);
-    return (0);
+    exit (0);
 }
