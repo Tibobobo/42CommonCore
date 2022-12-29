@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/29 16:54:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:26:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,61 +16,110 @@
 
 int move_right(t_var *var)
 {
-    if (var->map.grid[var->map.py][var->map.px + 1] == '1')
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
-    else
+    
+    // if (var->map.grid[var->map.py][var->map.px + 1] == '1')
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    // else
+    // {
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, (var->map.px + 1) * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+    //     var->map.px++;
+    //     var->move++;
+    //     ft_printf("You made %d moves.\n", var->move);
+    // }
+    if (var->map.grid[var->map.py][var->map.px + 1] != '1')
     {
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, (var->map.px + 1) * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+        if (var->map.grid[var->map.py][var->map.px + 1] == 'C')    //SOLUTION POUR LAISSER COFFRE OUVERT ET SORTIE DERRIERE SOI
+            var->map.c--;
+        var->map.grid[var->map.py][var->map.px] = '0';
+        var->map.grid[var->map.py][var->map.px + 1] = 'P';
         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
         var->map.px++;
         var->move++;
         ft_printf("You made %d moves.\n", var->move);
     }
+    var->dir = 'r';
     return (0);
 }
 
 int move_down(t_var *var)
 {
-    if (var->map.grid[var->map.py + 1][var->map.px] == '1')
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
-    else
+    // if (var->map.grid[var->map.py + 1][var->map.px] == '1')
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    // else
+    // {
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, var->map.px * CELL_SIZE + 10, (var->map.py + 1) * CELL_SIZE + 10);
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+    //     var->map.py++;
+    //     var->move++;
+    //     ft_printf("You made %d moves.\n", var->move);
+    // }
+    if (var->map.grid[var->map.py + 1][var->map.px] != '1')
     {
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, var->map.px * CELL_SIZE + 10, (var->map.py + 1) * CELL_SIZE + 10);
+        if (var->map.grid[var->map.py + 1][var->map.px] == 'C')
+            var->map.c--;
+        var->map.grid[var->map.py][var->map.px] = '0';
+        var->map.grid[var->map.py + 1][var->map.px] = 'P';
         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
         var->map.py++;
         var->move++;
         ft_printf("You made %d moves.\n", var->move);
     }
+    var->dir = 'd';
     return (0);
 }
 
 int move_left(t_var *var)
 {
-    if (var->map.grid[var->map.py][var->map.px - 1] == '1')
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
-    else
+    if (var->map.grid[var->map.py][var->map.px - 1] != '1')
     {
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, (var->map.px - 1) * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+        if (var->map.grid[var->map.py][var->map.px - 1] == 'C')
+            var->map.c--;
+        var->map.grid[var->map.py][var->map.px] = '0';
+        var->map.grid[var->map.py][var->map.px - 1] = 'P';
         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
         var->map.px--;
         var->move++;
         ft_printf("You made %d moves.\n", var->move);
     }
+    var->dir = 'l';
+    // if (var->map.grid[var->map.py][var->map.px - 1] == '1')
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    // else
+    // {
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, (var->map.px - 1) * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+    //     mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+    //     var->map.px--;
+    //     var->move++;
+    //     ft_printf("You made %d moves.\n", var->move);
+    // }
     return (0);
 }
 
 int move_up(t_var *var)
 {
-   if (var->map.grid[var->map.py - 1][var->map.px] == '1')
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
-    else
+    if (var->map.grid[var->map.py - 1][var->map.px] != '1')
     {
-        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, var->map.px * CELL_SIZE + 10, (var->map.py - 1) * CELL_SIZE + 10);
+        if (var->map.grid[var->map.py - 1][var->map.px] == 'C')
+            var->map.c--;
+        var->map.grid[var->map.py][var->map.px] = '0';
+        var->map.grid[var->map.py - 1][var->map.px] = 'P';
         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
         var->map.py--;
         var->move++;
         ft_printf("You made %d moves.\n", var->move);
     }
+    var->dir = 'u';
+//    if (var->map.grid[var->map.py - 1][var->map.px] == '1')
+//         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+//     else
+//     {
+//         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, var->map.px * CELL_SIZE + 10, (var->map.py - 1) * CELL_SIZE + 10);
+//         mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
+//         var->map.py--;
+//         var->move++;
+//         ft_printf("You made %d moves.\n", var->move);
+//     }
     return (0);
 }
 

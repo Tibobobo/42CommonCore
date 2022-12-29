@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/29 17:05:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:25:05 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ void    load_sprites(t_var *var)
     var->p_r.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr, "./sprites/player_right.xpm", &var->p_r.w, &var->p_r.h);
 }
 
+void    render_player(t_var *var, int i, int j)
+{
+    if (var->dir == 'd')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, j * CELL_SIZE + 10 , i * CELL_SIZE + 10);
+    else if (var->dir == 'u')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_u.mlx_img, j * CELL_SIZE + 10 , i * CELL_SIZE + 10);
+    else if (var->dir == 'r')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_r.mlx_img, j * CELL_SIZE + 10 , i * CELL_SIZE + 10);
+    else if (var->dir == 'l')
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_l.mlx_img, j * CELL_SIZE + 10 , i * CELL_SIZE + 10);
+}
+
 int    game(t_var *var)
 {
     int i;
@@ -60,12 +72,12 @@ int    game(t_var *var)
         while (var->map.grid[i][j] != '\0')
         {
             if (var->map.grid[i][j] == 'P')
+                render_player(var, i, j);
                 // mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->p_d.mlx_img, j * CELL_SIZE + 10 , i * CELL_SIZE + 10);
             else if (var->map.grid[i][j] == 'E')
                 mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->e.mlx_img, j * CELL_SIZE + 10, i * CELL_SIZE + 10);
             else if (var->map.grid[i][j] == 'C')
                 mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->c.mlx_img, j * CELL_SIZE + 10, i * CELL_SIZE + 10);
-            else if (var->map.grid[i][j] == 'G')
             j++;
         }
         i++;
@@ -85,6 +97,6 @@ void    game_init(t_var *var)
     load_sprites(var);
     render_background(var);
     mlx_loop_hook(var->mlx_ptr, game, var);
-    mlx_hook(var->win_ptr, 2, 1L<<0, &keypress, var);
+    mlx_hook(var->win_ptr, 2, 1L<<0, &keypress, var);       //AJOUTER SOURIS
     mlx_loop(var->mlx_ptr);
 }
