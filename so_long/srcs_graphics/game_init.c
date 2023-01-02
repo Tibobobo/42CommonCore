@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 12:32:51 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:42:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	render_background(t_var *var)
 					var->wall.mlx_img, CELL_SIZE * j, CELL_SIZE * i);
 			else if (var->map.grid[i][j] == 'E')
 				mlx_put_image_to_window(var->mlx_ptr, var->win_ptr,
-					var->e.mlx_img, j * CELL_SIZE + 10, i * CELL_SIZE + 10);
+					var->e.mlx_img, j * CELL_SIZE, i * CELL_SIZE);
 			else if (var->map.grid[i][j] == 'C')
 				mlx_put_image_to_window(var->mlx_ptr, var->win_ptr,
 					var->c.mlx_img, j * CELL_SIZE + 10, i * CELL_SIZE + 10);
@@ -52,17 +52,17 @@ void	load_sprites(t_var *var)
 	var->c.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./sprites/chest.xpm", &var->c.w, &var->c.h);
 	var->e.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/o_chest.xpm", &var->e.w, &var->e.h);
+			"./sprites/exit.xpm", &var->e.w, &var->e.h);
 	var->wall.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./sprites/tree.xpm", &var->wall.w, &var->wall.h);
 	var->pd.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/player_down.xpm", &var->pd.w, &var->pd.h);
+			"./sprites/p_down.xpm", &var->pd.w, &var->pd.h);
 	var->pu.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/player_down.xpm", &var->pu.w, &var->pu.h);
+			"./sprites/p_up.xpm", &var->pu.w, &var->pu.h);
 	var->pl.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/player_left.xpm", &var->pl.w, &var->pl.h);
+			"./sprites/p_left.xpm", &var->pl.w, &var->pl.h);
 	var->pr.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/player_right.xpm", &var->pr.w, &var->pr.h);
+			"./sprites/p_right.xpm", &var->pr.w, &var->pr.h);
 	var->g.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./sprites/o_chest.xpm", &var->g.w, &var->g.h);
 }
@@ -78,16 +78,16 @@ int	game(t_var *var)
 	{
 		if (var->dir == 'd')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pd.mlx_img,
-				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
 		else if (var->dir == 'u')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pu.mlx_img,
-				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
 		else if (var->dir == 'r')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pr.mlx_img,
-				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
 		else if (var->dir == 'l')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pl.mlx_img,
-				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
 	}
 	return (0);
 }

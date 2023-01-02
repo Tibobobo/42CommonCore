@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 12:17:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:43:03 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	leave_cell(t_var *var)
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img,
 			CELL_SIZE * var->map.px, CELL_SIZE * var->map.py);
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->e.mlx_img,
-			CELL_SIZE * var->map.px + 10, CELL_SIZE * var->map.py + 10);
+			CELL_SIZE * var->map.px, CELL_SIZE * var->map.py);
 		var->item = ' ';
 	}
 	else
@@ -53,13 +53,16 @@ int	move_right(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py][var->map.px + 1] == 'E')
+		{
 			var->item = 'e';
+			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
+		}
 		else if (var->map.grid[var->map.py][var->map.px + 1] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py][var->map.px + 1] = 'P';
 		var->map.px++;
 		var->move++;
-		ft_printf("You made %d moves.\n", var->move);
+		ft_printf("You made %d move(s).\n", var->move);
 	}
 	var->dir = 'r';
 	return (0);
@@ -76,13 +79,16 @@ int	move_down(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py + 1][var->map.px] == 'E')
+		{
+			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
 			var->item = 'e';
+		}
 		else if (var->map.grid[var->map.py + 1][var->map.px] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py + 1][var->map.px] = 'P';
 		var->map.py++;
 		var->move++;
-		ft_printf("You made %d moves.\n", var->move);
+		ft_printf("You made %d move(s).\n", var->move);
 	}
 	var->dir = 'd';
 	return (0);
@@ -99,13 +105,16 @@ int	move_left(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py][var->map.px - 1] == 'E')
+		{
+			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
 			var->item = 'e';
+		}
 		else if (var->map.grid[var->map.py][var->map.px - 1] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py][var->map.px - 1] = 'P';
 		var->map.px--;
 		var->move++;
-		ft_printf("You made %d moves.\n", var->move);
+		ft_printf("You made %d move(s).\n", var->move);
 	}
 	var->dir = 'l';
 	return (0);
@@ -122,13 +131,16 @@ int	move_up(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py - 1][var->map.px] == 'E')
+		{
+			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
 			var->item = 'e';
+		}
 		else if (var->map.grid[var->map.py - 1][var->map.px] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py - 1][var->map.px] = 'P';
 		var->map.py--;
 		var->move++;
-		ft_printf("You made %d moves.\n", var->move);
+		ft_printf("You made %d move(s).\n", var->move);
 	}
 	var->dir = 'u';
 	return (0);
