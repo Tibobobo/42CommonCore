@@ -6,13 +6,36 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 11:40:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:03:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
+
+void    leave_cell(t_var *var)
+{
+    if (var->item == 'c')
+    {
+        var->map.grid[var->map.py][var->map.px] = 'G';
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, CELL_SIZE * var->map.px, CELL_SIZE * var->map.py);
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->g.mlx_img, CELL_SIZE * var->map.px + 10, CELL_SIZE * var->map.py + 10);
+        var->item = ' ';
+    }
+    else if (var->item == 'e')
+    {
+        var->map.grid[var->map.py][var->map.px] = 'E';
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, CELL_SIZE * var->map.px, CELL_SIZE * var->map.py);
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->e.mlx_img, CELL_SIZE * var->map.px + 10, CELL_SIZE * var->map.py + 10);
+        var->item = ' ';
+    }
+    else
+    {
+        var->map.grid[var->map.py][var->map.px] = '0';
+        mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->floor.mlx_img, CELL_SIZE * var->map.px, CELL_SIZE * var->map.py);
+    }
+}
 
 int move_right(t_var *var)
 {
@@ -103,20 +126,5 @@ int move_up(t_var *var)
         ft_printf("You made %d moves.\n", var->move);
     }
     var->dir = 'u';
-    return (0);
-}
-
-int keypress(int key, t_var *var)
-{
-    if (key == 0xff1b)
-        game_quit(var);
-    else if (key == 0x0064)
-        move_right(var);
-    else if (key == 0x0073)
-        move_down(var);
-    else if (key == 0x0061)
-        move_left(var);
-    else if (key == 0x0077)
-        move_up(var);
     return (0);
 }

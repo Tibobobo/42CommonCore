@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 11:28:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:04:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,9 @@ int		game_quit(t_var *var);
 void    mlx_error(t_var *var);
 int		keypress(int key, t_var *var);
 void    leave_cell(t_var *var);
+int		move_up(t_var *var);
+int		move_left(t_var *var);
+int		move_down(t_var *var);
+int		move_right(t_var *var);
 
 #endif
