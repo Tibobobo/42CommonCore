@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 12:03:30 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:33:20 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 #include "../libft/libft.h"
 #include "../minilibx-linux/mlx.h"
 
-void    mlx_error(t_var *var)
+void	mlx_error(t_var *var)
 {
-    if (var->mlx_ptr != NULL)
-    {
-        mlx_destroy_display(var->mlx_ptr);
-        free(var->mlx_ptr);
-    }
-    free_map(var->map.grid);
-    ft_putstr_fd("Error\nMLX couldn't render map\n", 2);
-    exit (2);
+	if (var->mlx_ptr != NULL)
+	{
+		mlx_destroy_display(var->mlx_ptr);
+		free(var->mlx_ptr);
+	}
+	free_map(var->map.grid);
+	ft_putstr_fd("Error\nMLX couldn't render map\n", 2);
+	exit (2);
 }
 
-int    game_quit(t_var *var)
+int	game_quit(t_var *var)
 {
-    mlx_destroy_image(var->mlx_ptr, var->c.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->e.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->floor.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->p_d.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->p_u.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->p_l.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->p_r.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->wall.mlx_img);
-    mlx_destroy_image(var->mlx_ptr, var->g.mlx_img);
-    mlx_destroy_window(var->mlx_ptr, var->win_ptr);
-    mlx_destroy_display(var->mlx_ptr);
-    free_map(var->map.grid);
-    free(var->mlx_ptr);
-    exit (0);
+	mlx_destroy_image(var->mlx_ptr, var->c.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->e.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->floor.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->pd.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->pu.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->pl.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->pr.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->wall.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->g.mlx_img);
+	mlx_destroy_window(var->mlx_ptr, var->win_ptr);
+	mlx_destroy_display(var->mlx_ptr);
+	free_map(var->map.grid);
+	free(var->mlx_ptr);
+	exit (0);
 }

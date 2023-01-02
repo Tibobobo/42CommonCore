@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/29 15:35:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:08:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ static t_map	full_check(int ac, char **av, t_map *map)
 	return (*map);
 }
 
-void    launch_game(t_var *var)
+void	launch_game(t_var *var)
 {
-    game_init(var);
-    // game_loop(var);
-    game_quit(var);
+	game_init(var);
+	game_quit(var);
 }
 
 int	main(int ac, char **av)
