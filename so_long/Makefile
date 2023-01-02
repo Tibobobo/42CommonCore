@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/02 17:48:39 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/02 18:01:51 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS	=	./main.c \
 			./srcs_graphics/game_quit.c \
 			./srcs_graphics/game_play.c \
 
-B_SRC	=	./bonus/info_bonus.c \
+B_SRCS	=	./bonus/info_bonus.c \
 			./bonus/game_init_bonus.c \
 			./bonus/game_play_bonus.c \
 			./bonus/game_quit_bonus.c \
@@ -60,7 +60,7 @@ $(MLX_A):
 $(LIBFT_A):
 	make -C ./libft
 
-bonus:$(B_OBJS) $(MLX_A) $(LIBFT_A)
+bonus:		$(B_OBJS) $(MLX_A) $(LIBFT_A)
 	$(CC) $(CFLAGS)$(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:

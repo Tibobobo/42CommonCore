@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:36:39 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:23:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_var
 	t_img	pl;
 	t_img	pu;
 	t_img	g;
+	t_img	info;
 	int		move;
 	char	dir;
 	char	item;
@@ -83,5 +84,6 @@ int		move_up(t_var *var);
 int		move_left(t_var *var);
 int		move_down(t_var *var);
 int		move_right(t_var *var);
+void    display_info(t_var *var);
 
 #endif

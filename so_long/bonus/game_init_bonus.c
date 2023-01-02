@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:40:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:04:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	load_sprites(t_var *var)
 
 int	game(t_var *var)
 {
+	display_info(var);
 	if (var->map.c == 0 && var->item == 'e')
 	{
 		ft_printf("You won !\n");
