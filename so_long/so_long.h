@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/29 17:04:58 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 11:28:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ typedef struct s_var
 	t_img	p_r;
 	t_img	p_l;
 	t_img	p_u;
+	t_img	g;
 	int		move;
 	char	dir;
+	char	item;
 }				t_var;
 
 void	map_pre_check(int ac, char **av);
@@ -77,5 +79,6 @@ void    game_init(t_var *var);
 int		game_quit(t_var *var);
 void    mlx_error(t_var *var);
 int		keypress(int key, t_var *var);
+void    leave_cell(t_var *var);
 
 #endif
