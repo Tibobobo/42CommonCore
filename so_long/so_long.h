@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 14:17:35 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:30:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_var
 	t_map	map;
 	void	*mlx_ptr;
 	void	*win_ptr;
-	t_img	scr;
 	t_img	floor;
 	t_img	wall;
 	t_img	e;
