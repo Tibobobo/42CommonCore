@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 13:42:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:07:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,23 @@ void	load_sprites(t_var *var)
 	var->move = 0;
 	var->item = ' ';
 	var->floor.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/floor.xpm", &var->floor.w, &var->floor.h);
+			"./textures/floor.xpm", &var->floor.w, &var->floor.h);
 	var->c.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/chest.xpm", &var->c.w, &var->c.h);
+			"./textures/chest.xpm", &var->c.w, &var->c.h);
 	var->e.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/exit.xpm", &var->e.w, &var->e.h);
+			"./textures/exit.xpm", &var->e.w, &var->e.h);
 	var->wall.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/tree.xpm", &var->wall.w, &var->wall.h);
+			"./textures/tree.xpm", &var->wall.w, &var->wall.h);
 	var->pd.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/p_down.xpm", &var->pd.w, &var->pd.h);
+			"./textures/p_down.xpm", &var->pd.w, &var->pd.h);
 	var->pu.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/p_up.xpm", &var->pu.w, &var->pu.h);
+			"./textures/p_up.xpm", &var->pu.w, &var->pu.h);
 	var->pl.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/p_left.xpm", &var->pl.w, &var->pl.h);
+			"./textures/p_left.xpm", &var->pl.w, &var->pl.h);
 	var->pr.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/p_right.xpm", &var->pr.w, &var->pr.h);
+			"./textures/p_right.xpm", &var->pr.w, &var->pr.h);
 	var->g.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./sprites/o_chest.xpm", &var->g.w, &var->g.h);
+			"./textures/o_chest.xpm", &var->g.w, &var->g.h);
 }
 
 int	game(t_var *var)

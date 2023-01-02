@@ -6,16 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 12:08:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:34:03 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minilibx-linux/mlx.h"
 #include "so_long.h"
 #include "./libft/libft.h"
-
-// TO_DO : Makefile relinks mlx
-// 		Add enemies to allowed chars
 
 static t_map	full_check(int ac, char **av, t_map *map)
 {

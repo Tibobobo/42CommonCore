@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2022/12/29 15:11:36 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/02 14:32:04 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,15 +30,23 @@ CC		=	cc
 
 CFLAGS	=	-Wall -Wextra -Werror
 
+MLX_A	=	./minilibx-linux/libmlx_Linux.a
+
+LIBFT_A	=	./libft/libft.a
+
 ###############################################################################
 ########### RULES
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS)
-	make -C ./libft
-	make -C ./minilibx-linux
+$(NAME):	$(OBJS) $(MLX_A) $(LIBFT_A)
 	$(CC) $(CFLAGS) $(OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+
+$(MLX_A):
+	make -C ./minilibx-linux
+
+$(LIBFT_A):
+	make -C ./libft
 
 clean:
 	make fclean -C ./libft

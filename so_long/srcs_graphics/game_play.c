@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 13:43:03 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:27:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	move_right(t_var *var)
 		else if (var->map.grid[var->map.py][var->map.px + 1] == 'E')
 		{
 			var->item = 'e';
-			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
+			if (var->map.c != 0)
+				ft_printf("%d more chest(s) to collect\n", var->map.c);
 		}
 		else if (var->map.grid[var->map.py][var->map.px + 1] == 'G')
 			var->item = 'c';
@@ -80,7 +81,8 @@ int	move_down(t_var *var)
 		}
 		else if (var->map.grid[var->map.py + 1][var->map.px] == 'E')
 		{
-			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
+			if (var->map.c != 0)
+				ft_printf("%d more chest(s) to collect\n", var->map.c);
 			var->item = 'e';
 		}
 		else if (var->map.grid[var->map.py + 1][var->map.px] == 'G')
@@ -106,7 +108,8 @@ int	move_left(t_var *var)
 		}
 		else if (var->map.grid[var->map.py][var->map.px - 1] == 'E')
 		{
-			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
+			if (var->map.c != 0)
+				ft_printf("%d more chest(s) to collect\n", var->map.c);
 			var->item = 'e';
 		}
 		else if (var->map.grid[var->map.py][var->map.px - 1] == 'G')
@@ -132,7 +135,8 @@ int	move_up(t_var *var)
 		}
 		else if (var->map.grid[var->map.py - 1][var->map.px] == 'E')
 		{
-			ft_printf("You need to collect %d more chest(s).\n", var->map.c);
+			if (var->map.c != 0)
+				ft_printf("%d more chest(s) to collect\n", var->map.c);
 			var->item = 'e';
 		}
 		else if (var->map.grid[var->map.py - 1][var->map.px] == 'G')
