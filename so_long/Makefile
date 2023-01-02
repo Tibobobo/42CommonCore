@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/02 16:21:38 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/02 17:48:39 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,15 @@ SRCS	=	./main.c \
 			./srcs_graphics/game_quit.c \
 			./srcs_graphics/game_play.c \
 
-B_SRC	=	./bonus/info.c \
+B_SRC	=	./bonus/info_bonus.c \
+			./bonus/game_init_bonus.c \
+			./bonus/game_play_bonus.c \
+			./bonus/game_quit_bonus.c \
+			./bonus/is_solvable_bonus.c \
+			./bonus/main_bonus.c \
+			./bonus/map_pre_check_bonus.c \
+			./bonus/parse_map_bonus.c \
+			./bonus/map_check_bonus.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 
@@ -52,8 +60,8 @@ $(MLX_A):
 $(LIBFT_A):
 	make -C ./libft
 
-bonus: $(OBJS) $(B_OBJS) $(MLX_A) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(OBJS) $(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+bonus:$(B_OBJS) $(MLX_A) $(LIBFT_A)
+	$(CC) $(CFLAGS)$(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	make fclean -C ./libft

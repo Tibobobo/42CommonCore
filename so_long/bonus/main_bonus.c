@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:56:51 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:41:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minilibx-linux/mlx.h"
-#include "so_long.h"
-#include "./libft/libft.h"
+#include "../minilibx-linux/mlx.h"
+#include "so_long_bonus.h"
+#include "../libft/libft.h"
 
 static t_map	full_check(int ac, char **av, t_map *map)
 {
@@ -29,12 +29,17 @@ static t_map	full_check(int ac, char **av, t_map *map)
 	return (*map);
 }
 
+void	launch_game(t_var *var)
+{
+	game_init(var);
+	game_quit(var);
+}
+
 int	main(int ac, char **av)
 {
 	t_var	var;
 
 	var.map = full_check(ac, av, &var.map);
-	game_init(&var);
-	game_quit(&var);
+	launch_game(&var);
 	return (0);
 }
