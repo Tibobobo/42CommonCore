@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:29:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:55:08 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,13 @@ int	check_foe_nb(char **grid)
 void	assign_foe_position(t_var *var)
 {
 	if (var->foe_nb == 0)
+	{
+		var->map.f1x = 0;
+		var->map.f1y = 0;
+		var->map.f2x = 0;
+		var->map.f2y = 0;
 		return ;
+	}
 	else if (var->foe_nb == 1)
 		position_1_foe(var);
 	else if (var->foe_nb == 2)

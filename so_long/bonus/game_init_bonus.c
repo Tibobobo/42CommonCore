@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:32:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:43:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ void	load_sprites(t_var *var)
 
 int	game(t_var *var)
 {
-	if (var->map.c == 0 && var->item == 'e')
-	{
-		ft_printf("You won !\n");
-		game_quit(var);
-	}
-	else
-	{
+	// if (var->map.c == 0 && var->item == 'e')
+	// {
+	// 	ft_printf("You won !\n");
+	// 	game_quit(var);
+	// }
+	check_win_or_lose(var);
+	// else
+	// {
 		if (var->foe_nb != 0)
 			place_enemies(var);
 		if (var->dir == 'd')
@@ -94,7 +95,7 @@ int	game(t_var *var)
 		else if (var->dir == 'l')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pl.mlx_img,
 				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
-	}
+	// }
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:36:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:44:04 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void    display_moves(t_var *var);
 void	position_2_foes(t_var *var, int i, int j);
 void	position_1_foe(t_var *var);
 void    place_enemies(t_var *var);
+void	check_win_or_lose(t_var *var);
 
 #endif

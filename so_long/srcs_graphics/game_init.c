@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:31:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:48:19 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	game(t_var *var)
 {
 	if (var->map.c == 0 && var->item == 'e')
 	{
-		ft_printf("You won !\n");
+		ft_printf("Well done, level cleared !\n");
 		game_quit(var);
 	}
 	else
