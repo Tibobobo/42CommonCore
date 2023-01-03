@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 18:04:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:55:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ void	load_sprites(t_var *var)
 			"./textures/p_right.xpm", &var->pr.w, &var->pr.h);
 	var->g.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./textures/o_chest.xpm", &var->g.w, &var->g.h);
+	var->info.mlx_img = mlx_new_image(var->mlx_ptr,
+			CELL_SIZE * var->map.width, 15);
 }
 
 int	game(t_var *var)
 {
-	display_info(var);
 	if (var->map.c == 0 && var->item == 'e')
 	{
 		ft_printf("You won !\n");

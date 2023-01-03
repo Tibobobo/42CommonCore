@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:41:03 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:55:49 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	game_quit(t_var *var)
 	mlx_destroy_image(var->mlx_ptr, var->pr.mlx_img);
 	mlx_destroy_image(var->mlx_ptr, var->wall.mlx_img);
 	mlx_destroy_image(var->mlx_ptr, var->g.mlx_img);
+	mlx_destroy_image(var->mlx_ptr, var->info.mlx_img);
 	mlx_destroy_window(var->mlx_ptr, var->win_ptr);
 	mlx_destroy_display(var->mlx_ptr);
 	free_map(var->map.grid);

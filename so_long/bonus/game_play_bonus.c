@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:41:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:58:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	move_right(t_var *var)
 		var->map.grid[var->map.py][var->map.px + 1] = 'P';
 		var->map.px++;
 		var->move++;
-		ft_printf("You made %d move(s).\n", var->move);
+		display_moves(var);
 	}
 	var->dir = 'r';
 	return (0);
@@ -90,7 +90,7 @@ int	move_down(t_var *var)
 		var->map.grid[var->map.py + 1][var->map.px] = 'P';
 		var->map.py++;
 		var->move++;
-		ft_printf("You made %d move(s).\n", var->move);
+		display_moves(var);
 	}
 	var->dir = 'd';
 	return (0);
@@ -117,7 +117,7 @@ int	move_left(t_var *var)
 		var->map.grid[var->map.py][var->map.px - 1] = 'P';
 		var->map.px--;
 		var->move++;
-		ft_printf("You made %d move(s).\n", var->move);
+		display_moves(var);
 	}
 	var->dir = 'l';
 	return (0);
@@ -144,7 +144,7 @@ int	move_up(t_var *var)
 		var->map.grid[var->map.py - 1][var->map.px] = 'P';
 		var->map.py--;
 		var->move++;
-		ft_printf("You made %d move(s).\n", var->move);
+		display_moves(var);
 	}
 	var->dir = 'u';
 	return (0);

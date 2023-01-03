@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/02 18:01:51 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/03 10:51:18 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ $(LIBFT_A):
 	make -C ./libft
 
 bonus:		$(B_OBJS) $(MLX_A) $(LIBFT_A)
-	$(CC) $(CFLAGS)$(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(CFLAGS) $(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	make fclean -C ./libft
