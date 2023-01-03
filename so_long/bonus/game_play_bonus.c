@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 10:58:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:29:16 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ int	move_right(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py][var->map.px + 1] == 'E')
-		{
 			var->item = 'e';
-			if (var->map.c != 0)
-				ft_printf("%d more chest(s) to collect\n", var->map.c);
-		}
 		else if (var->map.grid[var->map.py][var->map.px + 1] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py][var->map.px + 1] = 'P';
@@ -80,11 +76,7 @@ int	move_down(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py + 1][var->map.px] == 'E')
-		{
-			if (var->map.c != 0)
-				ft_printf("%d more chest(s) to collect\n", var->map.c);
 			var->item = 'e';
-		}
 		else if (var->map.grid[var->map.py + 1][var->map.px] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py + 1][var->map.px] = 'P';
@@ -107,11 +99,7 @@ int	move_left(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py][var->map.px - 1] == 'E')
-		{
-			if (var->map.c != 0)
-				ft_printf("%d more chest(s) to collect\n", var->map.c);
 			var->item = 'e';
-		}
 		else if (var->map.grid[var->map.py][var->map.px - 1] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py][var->map.px - 1] = 'P';
@@ -134,11 +122,7 @@ int	move_up(t_var *var)
 			var->item = 'c';
 		}
 		else if (var->map.grid[var->map.py - 1][var->map.px] == 'E')
-		{
-			if (var->map.c != 0)
-				ft_printf("%d more chest(s) to collect\n", var->map.c);
 			var->item = 'e';
-		}
 		else if (var->map.grid[var->map.py - 1][var->map.px] == 'G')
 			var->item = 'c';
 		var->map.grid[var->map.py - 1][var->map.px] = 'P';

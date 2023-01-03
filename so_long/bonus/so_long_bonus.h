@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 10:58:38 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:02:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_map
 {
 	char	**grid;
 	int		c;
+	int		c_total;
 	int		width;
 	int		height;
 	int		px;

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:41:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:04:19 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static void	assign_values(t_map *map, int i, int j, int c)
 		i++;
 	}
 	map->c = c;
+	map->c_total = c;
 }
 
 int	is_valid_map(t_map *map)

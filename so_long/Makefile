@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/03 10:51:18 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/03 11:25:05 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ B_OBJS	=	$(B_SRCS:%.c=%.o)
 
 NAME	=	so_long
 
+B_NAME	=	so_long_bonus
+
 CC		=	cc
 
 CFLAGS	=	-Wall -Wextra -Werror
@@ -60,8 +62,10 @@ $(MLX_A):
 $(LIBFT_A):
 	make -C ./libft
 
-bonus:		$(B_OBJS) $(MLX_A) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+bonus:		$(B_NAME)
+
+$(B_NAME):	$(B_OBJS) $(MLX_A) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(B_OBJS) ./libft/libft.a -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -o $(B_NAME)
 
 clean:
 	make fclean -C ./libft
@@ -70,6 +74,7 @@ clean:
 
 fclean:		clean
 	rm -f $(NAME)
+	rm -f $(B_NAME)
 
 re:			fclean all
 
