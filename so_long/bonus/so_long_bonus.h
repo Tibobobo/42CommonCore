@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:02:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:36:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ typedef struct s_map
 	int		height;
 	int		px;
 	int		py;
+	int		f1x;
+	int		f1y;
+	int		f2x;
+	int		f2y;
 }				t_map;
 
 typedef struct s_find
@@ -65,9 +69,11 @@ typedef struct s_var
 	t_img	pu;
 	t_img	g;
 	t_img	info;
+	t_img	foe;
 	int		move;
 	char	dir;
 	char	item;
+	int		foe_nb;
 }				t_var;
 
 void	map_pre_check(int ac, char **av);
@@ -86,5 +92,8 @@ int		move_left(t_var *var);
 int		move_down(t_var *var);
 int		move_right(t_var *var);
 void    display_moves(t_var *var);
+void	position_2_foes(t_var *var, int i, int j);
+void	position_1_foe(t_var *var);
+void    place_enemies(t_var *var);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:42:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:57:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static void	assign_values(t_map *map, int i, int j, int c)
 				map->px = j;
 				map->py = i;
 			}
+			if (map) // A COMPLETER
 			j++;
 		}
 		i++;

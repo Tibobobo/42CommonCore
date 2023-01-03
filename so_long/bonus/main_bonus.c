@@ -6,13 +6,45 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:37:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:29:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minilibx-linux/mlx.h"
 #include "so_long_bonus.h"
 #include "../libft/libft.h"
+
+int	check_foe_nb(char **grid)
+{
+	int	i;
+	int	j;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	while(grid[i] != NULL)
+	{
+		j = 0;
+		while(grid[i][j] != '\0')
+		{
+			if (grid[i][j] == 'F')
+				nb++;
+			j++;
+		}
+		i++;
+	}
+	return (nb);
+}
+
+void	assign_foe_position(t_var *var)
+{
+	if (var->foe_nb == 0)
+		return ;
+	else if (var->foe_nb == 1)
+		position_1_foe(var);
+	else if (var->foe_nb == 2)
+		position_2_foes(var, 0, 0);
+}
 
 static t_map	full_check(int ac, char **av, t_map *map)
 {
@@ -34,6 +66,14 @@ int	main(int ac, char **av)
 	t_var	var;
 
 	var.map = full_check(ac, av, &var.map);
+	var.foe_nb = check_foe_nb(var.map.grid);
+	if (var.foe_nb > 2)
+	{
+		free_map(var.map.grid);
+		ft_putstr_fd("Too many enemies, maximum is 2\n", 2);
+		return (-1);
+	}
+	assign_foe_position(&var);
 	game_init(&var);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 10:55:06 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 12:32:42 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	load_sprites(t_var *var)
 			"./textures/o_chest.xpm", &var->g.w, &var->g.h);
 	var->info.mlx_img = mlx_new_image(var->mlx_ptr,
 			CELL_SIZE * var->map.width, 15);
+	var->foe.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
+			"./textures/mushroom.xpm", &var->foe.w, &var->g.h);
 }
 
 int	game(t_var *var)
@@ -78,6 +80,8 @@ int	game(t_var *var)
 	}
 	else
 	{
+		if (var->foe_nb != 0)
+			place_enemies(var);
 		if (var->dir == 'd')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pd.mlx_img,
 				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
