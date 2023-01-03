@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:29:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:17:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	move_right(t_var *var)
 		var->map.px++;
 		var->move++;
 		display_moves(var);
+		if (var->move % 2 != 0)
+			move_enemy(var);
 	}
 	var->dir = 'r';
 	return (0);
@@ -83,6 +85,8 @@ int	move_down(t_var *var)
 		var->map.py++;
 		var->move++;
 		display_moves(var);
+		if (var->move % 2 != 0)
+			move_enemy(var);
 	}
 	var->dir = 'd';
 	return (0);
@@ -106,6 +110,8 @@ int	move_left(t_var *var)
 		var->map.px--;
 		var->move++;
 		display_moves(var);
+		if (var->move % 2 != 0)
+			move_enemy(var);
 	}
 	var->dir = 'l';
 	return (0);
@@ -129,6 +135,8 @@ int	move_up(t_var *var)
 		var->map.py--;
 		var->move++;
 		display_moves(var);
+		if (var->move % 2 != 0)
+			move_enemy(var);
 	}
 	var->dir = 'u';
 	return (0);

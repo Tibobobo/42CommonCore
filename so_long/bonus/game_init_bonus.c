@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 13:13:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:44:33 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	load_sprites(t_var *var)
 	var->info.mlx_img = mlx_new_image(var->mlx_ptr,
 			CELL_SIZE * var->map.width, 15);
 	var->foe.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/mushroom.xpm", &var->foe.w, &var->g.h);
+			"./textures/foe.xpm", &var->foe.w, &var->g.h);
 }
 
 int	game(t_var *var)
