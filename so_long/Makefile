@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/07 10:44:30 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/03 11:25:05 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/03 11:37:47 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ B_SRCS	=	./bonus/info_bonus.c \
 			./bonus/map_pre_check_bonus.c \
 			./bonus/parse_map_bonus.c \
 			./bonus/map_check_bonus.c \
+			./bonus/animation_bonus.c \
+			./bonus/enemy_bonus.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 11:54:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:04:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:42:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	char_check(char **map, int i, int c, int e)
 		while (map[i][j] != '\0')
 		{
 			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != 'C'
-				&& map[i][j] != 'E' && map[i][j] != 'P')
+				&& map[i][j] != 'E' && map[i][j] != 'P' && map[i][j] != 'F')
 				return (0);
 			if (map[i][j] == 'C')
 				c++;

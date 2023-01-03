@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/02 17:56:51 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:39:25 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ int	main(int ac, char **av)
 
 	var.map = full_check(ac, av, &var.map);
 	game_init(&var);
-	game_quit(&var);
 	return (0);
 }
