@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/04 16:15:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:30:03 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ int	game(t_var *var)
 	{
 		if (var->dir == 'd')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pd.mlx_img,
-				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
 		else if (var->dir == 'u')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pu.mlx_img,
-				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
 		else if (var->dir == 'r')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pr.mlx_img,
-				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
 		else if (var->dir == 'l')
 			mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pl.mlx_img,
-				var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
+				var->map.px * CELL_SIZE + 10, var->map.py * CELL_SIZE + 10);
 	}
 	return (0);
 }
