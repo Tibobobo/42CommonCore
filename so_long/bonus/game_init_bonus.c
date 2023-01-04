@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 17:44:33 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/04 12:10:08 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	keypress(int key, t_var *var)
 {
 	if (key == 0xff1b)
 		game_quit(var);
-	else if (key == 0x0064)
+	else if (key == 0x0064 && var->map.py >= 0)
 		move_right(var);
-	else if (key == 0x0073)
+	else if (key == 0x0073 && var->map.py >= 0)
 		move_down(var);
-	else if (key == 0x0061)
+	else if (key == 0x0061 && var->map.py >= 0)
 		move_left(var);
-	else if (key == 0x0077)
+	else if (key == 0x0077 && var->map.py >= 0)
 		move_up(var);
 	return (0);
 }
