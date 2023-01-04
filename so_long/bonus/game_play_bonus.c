@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 11:38:02 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 17:17:58 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/04 10:19:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ int	move_right(t_var *var)
 		var->map.px++;
 		var->move++;
 		display_moves(var);
-		if (var->move % 2 != 0)
+		if (!(var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 2 != 0)
+			move_enemy(var);
+		else if ((var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 3 != 0)
 			move_enemy(var);
 	}
 	var->dir = 'r';
@@ -85,7 +89,11 @@ int	move_down(t_var *var)
 		var->map.py++;
 		var->move++;
 		display_moves(var);
-		if (var->move % 2 != 0)
+		if (!(var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 2 != 0)
+			move_enemy(var);
+		else if ((var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 3 != 0)
 			move_enemy(var);
 	}
 	var->dir = 'd';
@@ -110,7 +118,11 @@ int	move_left(t_var *var)
 		var->map.px--;
 		var->move++;
 		display_moves(var);
-		if (var->move % 2 != 0)
+		if (!(var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 2 != 0)
+			move_enemy(var);
+		else if ((var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 3 != 0)
 			move_enemy(var);
 	}
 	var->dir = 'l';
@@ -135,7 +147,11 @@ int	move_up(t_var *var)
 		var->map.py--;
 		var->move++;
 		display_moves(var);
-		if (var->move % 2 != 0)
+		if (!(var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 2 != 0)
+			move_enemy(var);
+		else if ((var->map.f1x == var->map.f2x && var->map.f1y == var->map.f2y)
+			&& var->move % 3 != 0)
 			move_enemy(var);
 	}
 	var->dir = 'u';

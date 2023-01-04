@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:06:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 13:28:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/04 10:15:09 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	check_foe_nb(char **grid)
 
 	i = 0;
 	nb = 0;
-	while(grid[i] != NULL)
+	while (grid[i] != NULL)
 	{
 		j = 0;
-		while(grid[i][j] != '\0')
+		while (grid[i][j] != '\0')
 		{
 			if (grid[i][j] == 'F')
 				nb++;
