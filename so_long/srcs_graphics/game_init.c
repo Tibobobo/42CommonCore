@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:48:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:15:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	load_sprites(t_var *var)
 	var->wall.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./textures/tree.xpm", &var->wall.w, &var->wall.h);
 	var->pd.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_down.xpm", &var->pd.w, &var->pd.h);
+			"./textures/pd2.xpm", &var->pd.w, &var->pd.h);
 	var->pu.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_up.xpm", &var->pu.w, &var->pu.h);
+			"./textures/pu2.xpm", &var->pu.w, &var->pu.h);
 	var->pl.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_left.xpm", &var->pl.w, &var->pl.h);
+			"./textures/pl2.xpm", &var->pl.w, &var->pl.h);
 	var->pr.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_right.xpm", &var->pr.w, &var->pr.h);
+			"./textures/pr2.xpm", &var->pr.w, &var->pr.h);
 	var->g.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./textures/o_chest.xpm", &var->g.w, &var->g.h);
 }

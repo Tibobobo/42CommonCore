@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/04 12:10:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:14:14 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,52 +42,15 @@ void	render_background(t_var *var)
 	}
 }
 
-void	load_sprites(t_var *var)
-{
-	var->dir = 'd';
-	var->move = 0;
-	var->item = ' ';
-	var->floor.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/floor.xpm", &var->floor.w, &var->floor.h);
-	var->c.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/chest.xpm", &var->c.w, &var->c.h);
-	var->e.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/exit.xpm", &var->e.w, &var->e.h);
-	var->wall.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/tree.xpm", &var->wall.w, &var->wall.h);
-	var->pd.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_down.xpm", &var->pd.w, &var->pd.h);
-	var->pu.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_up.xpm", &var->pu.w, &var->pu.h);
-	var->pl.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_left.xpm", &var->pl.w, &var->pl.h);
-	var->pr.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/p_right.xpm", &var->pr.w, &var->pr.h);
-	var->g.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/o_chest.xpm", &var->g.w, &var->g.h);
-	var->info.mlx_img = mlx_new_image(var->mlx_ptr,
-			CELL_SIZE * var->map.width, 15);
-	var->foe.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
-			"./textures/foe.xpm", &var->foe.w, &var->g.h);
-}
-
 int	game(t_var *var)
 {
 	check_win_or_lose(var);
+	var->frame++;
+	if (var->frame > FRAME_LOOP)
+		var->frame = 0;
+	animation(var);
 	if (var->foe_nb != 0)
 		place_enemies(var);
-	if (var->dir == 'd')
-		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pd.mlx_img,
-			var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
-	else if (var->dir == 'u')
-		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pu.mlx_img,
-			var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
-	else if (var->dir == 'r')
-		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pr.mlx_img,
-			var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
-	else if (var->dir == 'l')
-		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->pl.mlx_img,
-			var->map.px * CELL_SIZE + 15, var->map.py * CELL_SIZE + 10);
 	return (0);
 }
 
@@ -117,6 +80,7 @@ void	game_init(t_var *var)
 		mlx_error(var);
 	load_sprites(var);
 	render_background(var);
+	var->frame = 0;
 	mlx_loop_hook(var->mlx_ptr, game, var);
 	mlx_hook(var->win_ptr, 2, 1L << 0, &keypress, var);
 	mlx_hook(var->win_ptr, 17, 1L << 0, &game_quit, var);
