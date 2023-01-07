@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 11:32:57 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/07 23:43:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:53:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,21 @@ void	animation(t_var *var)
 
 void	place_enemies_2(t_var *var)
 {
-	if (var->frame < FRAME_LOOP / 3)
+	if (var->frame < FRAME_LOOP / 3 && var->map.py >= 0)
 	{
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->foe1.mlx_img,
 			var->map.f1x * CELL_SIZE, var->map.f1y * CELL_SIZE);
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->foe2.mlx_img,
 			var->map.f2x * CELL_SIZE, var->map.f2y * CELL_SIZE);
 	}
-	else if (var->frame < FRAME_LOOP * 2 / 3)
+	else if (var->frame < FRAME_LOOP * 2 / 3 && var->map.py >= 0)
 	{
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->foe2.mlx_img,
 			var->map.f1x * CELL_SIZE, var->map.f1y * CELL_SIZE);
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->foe3.mlx_img,
 			var->map.f2x * CELL_SIZE, var->map.f2y * CELL_SIZE);
 	}
-	else if (var->frame < FRAME_LOOP)
+	else if (var->frame < FRAME_LOOP && var->map.py >= 0)
 	{
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->foe3.mlx_img,
 			var->map.f1x * CELL_SIZE, var->map.f1y * CELL_SIZE);

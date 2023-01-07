@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:44:00 by tgrasset          #+#    #+#             */
-/*   Updated: 2022/12/21 11:46:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:16:13 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,16 @@
 void	ft_error(int num)
 {
 	if (num == 1)
-	{
 		ft_putstr_fd("Error\nso_long must be executed with map path only\n", 2);
-		exit(1);
-	}
-	if (num == 2)
-	{
+	else if (num == 2)
 		ft_putstr_fd("Error\nMap must be a valid .ber file\n", 2);
-		exit(1);
-	}
-	if (num == 3)
-	{
+	else if (num == 3)
 		ft_putstr_fd("Error\nMap couldn't be read or file doesn't exist\n", 2);
-		exit(1);
-	}
-	if (num == 4)
-	{
+	else if (num == 4)
 		ft_putstr_fd("Error\nMap content invalid\n", 2);
-		exit(1);
-	}
-	if (num == 5)
-	{
+	else if (num == 5)
 		ft_putstr_fd("Error\nMap is impossible to finish\n", 2);
-		exit(1);
-	}
+	exit(1);
 }
 
 static int	valid_extension(char *file)

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:00:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/07 23:43:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:01:00 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	check_win_or_lose(t_var *var)
 	if ((var->map.px == var->map.f1x && var->map.py == var->map.f1y)
 		|| (var->map.px == var->map.f2x && var->map.py == var->map.f2y))
 	{
+		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr, var->dead.mlx_img,
+			var->map.px * CELL_SIZE, var->map.py * CELL_SIZE);
 		var->map.py = -1;
 		mlx_put_image_to_window(var->mlx_ptr, var->win_ptr,
 			var->info.mlx_img, 0, 0);
