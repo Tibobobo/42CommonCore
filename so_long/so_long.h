@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:46:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:24:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int		move_up(t_var *var);
 int		move_left(t_var *var);
 int		move_down(t_var *var);
 int		move_right(t_var *var);
+void	check_sprites(t_var *var);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/04 17:14:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:31:13 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,23 @@ int	keypress(int key, t_var *var)
 	return (0);
 }
 
+void	check_sprites(t_var *var)
+{
+	if (var->floor.mlx_img == NULL || var->c.mlx_img == NULL
+		|| var->e.mlx_img == NULL || var->wall.mlx_img == NULL
+		|| var->pd1.mlx_img == NULL || var->pu1.mlx_img == NULL
+		|| var->pl1.mlx_img == NULL || var->pr1.mlx_img == NULL
+		|| var->pd2.mlx_img == NULL || var->pu2.mlx_img == NULL
+		|| var->pl2.mlx_img == NULL || var->pr2.mlx_img == NULL
+		|| var->g.mlx_img == NULL || var->info.mlx_img == NULL
+		|| var->foe1.mlx_img == NULL || var->foe2.mlx_img == NULL
+		|| var->foe3.mlx_img == NULL || var->dead.mlx_img == NULL)
+	{
+		ft_putstr_fd("Error while loading images.\n", 2);
+		game_quit(var);
+	}
+}
+
 void	game_init(t_var *var)
 {
 	var->mlx_ptr = mlx_init();
@@ -79,6 +96,7 @@ void	game_init(t_var *var)
 	if (var->win_ptr == NULL)
 		mlx_error(var);
 	load_sprites(var);
+	check_sprites(var);
 	render_background(var);
 	var->frame = 0;
 	mlx_loop_hook(var->mlx_ptr, game, var);

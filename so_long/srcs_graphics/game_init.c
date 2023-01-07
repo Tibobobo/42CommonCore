@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:52:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/04 18:30:03 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:23:09 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	load_sprites(t_var *var)
 			"./textures/pr2.xpm", &var->pr.w, &var->pr.h);
 	var->g.mlx_img = mlx_xpm_file_to_image(var->mlx_ptr,
 			"./textures/o_chest.xpm", &var->g.w, &var->g.h);
+	check_sprites(var);
 }
 
 int	game(t_var *var)

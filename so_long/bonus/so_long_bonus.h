@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 09:19:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/04 17:12:25 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/07 23:37:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_var
 	t_img	foe1;
 	t_img	foe2;
 	t_img	foe3;
+	t_img	dead;
 	int		move;
 	char	dir;
 	char	item;
