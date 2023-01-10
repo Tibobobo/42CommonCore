@@ -6,14 +6,29 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/10 13:33:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:18:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_error(int num, char *arg)
+void	free_split(char **split)
 {
+	int	i;
+
+	i = 0;
+	while (split[i] != NULL)
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
+int	ft_error(int num, char *arg, char **split)
+{
+	if (split != NULL)
+		free_split(split);
 	if (num == 1)
 		ft_putstr_fd("Error\nUsage: ./pipex [file1] [cmd1] [cmd2] [file2]\n", 2);
 	else if (num == 2)
@@ -35,23 +50,10 @@ int	ft_error(int num, char *arg)
 	exit(1);
 }
 
-void	free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i] != NULL)
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
-
 int	command_error(char **command)
 {
 	ft_putstr_fd("command not found: ", 2);
 	ft_putendl_fd(command[0], 2);
 	free_split(command);
-	exit(1);
+	exit(2);
 }

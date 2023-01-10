@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/10 13:41:36 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:21:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**split_paths(char **env)
 		i++;
 	paths = ft_split(env[i] + 5, ':');
 	if (paths == NULL)
-		ft_error(5, NULL);
+		ft_error(5, NULL, NULL);
 	return (paths);
 }
 
@@ -34,16 +34,18 @@ char	*path(char *command, char **env)
 	int		i;
 
 	paths = split_paths(env);
+	if (paths == NULL)
+		ft_error(5, NULL, NULL);
 	i = 0;
 	while (paths[i] != NULL)
 	{
 		temp = ft_strjoin(paths[i], "/");
 		if (temp == NULL)
-			ft_error(5, NULL);
+			ft_error(5, NULL, paths);
 		path_try = ft_strjoin(temp, command);
 		free(temp);
 		if (path_try == NULL)
-			ft_error(5, NULL);
+			ft_error(5, NULL, paths);
 		if (access(path_try, F_OK) == 0)
 			return (free_split(paths), path_try);
 		free(path_try);
@@ -60,15 +62,15 @@ void	first_child(char **av, char **env, int *pipe_fd, int *file_fd)
 
 	pid = fork();
 	if (pid < 0)
-		ft_error(3, NULL);
+		ft_error(3, NULL, NULL);
 	else if (pid == 0)
 	{
 		file_fd[0] = open(av[1], O_RDONLY);
 		if (file_fd[0] < 0)
-			ft_error(4, av[1]);
+			ft_error(4, av[1], NULL);
 		command1 = ft_split(av[2], ' ');
 		if (command1 == NULL)
-			ft_error(5, NULL);
+			ft_error(5, NULL, NULL);
 		close(pipe_fd[0]);
 		dup2(file_fd[0], 0);
 		dup2(pipe_fd[1], 1);
@@ -89,15 +91,15 @@ void	second_child(char **av, char **env, int *pipe_fd, int *file_fd)
 
 	pid = fork();
 	if (pid < 0)
-		ft_error(3, NULL);
+		ft_error(3, NULL, NULL);
 	else if (pid == 0)
 	{
 		file_fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (file_fd[1] < 0)
-			ft_error(6, av[4]);
+			ft_error(6, av[4], NULL);
 		command2 = ft_split(av[3], ' ');
 		if (command2 == NULL)
-			ft_error(5, NULL);
+			ft_error(5, NULL, NULL);
 		close(pipe_fd[1]);
 		dup2(file_fd[1], 1);
 		dup2(pipe_fd[0], 0);
@@ -118,9 +120,9 @@ int	main(int ac, char **av, char **env)
 	int	status;
 
 	if (ac != 5)
-		ft_error(1, NULL);
+		ft_error(1, NULL, NULL);
 	if (pipe(pipe_fd) < 0)
-		ft_error(2, NULL);
+		ft_error(2, NULL, NULL);
 	first_child(av, env, pipe_fd, file_fd);
 	second_child(av, env, pipe_fd, file_fd);
 	close(pipe_fd[0]);
