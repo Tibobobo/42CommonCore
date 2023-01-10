@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 09:47:26 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/09 10:02:08 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/10 13:18:45 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 ########### VARIABLES
 
 SRCS	=	./main.c \
+			./utils.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 

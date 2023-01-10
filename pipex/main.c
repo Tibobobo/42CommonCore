@@ -6,55 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/10 12:20:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:17:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int ft_error(int num, char *arg)
-{
-  if (num == 1)
-    ft_putstr_fd("Error\nUsage: ./pipex [file1] [cmd1] [cmd2] [file2]\n", 2);
-  else if (num == 2)
-    ft_putstr_fd("Pipe error\n", 2);
-  else if (num == 3)
-    ft_putstr_fd("Fork error\n", 2);
-  else if (num == 4)
-  {
-    ft_putstr_fd("no such file or directory:", 2);
-    ft_putendl_fd(arg, 2);
-  }
-  else if (num == 5)
-    ft_putstr_fd("Malloc error\n", 2);
-  else if (num == 6)
-  {
-    ft_putstr_fd("Error while creating or writing to file: ", 2);
-    ft_putendl_fd(arg, 2);
-  }
-  exit(1);
-}
-
-void  free_split(char **split)
-{
-  int i;
-
-  i = 0;
-  while (split[i] != NULL)
-  {
-    free(split[i]);
-    i++;
-  }
-  free(split);
-}
-
-int command_error(char **command)
-{
-  ft_putstr_fd("command not found: ", 2);
-  ft_putendl_fd(command[0], 2);
-  free_split(command);
-  exit(1);
-}
 
 char  **split_paths(char **env)
 {
@@ -64,8 +20,7 @@ char  **split_paths(char **env)
   i = 0;
   while (ft_strnstr(env[i], "PATH=", 5) == NULL)
     i++;
-  env[i] = env[i] + 5;
-  paths = ft_split(env[i], ':');
+  paths = ft_split(env[i] + 5, ':');
   if (paths == NULL)
     ft_error(5, NULL);
   return (paths);
@@ -140,7 +95,7 @@ void  second_child(char **av, char **env, int *pipe_fd, int *file_fd)
     ft_error(3, NULL);
   else if (pid == 0)
   {
-    file_fd[1] = open(av[4], O_WRONLY, O_CREAT, O_TRUNC, 0644);
+    file_fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (file_fd[1] < 0)
       ft_error(6, av[4]);
     command2 = ft_split(av[3], ' ');
@@ -171,6 +126,8 @@ int main(int ac, char **av, char **env)
     ft_error(2, NULL);
   first_child(av, env, pipe_fd, file_fd);
   second_child(av, env, pipe_fd, file_fd);
+  close(pipe_fd[0]);
+  close(pipe_fd[1]);
   waitpid(-1, &status, 0);
   waitpid(-1, &status, 0);
   return (0);
