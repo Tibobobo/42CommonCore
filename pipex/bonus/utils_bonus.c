@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:43 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 11:24:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:01:14 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	ft_error(int num, char *arg, char **split)
+int	ft_error(int num, char **split)
 {
 	if (split != NULL)
 		free_split(split);
@@ -38,12 +38,7 @@ int	ft_error(int num, char *arg, char **split)
 	else if (num == 4)
 		ft_putstr_fd("Malloc error\n", 2);
 	else if (num == 5)
-	{
-		ft_putstr_fd("Error while creating or writing to file: ", 2);
-		ft_putendl_fd(arg, 2);
-	}
-	else if (num == 6)
-		ft_putstr_fd("Execve error\n", 2);
+		ft_putstr_fd("Error while opening or creating file: ", 2);
 	exit(1);
 }
 

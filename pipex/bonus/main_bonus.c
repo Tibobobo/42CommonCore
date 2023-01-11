@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 14:20:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:58:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**split_paths(char **env)
 		i++;
 	paths = ft_split(env[i] + 5, ':');
 	if (paths == NULL)
-		ft_error(5, NULL, NULL);
+		ft_error(4, NULL);
 	return (paths);
 }
 
@@ -35,17 +35,17 @@ char	*get_path(char *command, char **env)
 
 	paths = split_paths(env);
 	if (paths == NULL)
-		ft_error(5, NULL, NULL);
+		ft_error(4, NULL);
 	i = 0;
 	while (paths[i] != NULL)
 	{
 		temp = ft_strjoin(paths[i], "/");
 		if (temp == NULL)
-			ft_error(5, NULL, paths);
+			ft_error(4, paths);
 		path_try = ft_strjoin(temp, command);
 		free(temp);
 		if (path_try == NULL)
-			ft_error(5, NULL, paths);
+			ft_error(4, paths);
 		if (access(path_try, F_OK | X_OK) == 0)
 			return (free_split(paths), path_try);
 		free(path_try);
@@ -61,7 +61,7 @@ void    exec(char *command, char **env)
 
     args = ft_split(command, ' ');
     if (args == NULL)
-        ft_error(4, NULL, NULL);
+        ft_error(4, NULL);
     if (ft_strchr(command, '/') != NULL)
         path = args[0];
     else
@@ -77,10 +77,10 @@ void    redirect(char *command, int fdin, char **env)
     int     pipe_fd[2];
 
     if (pipe(pipe_fd) < 0)
-        ft_error(2, NULL, NULL);
+        ft_error(2, NULL);
     pid = fork();
     if (pid < 0)
-        ft_error(3, NULL, NULL);
+        ft_error(3, NULL);
     else if (pid == 0)
     {
         close(pipe_fd[0]);
@@ -121,9 +121,11 @@ int main(int ac, char **av, char **env)
     int i;
 
     if (ac < 5)
-        ft_error(1, NULL, NULL);
+        ft_error(1, NULL);
     fdin = get_fd(av[1], 0);
     fdout = get_fd(av[ac - 1], 1);
+    if (fdin < 0 || fdout <0)
+        ft_error(5, NULL);
     i = 3;
     dup2(fdin, 0);
     dup2(fdout, 1);
