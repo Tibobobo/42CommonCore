@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 13:50:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:11:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,11 @@ void	first_child(char **av, char **env, int *pipe_fd, int *file_fd)
 		close(pipe_fd[0]);
 		dup2(file_fd[0], 0);
 		dup2(pipe_fd[1], 1);
-		if (command1[0] != NULL && path(command1[0], env) != NULL)
-		{
+		if (command1[0] != NULL && ft_strchr(command1[0], '/') != NULL)
+			execve(command1[0], command1, env);
+		else if (command1[0] != NULL && path(command1[0], env) != NULL)
 			execve(path(command1[0], env), command1, env);
-			ft_error(7, NULL, command1);
-		}
-		else
-			command_error(command1);
+		command_error(command1);
 	}
 }
 
@@ -102,13 +100,11 @@ void	second_child(char **av, char **env, int *pipe_fd, int *file_fd)
 		close(pipe_fd[1]);
 		dup2(file_fd[1], 1);
 		dup2(pipe_fd[0], 0);
-		if (command2[0] != NULL && path(command2[0], env) != NULL)
-		{
+		if (command2[0] != NULL && ft_strchr(command2[0], '/') != NULL)
+			execve(command2[0], command2, env);
+		else if (command2[0] != NULL && path(command2[0], env) != NULL)
 			execve(path(command2[0], env), command2, env);
-			ft_error(7, NULL, command2);
-		}
-		else
-			command_error(command2);
+		command_error(command2);
 	}
 }
 
