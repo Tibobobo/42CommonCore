@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 17:58:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:27:26 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ int	ft_error(int num, char *arg, char **split)
 	exit(1);
 }
 
-int	command_error(char **command, int file_fd, int pipe_fd)
+int	command_error(char **command)
 {
-	close(file_fd);
-	close(pipe_fd);
 	ft_putstr_fd("pipex: command not found: ", 2);
 	ft_putendl_fd(command[0], 2);
 	free_split(command);

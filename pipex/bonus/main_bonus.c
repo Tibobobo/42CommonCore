@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 17:17:24 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:24:30 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	redirect(char *command, int fdin, char **env)
 	{
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], 1);
+		close(pipe_fd[1]);
 		if (fdin == 0)
 			exit (1);
 		else
@@ -80,6 +81,7 @@ void	redirect(char *command, int fdin, char **env)
 	{
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], 0);
+		close(pipe_fd[0]);
 		waitpid(pid, NULL, 0);
 	}
 }
@@ -115,6 +117,8 @@ int	main(int ac, char **av, char **env)
 	i = 3;
 	dup2(fdin, 0);
 	dup2(fdout, 1);
+	close(fdin);
+	close(fdout);
 	redirect(av[2], fdin, env);
 	while (i < ac - 2)
 	{
@@ -124,3 +128,5 @@ int	main(int ac, char **av, char **env)
 	exec(av[i], env);
 	return (0);
 }
+
+//securiser dup2 (et mandatory aussi)
