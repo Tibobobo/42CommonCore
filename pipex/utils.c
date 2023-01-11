@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/10 14:18:41 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:33:53 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ int	ft_error(int num, char *arg, char **split)
 		ft_putstr_fd("Error while creating or writing to file: ", 2);
 		ft_putendl_fd(arg, 2);
 	}
+	else if (num == 7)
+		ft_putstr_fd("Execve error\n", 2);
 	exit(1);
 }
 
 int	command_error(char **command)
 {
-	ft_putstr_fd("command not found: ", 2);
+	ft_putstr_fd("pipex: command not found: ", 2);
 	ft_putendl_fd(command[0], 2);
 	free_split(command);
 	exit(2);

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/10 14:21:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:32:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*path(char *command, char **env)
 		free(temp);
 		if (path_try == NULL)
 			ft_error(5, NULL, paths);
-		if (access(path_try, F_OK) == 0)
+		if (access(path_try, F_OK | X_OK) == 0)
 			return (free_split(paths), path_try);
 		free(path_try);
 		i++;
@@ -77,7 +77,7 @@ void	first_child(char **av, char **env, int *pipe_fd, int *file_fd)
 		if (command1[0] != NULL && path(command1[0], env) != NULL)
 		{
 			execve(path(command1[0], env), command1, env);
-			free_split(command1);
+			ft_error(7, NULL, command1);
 		}
 		else
 			command_error(command1);
@@ -106,7 +106,7 @@ void	second_child(char **av, char **env, int *pipe_fd, int *file_fd)
 		if (command2[0] != NULL && path(command2[0], env) != NULL)
 		{
 			execve(path(command2[0], env), command2, env);
-			free_split(command2);
+			ft_error(7, NULL, command2);
 		}
 		else
 			command_error(command2);
