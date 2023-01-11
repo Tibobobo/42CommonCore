@@ -6,11 +6,25 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:43 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 17:01:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:07:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+char	**split_paths(char **env)
+{
+	int		i;
+	char	**paths;
+
+	i = 0;
+	while (ft_strnstr(env[i], "PATH=", 5) == NULL)
+		i++;
+	paths = ft_split(env[i] + 5, ':');
+	if (paths == NULL)
+		ft_error(4, NULL);
+	return (paths);
+}
 
 void	free_split(char **split)
 {
@@ -49,4 +63,3 @@ int	command_error(char **command)
 	free_split(command);
 	exit(127);
 }
-
