@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 09:47:26 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/11 12:21:19 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/11 14:11:04 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ $(B_NAME):		$(B_OBJS) $(LIBFT_A)
 
 clean:
 	make fclean -C ./libft
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(B_OBJS)
 
 fclean:		clean
 	rm -f $(NAME)
