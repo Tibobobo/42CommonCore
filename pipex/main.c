@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/10 17:32:58 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:50:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*path(char *command, char **env)
 		free(path_try);
 		i++;
 	}
-	free_split(paths);
 	return (free_split(paths), NULL);
 }
 

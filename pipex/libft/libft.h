@@ -24,5 +24,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
 
 #endif
