@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:18:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 13:09:27 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:44:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	redirect_gnl(char *limiter)
 		here_doc_loop(line, limiter);
 	}
 	else
-		parenting_task(pipe_fd, &pid);
+		parenting_task(pipe_fd);
 }
 
 void	here_doc(int ac, char **av, char **env, int fdout)
@@ -71,4 +71,25 @@ void	here_doc(int ac, char **av, char **env, int fdout)
 		i++;
 	}
 	exec(av[i], env);
+}
+
+void	fds_check_and_dup(int *fdin, int *fdout)
+{
+	if (*fdin < 0)
+		ft_error(5, NULL);
+	if (*fdout < 0)
+	{
+		if (*fdin != 0)
+			close(*fdin);
+		ft_error(5, NULL);
+	}
+	if (*fdin != 0)
+	{
+		if (dup2(*fdin, 0) < 0)
+			ft_error(6, NULL);
+		close(*fdin);
+	}
+	if (dup2(*fdout, 1) < 0)
+		ft_error(6, NULL);
+	close(*fdout);
 }

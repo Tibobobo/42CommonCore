@@ -6,118 +6,90 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 10:58:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:43:16 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*path(char *command, char **env)
+void	exec(char *command, char **env)
 {
-	char	**paths;
-	char	*temp;
-	char	*path_try;
-	int		i;
+	char	**args;
+	char	*path;
 
-	paths = split_paths(env);
-	if (paths == NULL)
-		ft_error(5, NULL, NULL);
-	i = 0;
-	while (paths[i] != NULL)
-	{
-		temp = ft_strjoin(paths[i], "/");
-		if (temp == NULL)
-			ft_error(5, NULL, paths);
-		path_try = ft_strjoin(temp, command);
-		free(temp);
-		if (path_try == NULL)
-			ft_error(5, NULL, paths);
-		if (access(path_try, F_OK | X_OK) == 0)
-			return (free_split(paths), path_try);
-		free(path_try);
-		i++;
-	}
-	return (free_split(paths), NULL);
+	args = ft_split(command, ' ');
+	if (args == NULL)
+		ft_error(4, NULL);
+	if (ft_strchr(command, '/') != NULL)
+		path = args[0];
+	else
+		path = get_path(args[0], env);
+	if (path != NULL)
+		execve(path, args, env);
+	command_error(args);
 }
 
-void	exec(char **command, char **env)
+void	parenting_task(int	*pipe_fd)
 {
-	if (command[0] != NULL && ft_strchr(command[0], '/') != NULL)
-		execve(command[0], command, env);
-	else if (command[0] != NULL && path(command[0], env) != NULL)
-		execve(path(command[0], env), command, env);
-	command_error(command);
+	(void)pid;
+	close(pipe_fd[1]);
+	if (dup2(pipe_fd[0], 0) < 0)
+		ft_error(6, NULL);
+	close(pipe_fd[0]);
 }
 
-void	first_child(char **av, char **env, int *pipe_fd, int *file_fd)
+void	redirect(char *command, int fdin, char **env)
 {
 	pid_t	pid;
-	char	**command1;
+	int		pipe_fd[2];
 
+	if (pipe(pipe_fd) < 0)
+		ft_error(2, NULL);
 	pid = fork();
 	if (pid < 0)
-		ft_error(3, NULL, NULL);
+		ft_error(3, NULL);
 	else if (pid == 0)
 	{
-		file_fd[0] = open(av[1], O_RDONLY);
-		if (file_fd[0] < 0)
-			ft_error(4, av[1], NULL);
-		command1 = ft_split(av[2], ' ');
-		if (command1 == NULL)
-			ft_error(5, NULL, NULL);
 		close(pipe_fd[0]);
-		if (dup2(file_fd[0], 0) < 0)
-			ft_error(7, NULL, command1);
-		close(file_fd[0]);
 		if (dup2(pipe_fd[1], 1) < 0)
-			ft_error(7, NULL, command1);
+			ft_error(6, NULL);
 		close(pipe_fd[1]);
-		exec(command1, env);
+		if (fdin == 0)
+			exit (1);
+		else
+			exec(command, env);
 	}
+	else
+		parenting_task(pipe_fd);
 }
 
-void	second_child(char **av, char **env, int *pipe_fd, int *file_fd)
+int	get_fd(char *file, int in_out)
 {
-	pid_t	pid;
-	char	**command2;
-
-	pid = fork();
-	if (pid < 0)
-		ft_error(3, NULL, NULL);
-	else if (pid == 0)
+	if (in_out == 0)
 	{
-		file_fd[1] = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (file_fd[1] < 0)
-			ft_error(6, av[4], NULL);
-		command2 = ft_split(av[3], ' ');
-		if (command2 == NULL)
-			ft_error(5, NULL, NULL);
-		close(pipe_fd[1]);
-		if (dup2(file_fd[1], 1) < 0)
-			ft_error(7, NULL, command2);
-		close(file_fd[1]);
-		if (dup2(pipe_fd[0], 0) < 0)
-			ft_error(7, NULL, command2);
-		close(pipe_fd[0]);
-		exec(command2, env);
+		if (access(file, F_OK) != 0)
+		{
+			ft_putstr_fd("pipex: no such file or directory: ", 2);
+			ft_putendl_fd(file, 2);
+			return (0);
+		}
+		return (open(file, O_RDONLY));
 	}
+	else
+		return (open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 }
 
 int	main(int ac, char **av, char **env)
 {
-	int	pipe_fd[2];
-	int	file_fd[2];
-	int	status;
+	int	fdin;
+	int	fdout;
 
 	if (ac != 5)
-		ft_error(1, NULL, NULL);
-	if (pipe(pipe_fd) < 0)
-		ft_error(2, NULL, NULL);
-	first_child(av, env, pipe_fd, file_fd);
-	second_child(av, env, pipe_fd, file_fd);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	waitpid(-1, &status, 0);
-	waitpid(-1, &status, 0);
+		ft_error(1, NULL);
+	fdin = get_fd(av[1], 0);
+	fdout = get_fd(av[4], 1);
+	fds_check_and_dup(&fdin, &fdout);
+	redirect(av[2], fdin, env);
+	exec(av[3], env);
 	return (0);
 }

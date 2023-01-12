@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 09:47:26 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/12 11:29:05 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/12 16:12:35 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 
 SRCS	=	./main.c \
 			./utils.c \
+			./utils_2.c \
 
 B_SRCS	=	./bonus/main_bonus.c \
 			./bonus/utils_bonus.c \

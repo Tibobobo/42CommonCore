@@ -6,11 +6,39 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 10:58:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:32:09 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	*get_path(char *command, char **env)
+{
+	char	**paths;
+	char	*temp;
+	char	*path_try;
+	int		i;
+
+	paths = split_paths(env);
+	if (paths == NULL)
+		ft_error(4, NULL);
+	i = 0;
+	while (paths[i] != NULL)
+	{
+		temp = ft_strjoin(paths[i], "/");
+		if (temp == NULL)
+			ft_error(4, paths);
+		path_try = ft_strjoin(temp, command);
+		free(temp);
+		if (path_try == NULL)
+			ft_error(4, paths);
+		if (access(path_try, F_OK | X_OK) == 0)
+			return (free_split(paths), path_try);
+		free(path_try);
+		i++;
+	}
+	return (free_split(paths), NULL);
+}
 
 char	**split_paths(char **env)
 {
@@ -22,7 +50,7 @@ char	**split_paths(char **env)
 		i++;
 	paths = ft_split(env[i] + 5, ':');
 	if (paths == NULL)
-		ft_error(5, NULL, NULL);
+		ft_error(4, NULL);
 	return (paths);
 }
 
@@ -39,29 +67,21 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	ft_error(int num, char *arg, char **split)
+int	ft_error(int num, char **split)
 {
 	if (split != NULL)
 		free_split(split);
 	if (num == 1)
-		ft_putstr_fd("Error\nUsage: ./pipex [file1] [cmd1] [cmd2] [file2]\n", 2);
+		ft_putstr_fd("Usage: ./pipex [file1] [cmd1] [cmd2] [file2]\n", 2);
 	else if (num == 2)
 		ft_putstr_fd("Pipe error\n", 2);
 	else if (num == 3)
 		ft_putstr_fd("Fork error\n", 2);
 	else if (num == 4)
-	{
-		ft_putstr_fd("pipex: no such file or directory: ", 2);
-		ft_putendl_fd(arg, 2);
-	}
-	else if (num == 5)
 		ft_putstr_fd("Malloc error\n", 2);
+	else if (num == 5)
+		ft_putstr_fd("Error while opening or creating file: ", 2);
 	else if (num == 6)
-	{
-		ft_putstr_fd("Error while creating or writing to file: ", 2);
-		ft_putendl_fd(arg, 2);
-	}
-	else if (num == 7)
 		ft_putstr_fd("Dup2 error\n", 2);
 	exit(1);
 }

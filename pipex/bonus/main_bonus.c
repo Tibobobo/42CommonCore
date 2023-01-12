@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 13:12:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:44:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ void	exec(char *command, char **env)
 	command_error(args);
 }
 
-void	parenting_task(int	*pipe_fd, pid_t *pid)
+void	parenting_task(int	*pipe_fd)
 {
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], 0) < 0)
 		ft_error(6, NULL);
 	close(pipe_fd[0]);
-	waitpid(*pid, NULL, 0);
 }
 
 void	redirect(char *command, int fdin, char **env)
@@ -60,7 +59,7 @@ void	redirect(char *command, int fdin, char **env)
 			exec(command, env);
 	}
 	else
-		parenting_task(pipe_fd, &pid);
+		parenting_task(pipe_fd);
 }
 
 int	get_fd(char *file, int in_out)
@@ -85,21 +84,14 @@ int	main(int ac, char **av, char **env)
 	int	fdout;
 	int	i;
 
+	i = 2;
 	if (ac < 5)
 		ft_error(1, NULL);
 	if (ft_strncmp(av[1], "here_doc", 8) == 0 && av[1][8] == '\0')
 		return (here_doc(ac, av, env, 0), 0);
 	fdin = get_fd(av[1], 0);
 	fdout = get_fd(av[ac - 1], 1);
-	if (fdin < 0 || fdout < 0)
-		ft_error(5, NULL);
-	i = 2;
-	if (dup2(fdin, 0) < 0)
-		ft_error(6, NULL);
-	close(fdin);
-	if (dup2(fdout, 1) < 0)
-		ft_error(6, NULL);
-	close(fdout);
+	fds_check_and_dup(&fdin, &fdout);
 	redirect(av[2], fdin, env);
 	while (++i < ac - 2)
 		redirect(av[i], 1, env);

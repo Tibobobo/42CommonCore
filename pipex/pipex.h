@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:47:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 10:58:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:43:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,14 @@
 # include <sys/wait.h>
 # include "./libft/libft.h"
 
-int		ft_error(int num, char *arg, char **split);
+int		ft_error(int num, char **split);
 void	free_split(char **split);
 int		command_error(char **command);
 char	**split_paths(char **env);
+char	*get_path(char *command, char **env);
+void	parenting_task(int	*pipe_fd);
+void	redirect(char *command, int fdin, char **env);
+void	exec(char *command, char **env);
+void	fds_check_and_dup(int *fdin, int *fdout);
 
 #endif
