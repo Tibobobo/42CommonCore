@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 09:51:13 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:12:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,13 @@ int	main(int ac, char **av, char **env)
 
 	if (ac < 5)
 		ft_error(1, NULL);
+	if (ft_strncmp(av[1], "here_doc", 8) == 0 && av[1][8] == '\0')
+		return (here_doc(ac, av, env, 0), 0);
 	fdin = get_fd(av[1], 0);
 	fdout = get_fd(av[ac - 1], 1);
 	if (fdin < 0 || fdout < 0)
 		ft_error(5, NULL);
-	i = 3;
+	i = 2;
 	if (dup2(fdin, 0) < 0)
 		ft_error(6, NULL);
 	close(fdin);
@@ -99,11 +101,8 @@ int	main(int ac, char **av, char **env)
 		ft_error(6, NULL);
 	close(fdout);
 	redirect(av[2], fdin, env);
-	while (i < ac - 2)
-	{
+	while (++i < ac - 2)
 		redirect(av[i], 1, env);
-		i++;
-	}
 	exec(av[i], env);
 	return (0);
 }

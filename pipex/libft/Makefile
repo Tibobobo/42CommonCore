@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tgrasset <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 10:48:17 by tgrasset          #+#    #+#              #
-#    Updated: 2022/11/17 10:04:49 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/12 11:52:38 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ SRCS	=	./ft_strnstr.c \
 		./ft_putstr_fd.c \
 		./ft_putendl_fd.c \
 		./ft_strlen.c \
-		./ft_strchr.c
+		./ft_strchr.c \
+		./ft_strncmp.c \
+		./get_next_line.c \
+		./get_next_line_utils.c \
 
 		
 OBJS	=	$(SRCS:%.c=%.o)

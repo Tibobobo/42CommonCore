@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 09:47:26 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/11 16:45:11 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/12 11:29:05 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS	=	./main.c \
 
 B_SRCS	=	./bonus/main_bonus.c \
 			./bonus/utils_bonus.c \
+			./bonus/heredoc_bonus.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 
