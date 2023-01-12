@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 16:43:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:53:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	exec(char *command, char **env)
 
 void	parenting_task(int	*pipe_fd)
 {
-	(void)pid;
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], 0) < 0)
 		ft_error(6, NULL);
