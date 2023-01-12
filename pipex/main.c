@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 16:53:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:25:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ void	redirect(char *command, int fdin, char **env)
 			exec(command, env);
 	}
 	else
+	{
 		parenting_task(pipe_fd);
+		if (ft_strncmp(command, "yes\0", 4) != 0)
+			waitpid(pid, NULL, 0);
+	}
 }
 
 int	get_fd(char *file, int in_out)

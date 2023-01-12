@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:18:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 16:44:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:46:36 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	redirect_gnl(char *limiter)
 		here_doc_loop(line, limiter);
 	}
 	else
+	{
 		parenting_task(pipe_fd);
+		waitpid(pid, NULL, 0);
+	}
 }
 
 void	here_doc(int ac, char **av, char **env, int fdout)

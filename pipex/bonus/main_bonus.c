@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 16:44:38 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:22:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ void	redirect(char *command, int fdin, char **env)
 			exec(command, env);
 	}
 	else
+	{
 		parenting_task(pipe_fd);
+		if (ft_strncmp(command, "yes\0", 4) != 0)
+			waitpid(pid, NULL, 0);
+	}
 }
 
 int	get_fd(char *file, int in_out)
@@ -98,3 +102,7 @@ int	main(int ac, char **av, char **env)
 	exec(av[i], env);
 	return (0);
 }
+
+// unset PATH ?
+// return 126 si le binaire existe mais pas les droits
+//		pipex: permission denied: <binaire>
