@@ -6,11 +6,39 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:43 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 17:07:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:51:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+char	*get_path(char *command, char **env)
+{
+	char	**paths;
+	char	*temp;
+	char	*path_try;
+	int		i;
+
+	paths = split_paths(env);
+	if (paths == NULL)
+		ft_error(4, NULL);
+	i = 0;
+	while (paths[i] != NULL)
+	{
+		temp = ft_strjoin(paths[i], "/");
+		if (temp == NULL)
+			ft_error(4, paths);
+		path_try = ft_strjoin(temp, command);
+		free(temp);
+		if (path_try == NULL)
+			ft_error(4, paths);
+		if (access(path_try, F_OK | X_OK) == 0)
+			return (free_split(paths), path_try);
+		free(path_try);
+		i++;
+	}
+	return (free_split(paths), NULL);
+}
 
 char	**split_paths(char **env)
 {
@@ -53,6 +81,8 @@ int	ft_error(int num, char **split)
 		ft_putstr_fd("Malloc error\n", 2);
 	else if (num == 5)
 		ft_putstr_fd("Error while opening or creating file: ", 2);
+	else if (num == 6)
+		ft_putstr_fd("Dup2 error\n", 2);
 	exit(1);
 }
 

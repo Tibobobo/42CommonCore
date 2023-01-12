@@ -6,39 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 18:24:30 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:51:13 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-char	*get_path(char *command, char **env)
-{
-	char	**paths;
-	char	*temp;
-	char	*path_try;
-	int		i;
-
-	paths = split_paths(env);
-	if (paths == NULL)
-		ft_error(4, NULL);
-	i = 0;
-	while (paths[i] != NULL)
-	{
-		temp = ft_strjoin(paths[i], "/");
-		if (temp == NULL)
-			ft_error(4, paths);
-		path_try = ft_strjoin(temp, command);
-		free(temp);
-		if (path_try == NULL)
-			ft_error(4, paths);
-		if (access(path_try, F_OK | X_OK) == 0)
-			return (free_split(paths), path_try);
-		free(path_try);
-		i++;
-	}
-	return (free_split(paths), NULL);
-}
 
 void	exec(char *command, char **env)
 {
@@ -57,6 +29,15 @@ void	exec(char *command, char **env)
 	command_error(args);
 }
 
+void	parenting_task(int	*pipe_fd, pid_t *pid)
+{
+	close(pipe_fd[1]);
+	if (dup2(pipe_fd[0], 0) < 0)
+		ft_error(6, NULL);
+	close(pipe_fd[0]);
+	waitpid(*pid, NULL, 0);
+}
+
 void	redirect(char *command, int fdin, char **env)
 {
 	pid_t	pid;
@@ -70,7 +51,8 @@ void	redirect(char *command, int fdin, char **env)
 	else if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		dup2(pipe_fd[1], 1);
+		if (dup2(pipe_fd[1], 1) < 0)
+			ft_error(6, NULL);
 		close(pipe_fd[1]);
 		if (fdin == 0)
 			exit (1);
@@ -78,12 +60,7 @@ void	redirect(char *command, int fdin, char **env)
 			exec(command, env);
 	}
 	else
-	{
-		close(pipe_fd[1]);
-		dup2(pipe_fd[0], 0);
-		close(pipe_fd[0]);
-		waitpid(pid, NULL, 0);
-	}
+		parenting_task(pipe_fd, &pid);
 }
 
 int	get_fd(char *file, int in_out)
@@ -115,9 +92,11 @@ int	main(int ac, char **av, char **env)
 	if (fdin < 0 || fdout < 0)
 		ft_error(5, NULL);
 	i = 3;
-	dup2(fdin, 0);
-	dup2(fdout, 1);
+	if (dup2(fdin, 0) < 0)
+		ft_error(6, NULL);
 	close(fdin);
+	if (dup2(fdout, 1) < 0)
+		ft_error(6, NULL);
 	close(fdout);
 	redirect(av[2], fdin, env);
 	while (i < ac - 2)
@@ -128,5 +107,3 @@ int	main(int ac, char **av, char **env)
 	exec(av[i], env);
 	return (0);
 }
-
-//securiser dup2 (et mandatory aussi)
