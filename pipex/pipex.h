@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:47:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 18:27:33 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:58:15 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@
 int		ft_error(int num, char *arg, char **split);
 void	free_split(char **split);
 int		command_error(char **command);
+char	**split_paths(char **env);
 
 #endif

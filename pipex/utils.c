@@ -6,11 +6,25 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 18:27:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:58:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	**split_paths(char **env)
+{
+	int		i;
+	char	**paths;
+
+	i = 0;
+	while (ft_strnstr(env[i], "PATH=", 5) == NULL)
+		i++;
+	paths = ft_split(env[i] + 5, ':');
+	if (paths == NULL)
+		ft_error(5, NULL, NULL);
+	return (paths);
+}
 
 void	free_split(char **split)
 {
@@ -47,6 +61,8 @@ int	ft_error(int num, char *arg, char **split)
 		ft_putstr_fd("Error while creating or writing to file: ", 2);
 		ft_putendl_fd(arg, 2);
 	}
+	else if (num == 7)
+		ft_putstr_fd("Dup2 error\n", 2);
 	exit(1);
 }
 

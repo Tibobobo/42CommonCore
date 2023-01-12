@@ -6,25 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/11 18:28:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:58:11 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	**split_paths(char **env)
-{
-	int		i;
-	char	**paths;
-
-	i = 0;
-	while (ft_strnstr(env[i], "PATH=", 5) == NULL)
-		i++;
-	paths = ft_split(env[i] + 5, ':');
-	if (paths == NULL)
-		ft_error(5, NULL, NULL);
-	return (paths);
-}
 
 char	*path(char *command, char **env)
 {
@@ -54,6 +40,15 @@ char	*path(char *command, char **env)
 	return (free_split(paths), NULL);
 }
 
+void	exec(char **command, char **env)
+{
+	if (command[0] != NULL && ft_strchr(command[0], '/') != NULL)
+		execve(command[0], command, env);
+	else if (command[0] != NULL && path(command[0], env) != NULL)
+		execve(path(command[0], env), command, env);
+	command_error(command);
+}
+
 void	first_child(char **av, char **env, int *pipe_fd, int *file_fd)
 {
 	pid_t	pid;
@@ -71,15 +66,13 @@ void	first_child(char **av, char **env, int *pipe_fd, int *file_fd)
 		if (command1 == NULL)
 			ft_error(5, NULL, NULL);
 		close(pipe_fd[0]);
-		dup2(file_fd[0], 0);
-		dup2(pipe_fd[1], 1);
+		if (dup2(file_fd[0], 0) < 0)
+			ft_error(7, NULL, command1);
 		close(file_fd[0]);
+		if (dup2(pipe_fd[1], 1) < 0)
+			ft_error(7, NULL, command1);
 		close(pipe_fd[1]);
-		if (command1[0] != NULL && ft_strchr(command1[0], '/') != NULL)
-			execve(command1[0], command1, env);
-		else if (command1[0] != NULL && path(command1[0], env) != NULL)
-			execve(path(command1[0], env), command1, env);
-		command_error(command1);
+		exec(command1, env);
 	}
 }
 
@@ -100,15 +93,13 @@ void	second_child(char **av, char **env, int *pipe_fd, int *file_fd)
 		if (command2 == NULL)
 			ft_error(5, NULL, NULL);
 		close(pipe_fd[1]);
-		dup2(file_fd[1], 1);
-		dup2(pipe_fd[0], 0);
+		if (dup2(file_fd[1], 1) < 0)
+			ft_error(7, NULL, command2);
 		close(file_fd[1]);
+		if (dup2(pipe_fd[0], 0) < 0)
+			ft_error(7, NULL, command2);
 		close(pipe_fd[0]);
-		if (command2[0] != NULL && ft_strchr(command2[0], '/') != NULL)
-			execve(command2[0], command2, env);
-		else if (command2[0] != NULL && path(command2[0], env) != NULL)
-			execve(path(command2[0], env), command2, env);
-		command_error(command2);
+		exec(command2, env);
 	}
 }
 
