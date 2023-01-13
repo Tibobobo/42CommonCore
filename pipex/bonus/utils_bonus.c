@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:43 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 09:52:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:54:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_path(char **args, char **env)
 		free(temp);
 		if (path_try == NULL)
 			ft_error(4, paths, args);
-		if (access(path_try, F_OK | X_OK) == 0)
+		if (access(path_try, F_OK) == 0)
 			return (free_split(paths), path_try);
 		free(path_try);
 		i++;

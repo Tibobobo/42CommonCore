@@ -6,33 +6,33 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 15:32:09 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:37:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_path(char *command, char **env)
+char	*get_path(char **args, char **env)
 {
 	char	**paths;
 	char	*temp;
 	char	*path_try;
 	int		i;
 
-	paths = split_paths(env);
+	paths = split_paths(args, env);
 	if (paths == NULL)
-		ft_error(4, NULL);
+		ft_error(4, args, NULL);
 	i = 0;
 	while (paths[i] != NULL)
 	{
 		temp = ft_strjoin(paths[i], "/");
 		if (temp == NULL)
-			ft_error(4, paths);
-		path_try = ft_strjoin(temp, command);
+			ft_error(4, paths, args);
+		path_try = ft_strjoin(temp, args[0]);
 		free(temp);
 		if (path_try == NULL)
-			ft_error(4, paths);
-		if (access(path_try, F_OK | X_OK) == 0)
+			ft_error(4, paths, args);
+		if (access(path_try, F_OK) == 0)
 			return (free_split(paths), path_try);
 		free(path_try);
 		i++;
@@ -40,17 +40,24 @@ char	*get_path(char *command, char **env)
 	return (free_split(paths), NULL);
 }
 
-char	**split_paths(char **env)
+char	**split_paths(char **args, char **env)
 {
 	int		i;
 	char	**paths;
 
 	i = 0;
-	while (ft_strnstr(env[i], "PATH=", 5) == NULL)
+	while (env[i] != NULL && ft_strnstr(env[i], "PATH=", 5) == NULL)
 		i++;
+	if (env[i] == NULL)
+	{
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(args[0], 2);
+		free_split(args);
+		exit(127);
+	}
 	paths = ft_split(env[i] + 5, ':');
 	if (paths == NULL)
-		ft_error(4, NULL);
+		ft_error(4, args, NULL);
 	return (paths);
 }
 
@@ -67,10 +74,12 @@ void	free_split(char **split)
 	free(split);
 }
 
-int	ft_error(int num, char **split)
+int	ft_error(int num, char **split, char **split2)
 {
 	if (split != NULL)
 		free_split(split);
+	if (split2 != NULL)
+		free_split(split2);
 	if (num == 1)
 		ft_putstr_fd("Usage: ./pipex [file1] [cmd1] [cmd2] [file2]\n", 2);
 	else if (num == 2)

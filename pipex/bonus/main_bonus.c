@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 10:21:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:53:19 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,15 @@ void	exec(char *command, char **env)
 	else
 		path = get_path(args, env);
 	if (path != NULL)
-		execve(path, args, env);
+	{
+		if (access(path, X_OK) == 0)
+			execve(path, args, env);
+		ft_putstr_fd("pipex: permission denied: ", 2);
+		ft_putendl_fd(args[0], 2);
+		free_split(args);
+		free(path);
+		exit (126);
+	}
 	command_error(args);
 }
 
