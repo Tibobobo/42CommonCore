@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:18:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 17:46:36 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 09:57:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ void	redirect_gnl(char *limiter)
 
 	line = NULL;
 	if (pipe(pipe_fd) < 0)
-		ft_error(2, NULL);
+		ft_error(2, NULL, NULL);
 	pid = fork();
 	if (pid < 0)
-		ft_error(3, NULL);
+		ft_error(3, NULL, NULL);
 	else if (pid == 0)
 	{
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], 1) < 0)
-			ft_error(6, NULL);
+			ft_error(6, NULL, NULL);
 		close(pipe_fd[1]);
 		here_doc_loop(line, limiter);
 	}
@@ -63,9 +63,9 @@ void	here_doc(int ac, char **av, char **env, int fdout)
 	i = 3;
 	fdout = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fdout < 0)
-		ft_error(5, NULL);
+		ft_error(5, NULL, NULL);
 	if (dup2(fdout, 1) < 0)
-		ft_error(6, NULL);
+		ft_error(6, NULL, NULL);
 	close(fdout);
 	redirect_gnl(av[2]);
 	while (i < ac - 2)
@@ -79,20 +79,20 @@ void	here_doc(int ac, char **av, char **env, int fdout)
 void	fds_check_and_dup(int *fdin, int *fdout)
 {
 	if (*fdin < 0)
-		ft_error(5, NULL);
+		ft_error(5, NULL, NULL);
 	if (*fdout < 0)
 	{
 		if (*fdin != 0)
 			close(*fdin);
-		ft_error(5, NULL);
+		ft_error(5, NULL, NULL);
 	}
 	if (*fdin != 0)
 	{
 		if (dup2(*fdin, 0) < 0)
-			ft_error(6, NULL);
+			ft_error(6, NULL, NULL);
 		close(*fdin);
 	}
 	if (dup2(*fdout, 1) < 0)
-		ft_error(6, NULL);
+		ft_error(6, NULL, NULL);
 	close(*fdout);
 }

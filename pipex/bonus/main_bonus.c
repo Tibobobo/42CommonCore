@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/12 18:22:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:21:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	exec(char *command, char **env)
 
 	args = ft_split(command, ' ');
 	if (args == NULL)
-		ft_error(4, NULL);
+		ft_error(4, NULL, NULL);
 	if (ft_strchr(command, '/') != NULL)
 		path = args[0];
 	else
-		path = get_path(args[0], env);
+		path = get_path(args, env);
 	if (path != NULL)
 		execve(path, args, env);
 	command_error(args);
@@ -33,7 +33,7 @@ void	parenting_task(int	*pipe_fd)
 {
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], 0) < 0)
-		ft_error(6, NULL);
+		ft_error(6, NULL, NULL);
 	close(pipe_fd[0]);
 }
 
@@ -43,15 +43,15 @@ void	redirect(char *command, int fdin, char **env)
 	int		pipe_fd[2];
 
 	if (pipe(pipe_fd) < 0)
-		ft_error(2, NULL);
+		ft_error(2, NULL, NULL);
 	pid = fork();
 	if (pid < 0)
-		ft_error(3, NULL);
+		ft_error(3, NULL, NULL);
 	else if (pid == 0)
 	{
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], 1) < 0)
-			ft_error(6, NULL);
+			ft_error(6, NULL, NULL);
 		close(pipe_fd[1]);
 		if (fdin == 0)
 			exit (1);
@@ -90,7 +90,7 @@ int	main(int ac, char **av, char **env)
 
 	i = 2;
 	if (ac < 5)
-		ft_error(1, NULL);
+		ft_error(1, NULL, NULL);
 	if (ft_strncmp(av[1], "here_doc", 8) == 0 && av[1][8] == '\0')
 		return (here_doc(ac, av, env, 0), 0);
 	fdin = get_fd(av[1], 0);
@@ -103,6 +103,6 @@ int	main(int ac, char **av, char **env)
 	return (0);
 }
 
-// unset PATH ?
 // return 126 si le binaire existe mais pas les droits
 //		pipex: permission denied: <binaire>
+// waitpid avec boucle infinie ?
