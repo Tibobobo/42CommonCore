@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 13:30:44 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:20:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,3 @@ int	main(int ac, char **av, char **env)
 	exec(av[i], env);
 	return (0);
 }
-// waitpid avec boucle infinie ?
