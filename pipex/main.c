@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 17:28:44 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:57:24 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ void	redirect(char *command, int fdin, char **env)
 	if (pid < 0)
 		ft_error(3, NULL, NULL);
 	else if (pid != 0)
-	{
 		parenting_task(pipe_fd);
-	}
 	else
 	{
 		close(pipe_fd[0]);
