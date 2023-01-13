@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:18:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 09:57:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:41:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ void	redirect_gnl(char *limiter)
 	pid = fork();
 	if (pid < 0)
 		ft_error(3, NULL, NULL);
-	else if (pid == 0)
+	else if (pid != 0)
+	{
+		childsplay(pipe_fd);
+		waitpid(pid, NULL, 0);
+	}
+	else
 	{
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], 1) < 0)
 			ft_error(6, NULL, NULL);
 		close(pipe_fd[1]);
 		here_doc_loop(line, limiter);
-	}
-	else
-	{
-		parenting_task(pipe_fd);
 		waitpid(pid, NULL, 0);
 	}
 }

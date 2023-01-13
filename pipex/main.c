@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 11:39:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:26:56 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	exec(char *command, char **env)
 	command_error(args);
 }
 
-void	parenting_task(int	*pipe_fd)
+void	childsplay(int	*pipe_fd)
 {
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], 0) < 0)
@@ -57,6 +57,8 @@ void	redirect(char *command, int fdin, char **env)
 	if (pid < 0)
 		ft_error(3, NULL, NULL);
 	else if (pid == 0)
+		childsplay(pipe_fd);
+	else
 	{
 		close(pipe_fd[0]);
 		if (dup2(pipe_fd[1], 1) < 0)
@@ -66,12 +68,6 @@ void	redirect(char *command, int fdin, char **env)
 			exit (1);
 		else
 			exec(command, env);
-	}
-	else
-	{
-		parenting_task(pipe_fd);
-		if (strncmp(command, "yes\0", 4) != 0)
-			waitpid(pid, NULL, 0);
 	}
 }
 
