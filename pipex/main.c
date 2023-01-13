@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 09:48:20 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 14:13:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:28:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void	exec(char *command, char **env)
 	else
 		path = get_path(args, env);
 	if (path != NULL && access(path, X_OK) == 0)
+	{
 		execve(path, args, env);
+	}
 	else if (path != NULL && access(path, F_OK) == 0)
 	{
 		ft_putstr_fd("pipex: permission denied: ", 2);
@@ -38,7 +40,7 @@ void	exec(char *command, char **env)
 	command_error(args);
 }
 
-void	childsplay(int	*pipe_fd)
+void	parenting_task(int	*pipe_fd)
 {
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], 0) < 0)
@@ -56,8 +58,10 @@ void	redirect(char *command, int fdin, char **env)
 	pid = fork();
 	if (pid < 0)
 		ft_error(3, NULL, NULL);
-	else if (pid == 0)
-		childsplay(pipe_fd);
+	else if (pid != 0)
+	{
+		parenting_task(pipe_fd);
+	}
 	else
 	{
 		close(pipe_fd[0]);

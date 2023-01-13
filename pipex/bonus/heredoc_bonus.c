@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 11:18:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 13:41:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:30:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	redirect_gnl(char *limiter)
 		ft_error(3, NULL, NULL);
 	else if (pid != 0)
 	{
-		childsplay(pipe_fd);
+		parenting_task(pipe_fd);
 		waitpid(pid, NULL, 0);
 	}
 	else
@@ -53,7 +53,6 @@ void	redirect_gnl(char *limiter)
 			ft_error(6, NULL, NULL);
 		close(pipe_fd[1]);
 		here_doc_loop(line, limiter);
-		waitpid(pid, NULL, 0);
 	}
 }
 

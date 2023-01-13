@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:16:48 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/13 10:37:27 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:22:15 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ int	command_error(char **command)
 	ft_putstr_fd("pipex: command not found: ", 2);
 	ft_putendl_fd(command[0], 2);
 	free_split(command);
+	wait(NULL);
 	exit(127);
 }
