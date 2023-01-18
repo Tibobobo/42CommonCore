@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/17 17:06:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:37:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,36 @@
 
 typedef struct s_var
 {
-    unsigned int    phil_nb;
-    unsigned int    ttd;
-    unsigned int    tte;
-    unsigned int    tts;
+    int             phil_nb;
+    int             ttd;
+    int             tte;
+    int             tts;
     int             nmeals;
+    int             dead;
     pthread_t       *threads;
     struct timeval  tv;
 	long long int   start;
+    struct s_philo  *philos;
 }               t_var;
+
+typedef struct s_mutex
+{
+    pthread_mutex_t *forks;
+    pthread_mutex_t print;
+}               t_mutex;
 
 typedef struct s_philo
 {
     t_var   *var;
-    unsigned int    n;
-    unsigned int    dead;
-    unsigned int    meals;
-    unsigned int    left;
-    unsigned int    right;
+    t_mutex *mutex;
+    int     n;
+    int     dead;
+    long long int   last_meal;
+    int     meals;
 }               t_philo;
+
+int             ft_error(int n, t_var *var);
+int             valid_args(char **av);
+long long int	ft_atol(const char *nptr);
 
 #endif

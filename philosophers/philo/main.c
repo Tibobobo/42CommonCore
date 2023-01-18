@@ -6,103 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/17 18:07:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:00:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-}
-
-int ft_error(int n)
-{
-    if (n == 1)
-    {
-		ft_putstr_fd("Error\nUsage: ./philo <number_of_philosophers> ", 2);
-		ft_putstr_fd("<time_to_die> <time_to_eat> <time_to_sleep> ", 2);
-		ft_putstr_fd("[number_of_necessary_meals]\n\n", 2);
-		ft_putstr_fd("All values must be positive integers\n", 2);
-    }
-    if (n == 2)
-        ft_putstr_fd("Malloc error", 2);
-    return (-1);
-}
-
-int ft_strlen(char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
-}
-
-long int	ft_atol(const char *nptr)
-{
-	long int	i;
-	long int	sign;
-	long int	res;
-
-	i = 0;
-	sign = 1;
-	res = 0;
-	while (nptr[i] == ' ' || (nptr[i] > 8 && nptr[i] < 14))
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
-	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		res = res * 10;
-		res = res + (nptr[i] - '0');
-		i++;
-	}
-	return (res * sign);
-}
-
-int valid_args(char **av)
-{
-    int	i;
-	int	j;
-
-	i = 1;
-	while (av[i] != NULL)
-	{
-		j = 0;
-		if (av[i][j] == '+')
-			j++;
-		if (av[i][j] == '\0')
-			return (0);
-		while (av[i][j] != '\0')
-		{
-			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
-				return (0);
-			j++;
-		}
-		if (ft_strlen(av[i]) > 11)
-			return (0);
-		if (ft_atol(av[i]) > 2147483647)
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 void    init_var(t_var *var, char **av)
 {
@@ -110,11 +18,13 @@ void    init_var(t_var *var, char **av)
     var->ttd = ft_atol(av[2]);
     var->tte = ft_atol(av[3]);
     var->tts = ft_atol(av[4]);
+	var->dead = 0;
     if (av[5] != NULL)
         var->nmeals = ft_atol(av[5]);
     else
         var->nmeals = -1;
     var->threads = malloc(sizeof(pthread_t) * var->phil_nb);
+	var->philos = malloc(sizeof(t_philo) * var->phil_nb);
 }
 
 long long int	timestamp(t_philo *p)
@@ -126,25 +36,86 @@ long long int	timestamp(t_philo *p)
 	return (ms - p->var->start);
 }
 
-void	*routine(t_philo *p)
+void	*last_philo(t_philo *p)
 {
 	while (1)
 	{
-		p->left = 1;
-		printf("%lld %u has taken a fork\n", timestamp(p), p->n);
-		p->right = 1;
-		printf("%lld %u has taken a fork\n", timestamp(p), p->n);
+		pthread_mutex_lock(&p->mutex->forks[0]);
+		pthread_mutex_lock(&p->mutex->print);
+		printf("%lld %u has taken a fork %u\n", timestamp(p), p->n, p->n - 1);
+		pthread_mutex_unlock(&p->mutex->print);
+		pthread_mutex_lock(&p->mutex->forks[p->n - 1]);
+		pthread_mutex_lock(&p->mutex->print);
+		printf("%lld %u has taken a fork %u\n", timestamp(p), p->n, 0);
 		printf("%lld %u is eating\n", timestamp(p), p->n);
+		pthread_mutex_unlock(&p->mutex->print);
+		p->last_meal = timestamp(p);
 		usleep(p->var->tte * 1000);
-		p->left = 0;
-		p->right = 0;
+		p->meals++;
+		if (p->meals == p->var->nmeals)
+		{
+			pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
+			pthread_mutex_unlock(&p->mutex->forks[0]);
+			break;
+		}
+		pthread_mutex_lock(&p->mutex->print);
 		printf("%lld %u is sleeping\n", timestamp(p), p->n);
+		pthread_mutex_unlock(&p->mutex->print);
+		pthread_mutex_unlock(&p->mutex->forks[0]);
+		pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
 		usleep(p->var->tts * 1000);
+		pthread_mutex_lock(&p->mutex->print);
 		printf("%lld %u is thinking\n", timestamp(p), p->n);
+		pthread_mutex_unlock(&p->mutex->print);
 	}
+	return (NULL);
 }
 
-void    start_threads(t_var *var, t_philo *philos)
+void	*routine(void *philo)
+{
+	t_philo *p;
+
+	p = philo;
+	if (p->n % 2 == 0)
+		usleep(1000);
+	// if (p->var->phil_nb == 1)			peut etre a gerer a la main
+	// 	return (one_philo(p));
+	if (p->n == p->var->phil_nb)
+		return (last_philo(p));
+	while (1)
+	{
+		pthread_mutex_lock(&p->mutex->forks[p->n - 1]);
+		pthread_mutex_lock(&p->mutex->print);
+		printf("%lld %u has taken a fork %u\n", timestamp(p), p->n, p->n - 1);
+		pthread_mutex_unlock(&p->mutex->print);
+		pthread_mutex_lock(&p->mutex->forks[p->n]);
+		pthread_mutex_lock(&p->mutex->print);
+		printf("%lld %u has taken a fork %u\n", timestamp(p), p->n, p->n);
+		printf("%lld %u is eating\n", timestamp(p), p->n);
+		pthread_mutex_unlock(&p->mutex->print);
+		p->last_meal = timestamp(p);
+		usleep(p->var->tte * 1000);
+		p->meals++;
+		if (p->meals == p->var->nmeals)
+		{
+			pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
+			pthread_mutex_unlock(&p->mutex->forks[p->n]);
+			break;
+		}
+		pthread_mutex_lock(&p->mutex->print);
+		printf("%lld %u is sleeping\n", timestamp(p), p->n);
+		pthread_mutex_unlock(&p->mutex->print);
+		pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
+		pthread_mutex_unlock(&p->mutex->forks[p->n]);
+		usleep(p->var->tts * 1000);
+		pthread_mutex_lock(&p->mutex->print);
+		printf("%lld %u is thinking\n", timestamp(p), p->n);
+		pthread_mutex_unlock(&p->mutex->print);
+	}
+	return (NULL);
+}
+
+void    start_threads(t_var *var)
 {
     int	i;
 	int	p;
@@ -153,52 +124,90 @@ void    start_threads(t_var *var, t_philo *philos)
 	p = var->phil_nb;
 	while (p > 0)
 	{
-		pthread_create(&var->threads[i], NULL, &routine, &philos[i]);    //arg fonction void * ???
+		pthread_create(&var->threads[i], NULL, &routine, &var->philos[i]);    //a securiser
 		p--;
 		i++;
 	}
 }
 
-int	init_philos(t_var *var, t_philo *philos)
+void	init_philos(t_mutex *mut, t_var *var)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
-	philos = malloc(sizeof(t_philo) * var->phil_nb);
-	if (philos == NULL)
-		return (ft_error(2));
 	while (i < var->phil_nb)
 	{
-		philos[i].dead = 0;
-		philos[i].left = 0;
-		philos[i].right = 0;
-		philos[i].n = i + 1;
-		philos[i].meals = 0;
-		philos[i].var = var;
+		var->philos[i].dead = 0;
+		var->philos[i].n = i + 1;
+		var->philos[i].meals = 0;
+		var->philos[i].var = var;
+		var->philos[i].mutex = mut;
 		i++;
 	}
+}
+
+int	init_mutex(t_var *var)
+{
+	int	i;
+
+	i = 0;
+	var->philos->mutex->forks = malloc(sizeof(pthread_mutex_t) * var->phil_nb);
+	if (var->philos->mutex->forks == NULL)
+		return (-1);
+	while (i < var->phil_nb)
+	{
+		pthread_mutex_init(&var->philos->mutex->forks[i], NULL);     //a securiser ?
+		i++;
+	}
+	pthread_mutex_init(&var->philos->mutex->print, NULL);
 	return (0);
+}
+
+void	join_threads(t_var *var)
+{
+	int	i;
+
+	i = 0;
+	while (i < var->phil_nb)
+	{
+		pthread_join(var->threads[i], NULL);		//a securiser
+		i++;
+	}
+}
+
+void	destroy_and_free(t_var *var)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&var->philos->mutex->print);
+	while (i < var->phil_nb)
+	{
+		pthread_mutex_destroy(&var->philos->mutex->forks[i]);
+		i++;
+	}
+	free(var->philos->mutex->forks);
+	free(var->philos);
+	free(var->threads);
 }
 
 int main(int ac, char **av)
 {
     t_var	var;
-	t_philo	*philos;
+	t_mutex mut;
 
-	philos = NULL;
 	gettimeofday(&var.tv, NULL);
 	var.start = var.tv.tv_sec * 1000LL + var.tv.tv_usec/1000;
     if (ac > 6 || ac < 5 || valid_args(av) == 0)
-        return(ft_error(1));
+        return(ft_error(1, &var));
     init_var(&var, av);
-    if (var.threads == NULL)
-	{
-        return (ft_error(2));
-	}	
-	if (init_philos(&var, philos) == -1)	//free var.threads
-		return (-1);
-    start_threads(&var, philos);
-    pthread_join(var.threads[0], NULL);
-    // free_all(&var, philos);
+    if (var.threads == NULL || var.philos == NULL)
+		return (ft_error(2, &var));
+	init_philos(&mut, &var);
+	if (init_mutex(&var) == -1)
+		return (ft_error(2, &var));
+    start_threads(&var);
+    join_threads(&var);
+    destroy_and_free(&var);
     return (0); 
 }
