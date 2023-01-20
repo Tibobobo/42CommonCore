@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/18 17:37:18 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:02:43 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct s_var
     int             tts;
     int             nmeals;
     int             dead;
+    int             finish;
     pthread_t       *threads;
-    struct timeval  tv;
 	long long int   start;
     struct s_philo  *philos;
 }               t_var;
@@ -39,6 +39,7 @@ typedef struct s_mutex
 {
     pthread_mutex_t *forks;
     pthread_mutex_t print;
+    pthread_mutex_t end;
 }               t_mutex;
 
 typedef struct s_philo
@@ -54,5 +55,10 @@ typedef struct s_philo
 int             ft_error(int n, t_var *var);
 int             valid_args(char **av);
 long long int	ft_atol(const char *nptr);
+char	*ft_litoa(long long int nb);
+char	*ft_strjoin(char *s1, char *s2);
+int ft_strlen(char *str);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putnbr_fd(long long int nb, int fd);
 
 #endif

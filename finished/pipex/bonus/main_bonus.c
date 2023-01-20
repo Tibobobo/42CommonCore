@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:25:30 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/17 17:53:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:49:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exec(char *command, char **env)
 	char	**args;
 	char	*path;
 
-	args = ft_split(command, ' ');
+	args = ft_split(command, ' ');						// attention a la chaine vide "" !
 	if (args == NULL)
 		ft_error(4, NULL, NULL);
 	if (ft_strchr(command, '/') != NULL)
