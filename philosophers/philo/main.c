@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/20 19:04:56 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/20 19:17:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void    ft_sleep(long long int time, t_philo *p)
     long long int    i;
 
     i = get_time();
-    while (get_time() - i < time && p->var->dead == 0)
+    while (get_time() - i < time)
 	{
 		usleep(50);
 		check_death(p);
