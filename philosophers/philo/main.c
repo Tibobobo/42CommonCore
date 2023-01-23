@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/20 19:17:41 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:18:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ long long int	get_time(void)
 
 void	kill_lonely_philo(t_philo *p)
 {
+	pthread_mutex_lock(&p->mutex->end);
 	p->var->dead = 1;
 	printf("%lld #%u has taken a fork\n", get_time() - p->var->start, p->n);
 	usleep(p->var->ttd * 1000);
-	printf("%lld #%u has died\n", get_time() - p->var->start, p->n);
+	printf("%lld #%u died\n", get_time() - p->var->start, p->n);
+	pthread_mutex_unlock(&p->mutex->end);
 }
 
 void    init_var(t_var *var, char **av)
@@ -63,7 +65,7 @@ int		check_end(t_philo *p)
 
 void	print(t_philo *p, char *msg)
 {
-	if (check_end(p) == 0)
+	if (check_end(p) == 0)						//ajouter mutex end pour eviter d'ecrire apres mort
 	{
 		pthread_mutex_lock(&p->mutex->print);
 		printf("%lld #%u ", get_time() - p->var->start, p->n);
@@ -83,7 +85,7 @@ void	check_death(t_philo *p)
 		p->var->dead = 1;
 		pthread_mutex_lock(&p->mutex->print);
 		printf("%lld #%u ", t - p->var->start, p->n);
-		printf("has died\n");
+		printf("died\n");
 		pthread_mutex_unlock(&p->mutex->print);
 	}
 	pthread_mutex_unlock(&p->mutex->end);
@@ -95,10 +97,11 @@ void    ft_sleep(long long int time, t_philo *p)
     long long int    i;
 
     i = get_time();
+	(void)p;
     while (get_time() - i < time)
 	{
 		usleep(50);
-		check_death(p);
+		// check_death(p);
 	}
 }
 
@@ -112,18 +115,23 @@ void	*routine(void *philo)
 	if (p->var->phil_nb == 1)
 		return (kill_lonely_philo(p), NULL);
 	if (p->n % 2 == 0)
-		usleep(500);
+		usleep(p->var->tte);
 	while (1)
 	{
 		pthread_mutex_lock(&p->mutex->forks[p->n - 1]);
+		// check_death(p);
 		print(p, "has taken a fork\n");
 		if (p->n == p->var->phil_nb)
 			pthread_mutex_lock(&p->mutex->forks[0]);
 		else
 			pthread_mutex_lock(&p->mutex->forks[p->n]);
+		// check_death(p);
 		print(p, "has taken a fork\n");
+		// check_death(p);
 		print(p, "is eating\n");
+		pthread_mutex_lock(&p->mutex->end);
 		p->last_meal = get_time();
+		pthread_mutex_unlock(&p->mutex->end);
 		ft_sleep(p->var->tte, p);
 		p->meals++;
 		print(p, "is sleeping\n");
@@ -138,6 +146,7 @@ void	*routine(void *philo)
 			pthread_mutex_unlock(&p->mutex->forks[p->n]);
 		ft_sleep(p->var->tts, p);
 		print(p, "is thinking\n");
+		usleep(100);
 		if (check_end(p) == 1)
 			break;
 	}
@@ -171,6 +180,7 @@ void	init_philos(t_mutex *mut, t_var *var)
 		var->philos[i].meals = 0;
 		var->philos[i].var = var;
 		var->philos[i].mutex = mut;
+		var->philos[i].last_meal = get_time();
 		i++;
 	}
 }
@@ -226,6 +236,7 @@ int main(int ac, char **av)
 {
     t_var	var;
 	t_mutex mut;
+	int		i;
 
 	var.start = get_time();
     if (ac > 6 || ac < 5 || valid_args(av) == 0)
@@ -239,6 +250,19 @@ int main(int ac, char **av)
 	if (init_mutex(&var) == -1)
 		return (ft_error(2, &var));
     start_threads(&var);
+	i = 0;
+	while (1)				//TROP LENT
+	{
+		check_death(&var.philos[i]);
+		if (check_end(&var.philos[i]) == 1)
+			break;
+		if (i == var.phil_nb - 1)
+		{
+			i = -1;
+			usleep(8000);
+		}
+		i++;
+	}
     join_threads(&var);
     destroy_and_free(&var);
     return (0); 
