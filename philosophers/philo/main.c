@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 10:33:30 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:06:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,7 @@ void    init_var(t_var *var, char **av)
 int		check_end(t_philo *p)
 {
 	pthread_mutex_lock(&p->mutex->end);
-	if (p->var->dead == 1)
-	{
-		pthread_mutex_unlock(&p->mutex->end);
-		return (1);
-	}
-	if (p->var->finish == p->var->phil_nb)
+	if (p->var->dead == 1 || p->var->finish == p->var->phil_nb)
 	{
 		pthread_mutex_unlock(&p->mutex->end);
 		return (1);
@@ -66,13 +61,15 @@ int		check_end(t_philo *p)
 
 void	print(t_philo *p, char *msg)
 {
-	if (check_end(p) == 0)						//ajouter mutex end pour eviter d'ecrire apres mort
+	pthread_mutex_lock(&p->mutex->end);
+	if (p->var->dead == 0 && p->var->finish != p->var->phil_nb)
 	{
 		pthread_mutex_lock(&p->mutex->print);
 		printf("%lld #%u ", get_time() - p->var->start, p->n);
 		printf("%s", msg);
 		pthread_mutex_unlock(&p->mutex->print);
 	}
+	pthread_mutex_unlock(&p->mutex->end);
 }
 
 void	check_death(t_philo *p)
@@ -196,7 +193,6 @@ void	*routine(void *philo)
 		}
 		ft_sleep(p->var->tts, p);
 		print(p, "is thinking\n");
-		usleep(100);
 		if (check_end(p) == 1)
 			break;
 	}
@@ -212,7 +208,7 @@ void    start_threads(t_var *var)
 	p = var->phil_nb;
 	while (p > 0)
 	{
-		pthread_create(&var->threads[i], NULL, &routine, &var->philos[i]);    //a securiser
+		pthread_create(&var->threads[i], NULL, &routine, &var->philos[i]);
 		p--;
 		i++;
 	}
@@ -247,11 +243,14 @@ int	init_mutex(t_var *var)
 		return (-1);
 	while (i < var->phil_nb)
 	{
-		pthread_mutex_init(&var->philos->mutex->forks[i], NULL);     //a securiser ?
+		if (pthread_mutex_init(&var->philos->mutex->forks[i], NULL) != 0)
+			return (1);
 		i++;
 	}
-	pthread_mutex_init(&var->philos->mutex->print, NULL);
-	pthread_mutex_init(&var->philos->mutex->end, NULL);
+	if (pthread_mutex_init(&var->philos->mutex->print, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&var->philos->mutex->end, NULL) != 0)
+		return (1);
 	return (0);
 }
 
@@ -262,7 +261,8 @@ void	join_threads(t_var *var)
 	i = 0;
 	while (i < var->phil_nb)
 	{
-		pthread_join(var->threads[i], NULL);		//a securiser
+		if (pthread_join(var->threads[i], NULL) != 0)
+			pthread_detach(var->threads[i]);
 		i++;
 	}
 }
@@ -289,9 +289,8 @@ int main(int ac, char **av)
 {
     t_var	var;
 	t_mutex mut;
-	int		i;
+	int		m;
 
-	var.start = get_time();
     if (ac > 6 || ac < 5 || valid_args(av) == 0)
 		return(ft_error(1, &var));
 	if (ft_atol(av[1]) < 1)
@@ -300,22 +299,13 @@ int main(int ac, char **av)
     if (var.threads == NULL || var.philos == NULL || var.forks == NULL)
 		return (ft_error(2, &var));
 	init_philos(&mut, &var);
-	if (init_mutex(&var) == -1)
+	m = init_mutex(&var);
+	if (m == -1)
 		return (ft_error(2, &var));
+	if (m == 1)
+		return (ft_error(3, &var));
+	var.start = get_time();
     start_threads(&var);
-	i = 0;
-	// while (1)				//TROP LENT
-	// {
-	// 	check_death(&var.philos[i]);
-	// 	if (check_end(&var.philos[i]) == 1)
-	// 		break;
-	// 	if (i == var.phil_nb - 1)
-	// 	{
-	// 		i = -1;
-	// 		usleep(8000);
-	// 	}
-	// 	i++;
-	// }
     join_threads(&var);
     destroy_and_free(&var);
     return (0); 

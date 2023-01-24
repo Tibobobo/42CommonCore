@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 09:47:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 09:50:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:20:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int ft_error(int n, t_var *var)
 		if (var->forks == NULL)
 			free(var->forks);
         ft_putstr_fd("Malloc error", 2);
+	}
+	if (n == 3)
+	{
+		destroy_and_free(var);
+		ft_putstr_fd("Mutex error", 2);
 	}
     return (-1);
 }

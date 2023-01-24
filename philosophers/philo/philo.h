@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 09:48:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:19:20 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char	*ft_strjoin(char *s1, char *s2);
 int ft_strlen(char *str);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(long long int nb, int fd);
+void	destroy_and_free(t_var *var);
 
 #endif
