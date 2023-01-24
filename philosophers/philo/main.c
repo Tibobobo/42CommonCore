@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/23 13:18:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:33:30 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void    init_var(t_var *var, char **av)
         var->nmeals = -1;
     var->threads = malloc(sizeof(pthread_t) * var->phil_nb);
 	var->philos = malloc(sizeof(t_philo) * var->phil_nb);
+	var->forks = malloc(sizeof(int) * var->phil_nb);
 }
 
 int		check_end(t_philo *p)
@@ -101,7 +102,7 @@ void    ft_sleep(long long int time, t_philo *p)
     while (get_time() - i < time)
 	{
 		usleep(50);
-		// check_death(p);
+		check_death(p);
 	}
 }
 
@@ -115,35 +116,84 @@ void	*routine(void *philo)
 	if (p->var->phil_nb == 1)
 		return (kill_lonely_philo(p), NULL);
 	if (p->n % 2 == 0)
-		usleep(p->var->tte);
+		usleep(p->var->tte * 1000);
 	while (1)
 	{
-		pthread_mutex_lock(&p->mutex->forks[p->n - 1]);
-		// check_death(p);
+		while (1)
+		{
+			check_death(p);
+			pthread_mutex_lock(&p->mutex->forks[p->n - 1]);
+			if (p->var->forks[p->n - 1] == 1)
+			{
+				p->var->forks[p->n - 1] = 0;
+				pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
+				break ;
+			}
+			pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
+			if (check_end(p) == 1)
+				break ;
+			usleep(50);
+		}
 		print(p, "has taken a fork\n");
-		if (p->n == p->var->phil_nb)
-			pthread_mutex_lock(&p->mutex->forks[0]);
-		else
-			pthread_mutex_lock(&p->mutex->forks[p->n]);
-		// check_death(p);
+		while (1)
+		{
+			check_death(p);
+			if (p->n == p->var->phil_nb)
+			{
+				pthread_mutex_lock(&p->mutex->forks[0]);
+				if (p->var->forks[0] == 1)
+				{
+					p->var->forks[0] = 0;
+					pthread_mutex_unlock(&p->mutex->forks[0]);
+					break ;
+				}
+				pthread_mutex_unlock(&p->mutex->forks[0]);
+				if (check_end(p) == 1)
+					break ;
+				usleep(50);	
+			}
+			else
+			{
+				pthread_mutex_lock(&p->mutex->forks[p->n]);
+				if (p->var->forks[p->n] == 1)
+				{
+					p->var->forks[p->n] = 0;
+					pthread_mutex_unlock(&p->mutex->forks[p->n]);
+					break ;
+				}
+				pthread_mutex_unlock(&p->mutex->forks[p->n]);
+				if (check_end(p) == 1)
+					break ;
+				usleep(50);
+			}
+		}
 		print(p, "has taken a fork\n");
-		// check_death(p);
 		print(p, "is eating\n");
 		pthread_mutex_lock(&p->mutex->end);
 		p->last_meal = get_time();
 		pthread_mutex_unlock(&p->mutex->end);
 		ft_sleep(p->var->tte, p);
 		p->meals++;
-		print(p, "is sleeping\n");
 		pthread_mutex_lock(&p->mutex->end);
 		if (p->meals == p->var->nmeals)
 			p->var->finish++;
 		pthread_mutex_unlock(&p->mutex->end);
+		print(p, "is sleeping\n");
+		pthread_mutex_lock(&p->mutex->forks[p->n - 1]);
+		p->var->forks[p->n - 1] = 1;
 		pthread_mutex_unlock(&p->mutex->forks[p->n - 1]);
 		if (p->n == p->var->phil_nb)
+		{
+			pthread_mutex_lock(&p->mutex->forks[0]);
+			p->var->forks[0] = 1;
 			pthread_mutex_unlock(&p->mutex->forks[0]);
+		}
 		else
+		{
+			pthread_mutex_lock(&p->mutex->forks[p->n]);
+			p->var->forks[p->n] = 1;
 			pthread_mutex_unlock(&p->mutex->forks[p->n]);
+		}
 		ft_sleep(p->var->tts, p);
 		print(p, "is thinking\n");
 		usleep(100);
@@ -181,7 +231,9 @@ void	init_philos(t_mutex *mut, t_var *var)
 		var->philos[i].var = var;
 		var->philos[i].mutex = mut;
 		var->philos[i].last_meal = get_time();
+		var->forks[i] = 1;
 		i++;
+		
 	}
 }
 
@@ -230,6 +282,7 @@ void	destroy_and_free(t_var *var)
 	free(var->philos->mutex->forks);
 	free(var->philos);
 	free(var->threads);
+	free(var->forks);
 }
 
 int main(int ac, char **av)
@@ -244,25 +297,25 @@ int main(int ac, char **av)
 	if (ft_atol(av[1]) < 1)
 		return(write(2, "Error\nSimulation needs at least 1 philo\n", 40), -1);
     init_var(&var, av);
-    if (var.threads == NULL || var.philos == NULL)
+    if (var.threads == NULL || var.philos == NULL || var.forks == NULL)
 		return (ft_error(2, &var));
 	init_philos(&mut, &var);
 	if (init_mutex(&var) == -1)
 		return (ft_error(2, &var));
     start_threads(&var);
 	i = 0;
-	while (1)				//TROP LENT
-	{
-		check_death(&var.philos[i]);
-		if (check_end(&var.philos[i]) == 1)
-			break;
-		if (i == var.phil_nb - 1)
-		{
-			i = -1;
-			usleep(8000);
-		}
-		i++;
-	}
+	// while (1)				//TROP LENT
+	// {
+	// 	check_death(&var.philos[i]);
+	// 	if (check_end(&var.philos[i]) == 1)
+	// 		break;
+	// 	if (i == var.phil_nb - 1)
+	// 	{
+	// 		i = -1;
+	// 		usleep(8000);
+	// 	}
+	// 	i++;
+	// }
     join_threads(&var);
     destroy_and_free(&var);
     return (0); 

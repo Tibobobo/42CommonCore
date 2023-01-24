@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/20 19:02:43 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 09:48:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_var
     int             tte;
     int             tts;
     int             nmeals;
+    int             *forks;
     int             dead;
     int             finish;
     pthread_t       *threads;
