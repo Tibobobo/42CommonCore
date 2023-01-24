@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 14:25:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:15:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_philo
 	t_var			*var;
 	t_mutex			*mutex;
 	int				n;
-	int				dead;
 	long long int	last_meal;
 	int				meals;
 }				t_philo;
@@ -70,7 +69,6 @@ void			join_threads(t_var *var);
 void			destroy_and_free(t_var *var);
 void			check_death(t_philo *p);
 int				check_end(t_philo *p);
-void			kill_lonely_philo(t_philo *p);
 void			print(t_philo *p, char *msg);
 void			get_fork_0(t_philo *p);
 void			get_right_fork(t_philo *p);

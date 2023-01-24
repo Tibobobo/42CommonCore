@@ -6,21 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:28:18 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 14:30:54 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:15:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	kill_lonely_philo(t_philo *p)
-{
-	pthread_mutex_lock(&p->mutex->end);
-	p->var->dead = 1;
-	printf("%lld #%u has taken a fork\n", get_time() - p->var->start, p->n);
-	usleep(p->var->ttd * 1000);
-	printf("%lld #%u died\n", get_time() - p->var->start, p->n);
-	pthread_mutex_unlock(&p->mutex->end);
-}
 
 int	check_end(t_philo *p)
 {

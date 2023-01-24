@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:19:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 14:31:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:25:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,20 @@ void	init_var(t_var *var, char **av)
 void	start_threads(t_var *var)
 {
 	int	i;
-	int	p;
 
 	i = 0;
-	p = var->phil_nb;
-	while (p > 0)
+	while (i < var->phil_nb)
 	{
-		pthread_create(&var->threads[i], NULL, &routine, &var->philos[i]);
-		p--;
+		if (pthread_create(&var->threads[i], NULL, &routine, &var->philos[i])
+			!= 0)
+		{
+			pthread_mutex_lock(&var->philos->mutex->end);
+			var->dead = 1;
+			pthread_mutex_lock(&var->philos->mutex->print);
+			write(2, "pthread_create error\n", 21);
+			pthread_mutex_unlock(&var->philos->mutex->print);
+			pthread_mutex_unlock(&var->philos->mutex->end);
+		}
 		i++;
 	}
 }
@@ -51,7 +57,6 @@ void	init_philos(t_mutex *mut, t_var *var)
 	i = 0;
 	while (i < var->phil_nb)
 	{
-		var->philos[i].dead = 0;
 		var->philos[i].n = i + 1;
 		var->philos[i].meals = 0;
 		var->philos[i].var = var;

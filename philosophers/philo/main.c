@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 14:29:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:52:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void	release_forks(t_philo *p)
 void	eat(t_philo *p)
 {
 	print(p, "is eating\n");
-	pthread_mutex_lock(&p->mutex->end);
 	p->last_meal = get_time();
-	pthread_mutex_unlock(&p->mutex->end);
 	ft_sleep(p->var->tte, p);
 	p->meals++;
 	pthread_mutex_lock(&p->mutex->end);
@@ -74,8 +72,6 @@ void	*routine(void *philo)
 	p = philo;
 	if (p->var->nmeals == 0)
 		return (NULL);
-	if (p->var->phil_nb == 1)
-		return (kill_lonely_philo(p), NULL);
 	if (p->n % 2 == 0)
 		usleep(p->var->tte * 1000);
 	while (1)
