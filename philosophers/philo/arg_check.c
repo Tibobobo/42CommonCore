@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 09:47:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 11:20:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:26:19 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	ft_putstr_fd(char *s, int fd)
 	write(fd, s, ft_strlen(s));
 }
 
-int ft_error(int n, t_var *var)
+int	ft_error(int n, t_var *var)
 {
-    if (n == 1)
-    {
+	if (n == 1)
+	{
 		ft_putstr_fd("Error\nUsage: ./philo <number_of_philosophers> ", 2);
 		ft_putstr_fd("<time_to_die> <time_to_eat> <time_to_sleep> ", 2);
 		ft_putstr_fd("[number_of_necessary_meals]\n\n", 2);
 		ft_putstr_fd("All values must be positive integers\n", 2);
-    }
-    if (n == 2)
+	}
+	if (n == 2)
 	{
 		if (var->threads != NULL)
 			free(var->threads);
@@ -36,24 +36,24 @@ int ft_error(int n, t_var *var)
 			free(var->philos);
 		if (var->forks == NULL)
 			free(var->forks);
-        ft_putstr_fd("Malloc error", 2);
+		ft_putstr_fd("Malloc error", 2);
 	}
 	if (n == 3)
 	{
 		destroy_and_free(var);
 		ft_putstr_fd("Mutex error", 2);
 	}
-    return (-1);
+	return (-1);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
 long long int	ft_atol(const char *nptr)
@@ -82,9 +82,9 @@ long long int	ft_atol(const char *nptr)
 	return (res * sign);
 }
 
-int valid_args(char **av)
+int	valid_args(char **av)
 {
-    int	i;
+	int	i;
 	int	j;
 
 	i = 1;

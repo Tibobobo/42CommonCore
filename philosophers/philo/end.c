@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:28:18 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 12:31:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:30:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	kill_lonely_philo(t_philo *p)
 	pthread_mutex_unlock(&p->mutex->end);
 }
 
-int		check_end(t_philo *p)
+int	check_end(t_philo *p)
 {
 	pthread_mutex_lock(&p->mutex->end);
 	if (p->var->dead == 1 || p->var->finish == p->var->phil_nb)
@@ -67,7 +67,7 @@ void	destroy_and_free(t_var *var)
 
 void	check_death(t_philo *p)
 {
-	long long int t;
+	long long int	t;
 
 	t = get_time();
 	pthread_mutex_lock(&p->mutex->end);
@@ -80,5 +80,4 @@ void	check_death(t_philo *p)
 		pthread_mutex_unlock(&p->mutex->print);
 	}
 	pthread_mutex_unlock(&p->mutex->end);
-
 }

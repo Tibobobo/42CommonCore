@@ -6,11 +6,55 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:36:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 12:31:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:32:24 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	get_fork_0(t_philo *p)
+{
+	while (1)
+	{
+		check_death(p);
+		pthread_mutex_lock(&p->mutex->forks[0]);
+		if (p->var->forks[0] == 1)
+		{
+			p->var->forks[0] = 0;
+			pthread_mutex_unlock(&p->mutex->forks[0]);
+			break ;
+		}
+		pthread_mutex_unlock(&p->mutex->forks[0]);
+		if (check_end(p) == 1)
+			break ;
+		usleep(50);
+	}
+}
+
+void	get_right_fork(t_philo *p)
+{
+	if (p->n == p->var->phil_nb)
+		get_fork_0(p);
+	else
+	{
+		while (1)
+		{
+			check_death(p);
+			pthread_mutex_lock(&p->mutex->forks[p->n]);
+			if (p->var->forks[p->n] == 1)
+			{
+				p->var->forks[p->n] = 0;
+				pthread_mutex_unlock(&p->mutex->forks[p->n]);
+				break ;
+			}
+			pthread_mutex_unlock(&p->mutex->forks[p->n]);
+			if (check_end(p) == 1)
+				break ;
+			usleep(50);
+		}
+	}
+	print(p, "has taken a fork\n");
+}
 
 void	print(t_philo *p, char *msg)
 {
@@ -33,13 +77,13 @@ long long int	get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void    ft_sleep(long long int time, t_philo *p)
+void	ft_sleep(long long int time, t_philo *p)
 {
-    long long int    i;
+	long long int	i;
 
-    i = get_time();
+	i = get_time();
 	(void)p;
-    while (get_time() - i < time)
+	while (get_time() - i < time)
 	{
 		usleep(50);
 		check_death(p);
