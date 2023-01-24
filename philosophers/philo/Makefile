@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 10:53:18 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/18 19:37:23 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/01/24 12:28:41 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@
 SRCS	=	./main.c \
 			./arg_check.c \
 			./utils.c \
+			./init.c \
+			./end.c \
 
 OBJS	=	$(SRCS:%.c=%.o)
 

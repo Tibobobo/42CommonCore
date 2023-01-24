@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 11:19:20 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:32:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,21 @@ typedef struct s_philo
 int             ft_error(int n, t_var *var);
 int             valid_args(char **av);
 long long int	ft_atol(const char *nptr);
-char	*ft_litoa(long long int nb);
-char	*ft_strjoin(char *s1, char *s2);
 int ft_strlen(char *str);
 void	ft_putstr_fd(char *s, int fd);
-void	ft_putnbr_fd(long long int nb, int fd);
 void	destroy_and_free(t_var *var);
+void    init_var(t_var *var, char **av);
+void    start_threads(t_var *var);
+void	init_philos(t_mutex *mut, t_var *var);
+int	init_mutex(t_var *var);
+void	*routine(void *philo);
+long long int	get_time(void);
+void    ft_sleep(long long int time, t_philo *p);
+void	join_threads(t_var *var);
+void	destroy_and_free(t_var *var);
+void	check_death(t_philo *p);
+int		check_end(t_philo *p);
+void	kill_lonely_philo(t_philo *p);
+void	print(t_philo *p, char *msg);
 
 #endif
