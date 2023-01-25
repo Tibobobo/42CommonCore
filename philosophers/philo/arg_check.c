@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 09:47:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 14:26:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/25 10:56:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	ft_error(int n, t_var *var)
 			free(var->philos);
 		if (var->forks == NULL)
 			free(var->forks);
-		ft_putstr_fd("Malloc error", 2);
+		ft_putstr_fd("Malloc error\n", 2);
 	}
 	if (n == 3)
 	{
 		destroy_and_free(var);
-		ft_putstr_fd("Mutex error", 2);
+		ft_putstr_fd("Mutex error\n", 2);
 	}
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:36:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 17:07:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:42:03 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void	print(t_philo *p, char *msg)
 	if (p->var->dead == 0 && p->var->finish != p->var->phil_nb)
 	{
 		pthread_mutex_lock(&p->mutex->print);
-		printf("%lld #%u ", get_time() - p->var->start, p->n);
-		printf("%s", msg);
+		printf("%lld #%u %s", get_time() - p->var->start, p->n, msg);
 		pthread_mutex_unlock(&p->mutex->print);
 	}
 	pthread_mutex_unlock(&p->mutex->end);

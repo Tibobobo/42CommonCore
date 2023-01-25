@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:28:18 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/24 17:15:39 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:51:40 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	check_death(t_philo *p)
 	{
 		p->var->dead = 1;
 		pthread_mutex_lock(&p->mutex->print);
-		printf("%lld #%u ", t - p->var->start, p->n);
-		printf("died\n");
+		printf("%lld #%u died\n", t - p->var->start, p->n);
 		pthread_mutex_unlock(&p->mutex->print);
 	}
 	pthread_mutex_unlock(&p->mutex->end);
