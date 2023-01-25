@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/25 15:06:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:46:00 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,13 @@ void	release_forks(t_philo *p)
 void	eat(t_philo *p)
 {
 	print(p, "is eating\n");
+	sem_wait(p->sem->end);
 	p->last_meal = get_time();
+	sem_post(p->sem->end);
 	ft_sleep(p->var->tte, p);
+	sem_wait(p->sem->end);
 	p->meals++;
+	sem_post(p->sem->end);
 }
 
 int	routine(t_philo *p)
@@ -53,7 +57,8 @@ int	routine(t_philo *p)
 		if (check_end(p) == 1)
 			break ;
 	}
-	return (0);
+	destroy(p->var);
+	exit (0);
 }
 
 int	main(int ac, char **av)

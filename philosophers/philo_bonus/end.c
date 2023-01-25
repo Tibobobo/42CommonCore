@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:28:18 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/25 15:32:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:35:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,9 @@ int	check_end(t_philo *p)
 
 void	destroy(t_var *var)
 {
-	int	i;
-
-	i = 0;
-	while (i < var->phil_nb)
-	{
-		sem_close(var->philos[i].sem->end);
-		sem_close(var->philos[i].sem->print);
-		sem_close(var->philos[i].sem->forks);
-		i++;
-	}
+	sem_close(var->philos[0].sem->end);
+	sem_close(var->philos[0].sem->print);
+	sem_close(var->philos[0].sem->forks);
 }
 
 void	*check_death(void *philo)
@@ -47,14 +40,17 @@ void	*check_death(void *philo)
 	while (1)
 	{
 		t = get_time();
+		sem_wait(p->sem->end);
 		if (t - p->last_meal > p->var->ttd)
 		{
 			p->var->dead = 1;
 			sem_wait(p->sem->print);
 			printf("%lld #%u died\n", t - p->var->start, p->n);
 			sem_post(p->sem->print);
+			sem_post(p->sem->end);
 			return (NULL);
 		}
+		sem_post(p->sem->end);
 		if (check_end(p) == 1)
 		{
 			return (NULL);
