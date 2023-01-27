@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:19:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/25 15:01:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 10:44:59 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_var(t_var *var, char **av)
 	var->tte = ft_atol(av[3]);
 	var->tts = ft_atol(av[4]);
 	var->dead = 0;
-	var->finish = 0;
+	var->all_eaten = 0;
 	if (av[5] != NULL)
 		var->nmeals = ft_atol(av[5]);
 	else
@@ -68,10 +68,15 @@ int	init_sem(t_var *var)
 	sem_unlink("/forks");
 	sem_unlink("/print");
 	sem_unlink("/end");
+	sem_unlink("/dead");
+	sem_unlink("/finish");
 	var->philos->sem->forks = sem_open("/forks", O_CREAT, S_IRWXU, var->phil_nb);
 	var->philos->sem->print = sem_open("/print", O_CREAT, S_IRWXU, 1);
 	var->philos->sem->end = sem_open("/end", O_CREAT, S_IRWXU, 1);
-	if (var->philos->sem->forks == SEM_FAILED || var->philos->sem->print == SEM_FAILED || var->philos->sem->end == SEM_FAILED)
+	var->philos->sem->dead = sem_open("/dead", O_CREAT, S_IRWXU, 0);
+	var->philos->sem->finish = sem_open("/finish", O_CREAT, S_IRWXU, var->phil_nb);
+	if (var->philos->sem->forks == SEM_FAILED || var->philos->sem->print == SEM_FAILED
+		|| var->philos->sem->end == SEM_FAILED || var->philos->sem->dead == SEM_FAILED || var->philos->sem->finish == SEM_FAILED)
 		return (-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:34 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/25 14:56:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 09:56:10 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_sem
 	sem_t	*forks;
 	sem_t	*print;
 	sem_t	*end;
+	sem_t	*dead;
+	sem_t	*finish;
 }				t_sem;
 
 typedef struct s_philo
@@ -51,11 +53,13 @@ typedef struct s_var
 	int				tte;
 	int				tts;
 	int				nmeals;
+	int				all_eaten;
 	int				dead;
-	int				finish;
 	long long int	start;
 	t_philo			philos[1024];
 	pid_t			pid[1024];
+	pthread_t		killer;
+	pthread_t		finish;
 }				t_var;
 
 int				ft_error(int n, t_var *var);
@@ -75,5 +79,7 @@ void			destroy(t_var *var);
 void			*check_death(void *philo);
 int				check_end(t_philo *p);
 void			print(t_philo *p, char *msg);
+void			*kill_children(void *v);
+void			*kill_children2(void *v);
 
 #endif

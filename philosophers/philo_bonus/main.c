@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/25 16:46:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 10:42:08 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	routine(t_philo *p)
 {
 	if (p->var->nmeals == 0)
 		return (0);
+	sem_wait(p->sem->finish);
 	pthread_create(&p->t, NULL, &check_death, p);
 	pthread_detach(p->t);
 	if (p->n % 2 == 0)
@@ -55,10 +56,11 @@ int	routine(t_philo *p)
 		release_forks(p);
 		print(p, "is thinking\n");
 		if (check_end(p) == 1)
-			break ;
+			sem_post(p->sem->finish);
+		usleep(500);
 	}
-	destroy(p->var);
-	exit (0);
+	// destroy(p->var);
+	// exit (0);
 }
 
 int	main(int ac, char **av)
@@ -79,11 +81,16 @@ int	main(int ac, char **av)
 	if (start_processes(&var) == -1)
 		return (ft_error(4, &var));
 	i = 0;
+	usleep(var.ttd * 1000 - 50);
+	pthread_create(&var.killer, NULL, &kill_children, &var);
+	pthread_create(&var.finish, NULL, &kill_children2, &var);
 	while (i < var.phil_nb)
 	{
 		waitpid(var.pid[i], NULL, 0);
 		i++;
 	}
+	// pthread_join(var.killer, NULL);
+	// pthread_join(var.finish, NULL);
 	destroy(&var);
 	return (0);
 }
