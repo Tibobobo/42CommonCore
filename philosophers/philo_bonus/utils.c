@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 19:36:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/27 10:14:18 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:36:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,9 @@
 
 void	print(t_philo *p, char *msg)
 {
-	sem_wait(p->sem->end);
-	if (p->var->dead == 0)
-	{
-		sem_wait(p->sem->print);
-		printf("%lld #%u %s", get_time() - p->var->start, p->n, msg);
-		sem_post(p->sem->print);
-	}
-	sem_post(p->sem->end);
+	sem_wait(p->sem->print);
+	printf("%lld #%u %s", get_time() - p->var->start, p->n, msg);
+	sem_post(p->sem->print);
 }
 
 long long int	get_time(void)

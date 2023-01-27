@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:53:42 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/27 10:42:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:43:31 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ void	get_forks(t_philo *p)
 	print(p, "has taken a fork\n");
 }
 
-void	release_forks(t_philo *p)
-{
-	print(p, "is sleeping\n");
-	sem_post(p->sem->forks);
-	sem_post(p->sem->forks);
-	ft_sleep(p->var->tts, p);
-}
-
 void	eat(t_philo *p)
 {
 	print(p, "is eating\n");
-	sem_wait(p->sem->end);
+	sem_wait(p->sem->variables);
 	p->last_meal = get_time();
-	sem_post(p->sem->end);
-	ft_sleep(p->var->tte, p);
-	sem_wait(p->sem->end);
 	p->meals++;
-	sem_post(p->sem->end);
+	sem_post(p->sem->variables);
+	ft_sleep(p->var->tte, p);
+}
+
+void	release_forks(t_philo *p)
+{
+	print(p, "is sleeping\n");
+	if (check_end(p) == 1)
+		sem_post(p->sem->finish);
+	sem_post(p->sem->forks);
+	sem_post(p->sem->forks);
+	ft_sleep(p->var->tts, p);
 }
 
 int	routine(t_philo *p)
@@ -55,12 +55,8 @@ int	routine(t_philo *p)
 		eat(p);
 		release_forks(p);
 		print(p, "is thinking\n");
-		if (check_end(p) == 1)
-			sem_post(p->sem->finish);
 		usleep(500);
 	}
-	// destroy(p->var);
-	// exit (0);
 }
 
 int	main(int ac, char **av)
@@ -68,7 +64,7 @@ int	main(int ac, char **av)
 	t_var	var;
 	t_sem	sem;
 	int		i;
-	
+
 	if (ac > 6 || ac < 5 || valid_args(av) == 0)
 		return (ft_error(1, &var));
 	if (ft_atol(av[1]) < 1)
@@ -81,16 +77,8 @@ int	main(int ac, char **av)
 	if (start_processes(&var) == -1)
 		return (ft_error(4, &var));
 	i = 0;
-	usleep(var.ttd * 1000 - 50);
-	pthread_create(&var.killer, NULL, &kill_children, &var);
-	pthread_create(&var.finish, NULL, &kill_children2, &var);
-	while (i < var.phil_nb)
-	{
-		waitpid(var.pid[i], NULL, 0);
-		i++;
-	}
-	// pthread_join(var.killer, NULL);
-	// pthread_join(var.finish, NULL);
+	usleep(var.tte * 1000 + 5000);
+	wait_and_kill(&var);
 	destroy(&var);
 	return (0);
 }

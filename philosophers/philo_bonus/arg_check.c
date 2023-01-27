@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 09:47:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/25 12:58:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:30:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_error(int n, t_var *var)
 	{
 		ft_putstr_fd("Semaphore error\n", 2);
 	}
-	if (n ==4)
+	if (n == 4)
 	{
 		ft_putstr_fd("Fork error\n", 2);
 	}

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 12:19:59 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/01/27 10:44:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:36:26 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	init_var(t_var *var, char **av)
 	var->ttd = ft_atol(av[2]);
 	var->tte = ft_atol(av[3]);
 	var->tts = ft_atol(av[4]);
-	var->dead = 0;
-	var->all_eaten = 0;
 	if (av[5] != NULL)
 		var->nmeals = ft_atol(av[5]);
 	else
@@ -35,7 +33,7 @@ int	start_processes(t_var *var)
 	{
 		var->pid[i] = fork();
 		if (var->pid[i] < 0)
-			return (-1);	
+			return (-1);
 		else if (var->pid[i] == 0)
 		{
 			routine(&var->philos[i]);
@@ -65,18 +63,21 @@ void	init_philos(t_sem *sem, t_var *var)
 
 int	init_sem(t_var *var)
 {
+	int	n;
+
+	n = var->phil_nb;
 	sem_unlink("/forks");
 	sem_unlink("/print");
-	sem_unlink("/end");
-	sem_unlink("/dead");
+	sem_unlink("/variables");
 	sem_unlink("/finish");
-	var->philos->sem->forks = sem_open("/forks", O_CREAT, S_IRWXU, var->phil_nb);
+	var->philos->sem->forks = sem_open("/forks", O_CREAT, S_IRWXU, n);
 	var->philos->sem->print = sem_open("/print", O_CREAT, S_IRWXU, 1);
-	var->philos->sem->end = sem_open("/end", O_CREAT, S_IRWXU, 1);
-	var->philos->sem->dead = sem_open("/dead", O_CREAT, S_IRWXU, 0);
-	var->philos->sem->finish = sem_open("/finish", O_CREAT, S_IRWXU, var->phil_nb);
-	if (var->philos->sem->forks == SEM_FAILED || var->philos->sem->print == SEM_FAILED
-		|| var->philos->sem->end == SEM_FAILED || var->philos->sem->dead == SEM_FAILED || var->philos->sem->finish == SEM_FAILED)
+	var->philos->sem->variables = sem_open("/variables", O_CREAT, S_IRWXU, 1);
+	var->philos->sem->finish = sem_open("/finish", O_CREAT, S_IRWXU, n);
+	if (var->philos->sem->forks == SEM_FAILED
+		|| var->philos->sem->print == SEM_FAILED
+		|| var->philos->sem->variables == SEM_FAILED
+		|| var->philos->sem->finish == SEM_FAILED)
 		return (-1);
 	return (0);
 }
