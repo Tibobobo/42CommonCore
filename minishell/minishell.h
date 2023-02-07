@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/06 16:53:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/07 12:40:30 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,19 @@
 
 typedef struct s_sh
 {
-    char    *buf;
-    char    **lex;
-}               t_sh;
+	char	*buf;
+	char	**lex;
+}			t_sh;
+
+int		ft_error(t_sh *sh, int n);
+void	lexing(t_sh *sh);
+int		token_count(char *s);
+void	free_lex(t_sh *sh);
+void	pipe_token(t_sh *sh, int *i, int *j);
+void	in_redir_token(t_sh *sh, int *i, int *j);
+void	out_redir_token(t_sh *sh, int *i, int *j);
+void	quote_token(t_sh *sh, int *i, int *j, int type);
+void	word_token(t_sh *sh, int *i, int *j);
+char	*copy_token(char *s, int flag);
 
 #endif
