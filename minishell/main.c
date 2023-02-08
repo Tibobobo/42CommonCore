@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/07 12:35:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/08 09:37:56 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		i = 0;
-		sh.buf = readline("$>");
+		sh.buf = readline("minishell-test$> ");
 		lexing(&sh);
 		while (sh.lex[i] != NULL)
 		{

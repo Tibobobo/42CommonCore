@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 14:58:06 by tgrasset          #+#    #+#              #
-#    Updated: 2023/02/07 12:37:05 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/02/08 10:41:02 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 SRCS	=	./main.c \
 			./lexer.c \
 			./lexer_token_count.c \
-			./lexer_token_create.c \
+			./lexer_token_extract.c \
 			
 OBJS	=	$(SRCS:%.c=%.o)
 
