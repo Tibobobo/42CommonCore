@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/08 09:37:56 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:31:19 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@ int	main(int ac, char **av, char **env)
 	{
 		i = 0;
 		sh.buf = readline("minishell-test$> ");
+		if (sh.buf[0] != '\0')
+			add_history(sh.buf);
 		lexing(&sh);
-		while (sh.lex[i] != NULL)
-		{
-			printf("%s\n", sh.lex[i]);
-			i++;
-		}
+		parsing(&sh);
+		// while (sh.lex[i] != NULL)
+		// {
+		// 	printf("%s\n", sh.lex[i]);
+		// 	i++;
+		// }
 	}
 	return (0);
 }
