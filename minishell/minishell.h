@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/07 12:40:30 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:03:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,28 @@
 # include <term.h>
 # include "./libft/libft.h"
 
+typedef struct s_redir
+{
+	char			*name;
+	int				doubl;
+	struct s_redir	*next;
+}			t_redir;
+
+typedef struct s_comm
+{
+	char			*file;
+	char			**argv;
+	t_redir			*in;
+	t_redir			*out;
+	struct s_comm	*next;
+}			t_comm;
+
 typedef struct s_sh
 {
 	char	*buf;
 	char	**lex;
+	t_comm	*comm;
+	
 }			t_sh;
 
 int		ft_error(t_sh *sh, int n);
