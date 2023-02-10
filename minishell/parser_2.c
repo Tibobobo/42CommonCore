@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:32:23 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 15:18:51 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 21:01:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	option_nbr(char **lex, int i)
 	int	count;
 
 	count = 0;
-	i++;
+	if (lex[i] != NULL && lex[i][0] != '|')
+		i++;
 	while (lex[i] != NULL && lex[i][0] != '|')
 	{
 		if (lex[i][0] != '<' && lex[i][0] != '>' && lex[i - 1][0] != '<'
@@ -50,12 +51,11 @@ void	get_command_args(t_sh *sh, t_comm *new, int i)
 
 	j = 0;
 	new->argv = NULL;
-	if (sh->lex[j] == NULL || sh->lex[j][0] == '|')
-		return ;
 	new->argv = malloc(sizeof(char *) * (option_nbr(sh->lex, i) + 1));
 	if (new->argv == NULL)
 		ft_error(sh, 1);
-	i++;
+	if (new->file != NULL)
+		i++;
 	while (sh->lex[i] != NULL && sh->lex[i][0] != '|')
 	{
 		if (sh->lex[i][0] != '<' && sh->lex[i][0] != '>'

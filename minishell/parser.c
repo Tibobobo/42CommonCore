@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 13:40:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:59:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,6 @@ void	parsing(t_sh *sh)
 		if (sh->lex[i] != NULL)
 			i++;
 	}
+	expand_variables(sh);
+	//clean simple and double quotes
 }

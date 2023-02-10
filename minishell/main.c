@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 15:13:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:45:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ int	main(int ac, char **av, char **env)
 	int		j;
 
 	(void)av;
-	(void)env;
 	(void)ac;
+	(void)env;
+	i = 0;
 	while (1)
 	{
 		i = 1;
