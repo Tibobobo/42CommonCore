@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 10:53:18 by tgrasset          #+#    #+#              #
-#    Updated: 2023/01/24 12:28:41 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/02/10 18:02:02 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME	=	philo
 
 CC		=	cc
 
-CFLAGS	=	-Wall -Wextra -Werror -pthread
+CFLAGS	= 	-Wall -Wextra -Werror -pthread
 
 ###############################################################################
 ########### RULES
