@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 20:45:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 22:24:25 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	main(int ac, char **av, char **env)
 				printf("%d  %s \n", sh.comm->out->doubl, sh.comm->out->name);
 				sh.comm->out = sh.comm->out->next;
 			}
+			printf("\n\n");
 			sh.comm = sh.comm->next;
 			i++;
 		}
