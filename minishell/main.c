@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 10:47:36 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:13:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_sh	sh;
 	int		i;
+	int		j;
 
 	(void)av;
 	(void)env;
@@ -90,14 +91,22 @@ int	main(int ac, char **av, char **env)
 		parsing(&sh);
 		while (sh.comm != NULL)
 		{
-			printf("COMMAND %d\n\n", i);
-			printf("IN\n\n");
+			j = 0;
+			printf("COMMAND %d :\n", i);
+			printf("%s\n", sh.comm->file);
+			printf("OPTIONS :\n");
+			while (sh.comm->argv[j] != NULL)
+			{
+				printf("%s\n", sh.comm->argv[j]);
+				j++;
+			}
+			printf("INPUT REDIRECT\n");
 			while (sh.comm->in != NULL)
 			{
 				printf("%d  %s \n", sh.comm->in->doubl, sh.comm->in->name);
 				sh.comm->in = sh.comm->in->next;
 			}
-			printf("OUT\n\n");
+			printf("OUTPUT REDIRECT\n");
 			while (sh.comm->out != NULL)
 			{
 				printf("%d  %s \n", sh.comm->out->doubl, sh.comm->out->name);

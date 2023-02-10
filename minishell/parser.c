@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 10:48:43 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:40:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,7 @@ int	add_command(t_sh *sh, int i)
 	new->in = NULL;
 	new->out = NULL;
 	get_redirections(sh, new, i);
-	// get_command_name(sh, new, i);
-	// get_command_args(sh, new, i);
+	get_command_args(sh, new, get_command_name(sh, new, i));
 	return (0);
 }
 

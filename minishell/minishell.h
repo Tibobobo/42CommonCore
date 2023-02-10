@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 10:31:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:16:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ void	word_token(t_sh *sh, int *i, int *j);
 char	*copy_token(char *s, int flag);
 void	parsing(t_sh *sh);
 void	free_comm(t_comm **comm);
+int		get_command_name(t_sh *sh, t_comm *new, int i);
+void	get_command_args(t_sh *sh, t_comm *new, int i);
 
 #endif
