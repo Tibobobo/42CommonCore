@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 12:27:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/07 12:36:06 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/10 10:39:35 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ void	free_lex(t_sh *sh)
 	int	i;
 
 	i = 0;
+	if (sh->lex == NULL)
+		return ;
 	while (sh->lex[i] != NULL)
 	{
 		free(sh->lex[i]);
 		i++;
 	}
 	free(sh->lex);
-	ft_error(sh, 1);
 }
 
 static void	skip_one_or_two(char *s, int *i)
