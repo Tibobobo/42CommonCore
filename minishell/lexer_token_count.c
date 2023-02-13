@@ -6,25 +6,25 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 12:27:01 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 09:56:04 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:23:16 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_lex(t_sh *sh)
+void	free_lex(char **lex)
 {
 	int	i;
 
 	i = 0;
-	if (sh->lex == NULL)
+	if (lex == NULL)
 		return ;
-	while (sh->lex[i] != NULL)
+	while (lex[i] != NULL)
 	{
-		free(sh->lex[i]);
+		free(lex[i]);
 		i++;
 	}
-	free(sh->lex);
+	free(lex);
 }
 
 static void	skip_one_or_two(char *s, int *i)

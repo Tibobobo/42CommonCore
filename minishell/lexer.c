@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 10:45:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 09:55:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:56:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,4 @@ void	lexing(t_sh *sh)
 		ft_error(sh, 1);
 	lex_loop(sh, &i, &j);
 	sh->lex[i] = NULL;
-	free(sh->buf);
 }

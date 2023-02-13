@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 15:14:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:55:40 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_sh
 int		ft_error(t_sh *sh, int n);
 void	lexing(t_sh *sh);
 int		token_count(char *s);
-void	free_lex(t_sh *sh);
+void	free_lex(char **lex);
 void	pipe_token(t_sh *sh, int *i, int *j);
 void	in_redir_token(t_sh *sh, int *i, int *j);
 void	out_redir_token(t_sh *sh, int *i, int *j);
@@ -69,7 +69,7 @@ void	quote_token(t_sh *sh, int *i, int *j, int type);
 void	word_token(t_sh *sh, int *i, int *j);
 char	*copy_token(char *s, int flag);
 void	parsing(t_sh *sh);
-void	free_comm(t_comm **comm);
+void	free_comm(t_comm *comm);
 int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i);
 void	expand_variables(t_sh *sh);

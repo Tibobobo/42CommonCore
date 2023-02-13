@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:20:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 15:33:41 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:19:05 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	quote_remove_2(char *new, char *str, int i, int j)
 			j++;
 		}
 	}
-	new[i] = '\0';
+	new[j] = '\0';
 }
 
 char	*quote_remove(char *str, t_sh *sh)
@@ -59,7 +59,8 @@ char	*quote_remove(char *str, t_sh *sh)
 			j += 2;
 			skip_quotes(str, &i, str[i]);
 		}
-		i++;
+		else
+			i++;
 	}
 	new = malloc(sizeof(char) * (ft_strlen(str) - j + 1));
 	if (new == NULL)

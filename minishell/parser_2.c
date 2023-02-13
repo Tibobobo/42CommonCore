@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:32:23 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 15:05:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:39:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	get_command_name(t_sh *sh, t_comm *new, int i)
 	int	j;
 
 	j = i;
+	new->file = NULL;
 	while (sh->lex[j] != NULL && sh->lex[j][0] != '|' && ((sh->lex[j][0] == '<'
 		|| sh->lex[j][0] == '>') || (j != i && ((sh->lex[j - 1][0] == '<')
 		|| sh->lex[j - 1][0] == '>'))))
@@ -41,7 +42,7 @@ int	get_command_name(t_sh *sh, t_comm *new, int i)
 	if (sh->lex[j] == NULL || sh->lex[j][0] == '|')
 		new->file = NULL;
 	else
-		new->file = sh->lex[j];
+		new->file = ft_strdup(sh->lex[j]);
 	return (j);
 }
 
@@ -61,12 +62,10 @@ void	get_command_args(t_sh *sh, t_comm *new, int i)
 		if (sh->lex[i][0] != '<' && sh->lex[i][0] != '>'
 				&& sh->lex[i - 1][0] != '<' && sh->lex[i - 1][0] != '>')
 		{
-			new->argv[j] = sh->lex[i];
+			new->argv[j] = ft_strdup(sh->lex[i]);
 			j++;
 		}
 		i++;
 	}
 	new->argv[j] = NULL;
 }
-
-//ATTENTION NOM JUSTE QUOTE CA VA PETER
