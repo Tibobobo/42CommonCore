@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:20:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 12:39:52 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:33:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,29 @@
 
 void	quote_remove_2(char *new, char *str, int i, int j)
 {
+	char	quote;
+
 	while (str[i] != '\0')
 	{
-		while (str[i] == 34 || str[i] == 39)
+		if ((str[i] == 34 && ft_strchr(&str[i + 1], 34) != NULL)
+			|| (str[i] == 39 && ft_strchr(&str[i + 1], 39) != NULL))
+		{
+			quote = str[i++];
+			while (str[i] != '\0' && str[i] != quote)
+			{
+				new[j] = str[i];
+				i++;
+				j++;
+			}
+			if (str[i] == quote)
+				i++;
+		}
+		else
+		{
+			new[j] = str[i];
 			i++;
-		new[j] = str[i];
-		i++;
-		j++;
+			j++;
+		}
 	}
 	new[i] = '\0';
 }
@@ -37,8 +53,12 @@ char	*quote_remove(char *str, t_sh *sh)
 		return (NULL);
 	while (str[i] != '\0')
 	{
-		if (str[i] == 34 || str[i] == 39)
-			j++;
+		if ((str[i] == 34 && ft_strchr(&str[i + 1], 34) != NULL)
+			|| (str[i] == 39 && ft_strchr(&str[i + 1], 39) != NULL))
+		{
+			j += 2;
+			skip_quotes(str, &i, str[i]);
+		}
 		i++;
 	}
 	new = malloc(sizeof(char) * (ft_strlen(str) - j + 1));
@@ -49,7 +69,7 @@ char	*quote_remove(char *str, t_sh *sh)
 	return (new);
 }
 
-void	clean_quotes(t_sh *sh)
+void	clean_paired_quotes(t_sh *sh)
 {
 	t_comm	*tmp;
 	t_redir	*tmp2;
