@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 09:27:12 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:00:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	expand_variables(t_sh *sh);
 int		remainder_length(char *str, int end);
 void	clean_quotes(t_sh *sh);
 void	skip_quotes(char *s, int *i, int type);
+int		check_syntax(char **lex, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 12:40:09 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 12:42:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,3 @@ void	expand_variables(t_sh *sh)
 		tmp = tmp->next;
 	}
 }
-// $? double dollar

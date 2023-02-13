@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 10:18:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:14:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,11 @@ void	get_redirections(t_sh *sh, t_comm *cmd, int i)
 	}
 }
 
-int	add_command(t_sh *sh, int i)
+void	add_command(t_sh *sh, int i)
 {
 	t_comm	*new;
 	t_comm	*tmp;
 
-	if (sh->lex[i][0] == '|')
-		return (1);
 	tmp = sh->comm;
 	new = malloc(sizeof(t_comm));
 	if (new == NULL)
@@ -114,7 +112,6 @@ int	add_command(t_sh *sh, int i)
 	new->out = NULL;
 	get_redirections(sh, new, i);
 	get_command_args(sh, new, get_command_name(sh, new, i));
-	return (0);
 }
 
 void	parsing(t_sh *sh)
@@ -123,13 +120,11 @@ void	parsing(t_sh *sh)
 
 	sh->comm = NULL;
 	i = 0;
+	if (sh->lex[0] != NULL && check_syntax(sh->lex, 1) != 0)
+		return (free_lex(sh));
 	while (sh->lex[i] != NULL)
 	{
-		if (add_command(sh, i) != 0)
-		{
-			free_comm(&sh->comm);
-			return ;
-		}
+		add_command(sh, i);
 		while (sh->lex[i] != NULL && sh->lex[i][0] != '|')
 			i++;
 		if (sh->lex[i] != NULL)
