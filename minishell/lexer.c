@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 10:45:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 10:38:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 09:55:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ int	word_length(char *s)
 
 	i = 0;
 	while (s[i] && s[i] != '|' && s[i] != '<' && s[i] != '>'
-		&& s[i] != ' ' && s[i] != '\t' && s[i] != '\n'
-		&& !(s[i] == 34 && ft_strchr(&s[i + 1], 34) != NULL)
-		&& !(s[i] == 39 && ft_strchr(&s[i + 1], 39) != NULL))
-		i++;
+		&& s[i] != ' ' && s[i] != '\t' && s[i] != '\n')
+	{
+		if ((s[i] == 34 && ft_strchr(&s[i + 1], 34) != NULL)
+			|| (s[i] == 39 && ft_strchr(&s[i + 1], 39) != NULL))
+			skip_quotes(s, &i, s[i]);
+		else
+			i++;
+	}
 	return (i);
 }
 
@@ -82,10 +86,6 @@ void	lex_loop(t_sh *sh, int *i, int *j)
 			in_redir_token(sh, i, j);
 		else if (sh->buf[*j] == '>')
 			out_redir_token(sh, i, j);
-		else if (sh->buf[*j] == 34 && ft_strchr(&sh->buf[*j + 1], 34) != NULL)
-			quote_token(sh, i, j, 34);
-		else if (sh->buf[*j] == 39 && ft_strchr(&sh->buf[*j + 1], 39) != NULL)
-			quote_token(sh, i, j, 39);
 		else
 			word_token(sh, i, j);
 		if (sh->lex[*i] == NULL)

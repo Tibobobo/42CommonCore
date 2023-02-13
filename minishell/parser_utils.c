@@ -6,32 +6,45 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:20:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 22:51:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 12:39:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	quote_remove_2(char *new, char *str, int i, int j)
+{
+	while (str[i] != '\0')
+	{
+		while (str[i] == 34 || str[i] == 39)
+			i++;
+		new[j] = str[i];
+		i++;
+		j++;
+	}
+	new[i] = '\0';
+}
+
 char	*quote_remove(char *str, t_sh *sh)
 {
 	char	*new;
 	int		i;
-	int		len;
-	
+	int		j;
+
 	i = 0;
-	len = ft_strlen(str);
-	if (!((str[0] == 34 && str[len - 1] == 34)
-		|| (str[0] == 39 && str[len - 1] == 39)))
-		return (str);
-	new = malloc(sizeof(char) * (len - 1));
-	if (new == NULL)
-		ft_error(sh, 1);
-	while (i < len - 2)
+	j = 0;
+	if (str == NULL)
+		return (NULL);
+	while (str[i] != '\0')
 	{
-		new[i] = str[i + 1];
+		if (str[i] == 34 || str[i] == 39)
+			j++;
 		i++;
 	}
-	new[i] = '\0';
+	new = malloc(sizeof(char) * (ft_strlen(str) - j + 1));
+	if (new == NULL)
+		ft_error(sh, 1);
+	quote_remove_2(new, str, 0, 0);
 	free(str);
 	return (new);
 }

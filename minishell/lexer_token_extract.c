@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 12:31:26 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/07 12:32:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 09:47:22 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,12 @@ void	word_token(t_sh *sh, int *i, int *j)
 	sh->lex[*i] = copy_token(&sh->buf[*j], 42);
 	while (sh->buf[*j] && sh->buf[*j] != '|' && sh->buf[*j] != '<'
 		&& sh->buf[*j] != '>' && sh->buf[*j] != ' ' && sh->buf[*j] != '\t'
-		&& sh->buf[*j] != '\n' && !(sh->buf[*j] == 34
-			&& ft_strchr(&sh->buf[*j + 1], 34) != NULL) && !(sh->buf[*j] == 39
-			&& ft_strchr(&sh->buf[*j + 1], 39) != NULL))
-		(*j)++;
+		&& sh->buf[*j] != '\n')
+	{	
+		if ((sh->buf[*j] == 34 && ft_strchr(&sh->buf[*j + 1], 34) != NULL)
+			|| (sh->buf[*j] == 39 && ft_strchr(&sh->buf[*j + 1], 39) != NULL))
+			skip_quotes(sh->buf, j, sh->buf[*j]);
+		else
+			(*j)++;
+	}
 }

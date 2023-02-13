@@ -6,13 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/10 22:21:37 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 12:40:09 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	append_exp(char *new, char *exp, int *i)
+static void	append_exp(char *new, char *exp, int *i)
 {
 	int	j;
 
@@ -25,7 +25,7 @@ void	append_exp(char *new, char *exp, int *i)
 	}
 }
 
-char	*replace_2(char *str, char *exp, int start, int end)
+static char	*replace_2(char *str, char *exp, int start, int end)
 {
 	char	*new;
 	int		i;
@@ -50,18 +50,15 @@ char	*replace_2(char *str, char *exp, int start, int end)
 	return (new);
 }
 
-char	*replace_var(char *str, t_sh *sh, int start)
+static char	*replace_var(char *str, t_sh *sh, int start)
 {
 	int		end;
 	char	var_name[1024];
 	char	*exp;
 
 	end = start + 1;
-	if (str == NULL)
-		return (NULL);
-	while (str[end] && str[end] != ' ' && str[end] != '\t'
-		&& str[end] != '\n' && str[end] != '$'
-		&& !(str[0] == '"' && str[end] == '"'))
+	while (str[end] && str[end] != ' ' && str[end] != '\t' && str[end] != '\n'
+		&& str[end] != '$' && str[end] != 34 && str[end] != 39)
 	{
 		var_name[end - start - 1] = str[end];
 		end++;
@@ -69,8 +66,6 @@ char	*replace_var(char *str, t_sh *sh, int start)
 			return (str + end);
 	}
 	var_name[end - start - 1] = '\0';
-	if (ft_strlen(var_name) == 0)
-		return (str + end);
 	exp = getenv(var_name);
 	str = replace_2(str, exp, start, end);
 	if (str == NULL)
@@ -78,21 +73,23 @@ char	*replace_var(char *str, t_sh *sh, int start)
 	return (str);
 }
 
-char	*var_check(char *str, t_sh *sh)
+static char	*var_check(char *str, t_sh *sh)
 {
 	int	i;
 
 	i = 0;
-	if (str == NULL || (str[0] == 39 && str[ft_strlen(str) - 1] == 39))
+	if (str == NULL)
 		return (str);
 	while (str[i] != '\0')
 	{
-		if (str[i] == '$' && str[i + 1] != '$' && str[i + 1] != ' '
+		if (str[i] == 39 && ft_strchr(&str[i + 1], 39) != NULL)
+			skip_quotes(str, &i, 39);
+		if (str[i] && str[i] == '$' && str[i + 1] != '$' && str[i + 1] != ' '
 			&& str[i + 1] != '\t' && str[i + 1] != '\n'
 			&& str[i + 1] != '\0')
 		{
 			str = replace_var(str, sh, i);
-			i = -1;
+			i--;
 		}
 		i++;
 	}
