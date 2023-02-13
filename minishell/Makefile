@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 14:58:06 by tgrasset          #+#    #+#              #
-#    Updated: 2023/02/13 16:09:18 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/02/13 18:06:54 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS	=	./main.c \
 			./var_expand.c \
 			./parser_utils.c \
 			./parser_syntax_check.c \
+			./free.c \
 			
 OBJS	=	$(SRCS:%.c=%.o)
 

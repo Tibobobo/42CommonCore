@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 10:45:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 15:56:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 17:50:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	lex_loop(t_sh *sh, int *i, int *j)
 			word_token(sh, i, j);
 		if (sh->lex[*i] == NULL)
 		{
-			free_lex(sh);
+			free_lex(sh->lex);
 			ft_error(sh, 1);
 		}
 		(*i)++;

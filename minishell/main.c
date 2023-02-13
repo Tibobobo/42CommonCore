@@ -6,111 +6,63 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 17:42:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:03:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redir(t_redir *in, t_redir *out)
+void	sig_handler_prompt(int signum)
 {
-	t_redir	*elem;
-	t_redir	*next_elem;
-
-	if (in != NULL)
+	if (signum == SIGINT)
 	{
-		elem = in;
-		while (elem != NULL)
-		{
-			next_elem = elem->next;
-			if (elem->name != NULL)
-				free(elem->name);
-			free(elem);
-			elem = next_elem;
-		}
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();         //$? = 130
 	}
-	if (out != NULL)
+	if (signum == SIGQUIT)
 	{
-		elem = out;
-		while (elem != NULL)
-		{
-			next_elem = elem->next;
-			if (elem->name != NULL)
-				free(elem->name);
-			free(elem);
-			elem = next_elem;
-		}
+		printf("\33[2K\r");
+		rl_on_new_line();
+		rl_redisplay();
 	}
-}
-
-void	free_comm(t_comm *comm)
-{
-	t_comm	*elem;
-	t_comm	*next_elem;
-
-	if (comm == NULL)
-		return ;
-	elem = comm;
-	while (elem != NULL)
-	{
-		next_elem = elem->next;
-		free_lex(elem->argv);
-		free_redir(elem->in, elem->out);
-		if (elem->file != NULL)
-			free(elem->file);
-		free(elem);
-		elem = next_elem;
-	}
-}
-
-int	ft_error(t_sh *sh, int n)
-{
-	if (sh->comm != NULL)
-		free_comm(sh->comm);
-	if (sh->buf != NULL)
-		free(sh->buf);
-	if (sh->lex != NULL)
-		free_lex(sh->lex);
-	rl_clear_history();
-	if (n == 1)
-		ft_putstr_fd("Malloc error\n", 2);
-	exit(-1);
-}
-
-void	free_all(t_sh *sh)
-{
-	if (sh->comm != NULL)
-		free_comm(sh->comm);
-	if (sh->buf != NULL)
-		free(sh->buf);
-	if (sh->lex != NULL)
-		free_lex(sh->lex);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_sh	sh;
-	// int		i;
-	// int		j;
 
 	(void)av;
 	(void)ac;
 	(void)env;
+	signal(SIGINT, sig_handler_prompt);
+	signal(SIGQUIT, sig_handler_prompt);
 	while (1)
 	{
 		sh.lex = NULL;
 		sh.comm = NULL;
 		sh.buf = readline("minishell $> ");
-		if (sh.buf[0] != '\0')
-			add_history(sh.buf);
-		if (ft_strncmp(sh.buf, "exit", 5) == 0)
+		if (sh.buf == NULL || ft_strncmp(sh.buf, "exit", 5) == 0)
 		{
 			rl_clear_history();
-			free(sh.buf);
+			if (sh.buf != NULL)
+				free(sh.buf);
+			printf("exit\n");
 			return (0);
 		}
+		if (sh.buf[0] != '\0')
+			add_history(sh.buf);
 		lexing(&sh);
 		parsing(&sh);
+		// if (sh.comm != NULL)
+		// 	execute(&sh);
+		free_all(&sh);
+	}
+	return (0);
+}
+
+
 		// i = 1;
 		// while (sh.comm != NULL)
 		// {
@@ -139,9 +91,3 @@ int	main(int ac, char **av, char **env)
 		// 	sh.comm = sh.comm->next;
 		// 	i++;
 		// }
-		// if (sh.comm != NULL)
-		// 	execute(&sh);
-		free_all(&sh);
-	}
-	return (0);
-}
