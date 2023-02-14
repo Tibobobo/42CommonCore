@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 20:03:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 18:48:16 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
-	(void)env;
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
 	while (1)
@@ -55,13 +54,12 @@ int	main(int ac, char **av, char **env)
 			add_history(sh.buf);
 		lexing(&sh);
 		parsing(&sh);
-		// if (sh.comm != NULL)
-		// 	execute(&sh);
+		if (sh.comm != NULL)
+			execution(&sh, env);
 		free_all(&sh);
 	}
 	return (0);
 }
-
 
 		// i = 1;
 		// while (sh.comm != NULL)
@@ -75,19 +73,13 @@ int	main(int ac, char **av, char **env)
 		// 		printf("%s\n", sh.comm->argv[j]);
 		// 		j++;
 		// 	}
-		// 	printf("INPUT REDIRECT\n");
-		// 	while (sh.comm->in != NULL)
+		// 	printf("REDIRECT\n");
+		// 	while (sh.comm->redir != NULL)
 		// 	{
-		// 		printf("%d  %s \n", sh.comm->in->doubl, sh.comm->in->name);
-		// 		sh.comm->in = sh.comm->in->next;
+		// 		printf("double: %d  output: %d   %s\n", sh.comm->redir->doubl, sh.comm->redir->output, sh.comm->redir->name);
+		// 		sh.comm->redir = sh.comm->redir->next;
 		// 	}
-		// 	printf("OUTPUT REDIRECT\n");
-		// 	while (sh.comm->out != NULL)
-		// 	{
-		// 		printf("%d  %s \n", sh.comm->out->doubl, sh.comm->out->name);
-		// 		sh.comm->out = sh.comm->out->next;
-		// 	}
-		// 	printf("\n\n");
+		// 	printf("\n");
 		// 	sh.comm = sh.comm->next;
 		// 	i++;
 		// }

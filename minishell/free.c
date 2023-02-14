@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:06:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 20:09:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:47:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	free_comm(t_comm *comm)
 	{
 		next_elem = elem->next;
 		free_lex(elem->argv);
-		free_redir(elem->in);
-        free_redir(elem->out);
+		free_redir(elem->redir);
 		if (elem->file != NULL)
 			free(elem->file);
 		free(elem);
@@ -54,15 +53,18 @@ void	free_comm(t_comm *comm)
 
 int	ft_error(t_sh *sh, int n)
 {
-	if (sh->comm != NULL)
-		free_comm(sh->comm);
-	if (sh->buf != NULL)
-		free(sh->buf);
-	if (sh->lex != NULL)
-		free_lex(sh->lex);
+	free_all(sh);
 	rl_clear_history();
 	if (n == 1)
-		ft_putstr_fd("Malloc error\n", 2);
+		ft_putendl_fd("Malloc error", 2);
+	else if (n == 2)
+		ft_putendl_fd("Open error", 2);
+	else if (n == 3)
+		ft_putendl_fd("Dup2 error", 2);
+	else if (n == 4)
+		ft_putendl_fd("Pipe error", 2);
+	else if (n == 5)
+		ft_putendl_fd("Fork error", 2);
 	exit(-1);
 }
 

@@ -6,62 +6,53 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 17:11:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:32:15 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_in_redir(t_sh *sh, t_comm *cmd, int i)
+void	assign_redir_values(t_sh *sh, t_redir *new, int i)
 {
-	t_redir	*new;
-	t_redir	*tmp;
-
-	tmp = cmd->in;
-	new = malloc(sizeof(t_redir));
-	if (new == NULL)
-		ft_error(sh, 1);
 	if (ft_strlen(sh->lex[i]) == 1)
 		new->doubl = 0;
 	else
 		new->doubl = 1;
+	if (sh->lex[i][0] == '<')
+		new->output = 0;
+	else
+		new->output = 1;
 	if (sh->lex[i + 1] == NULL || sh->lex[i + 1][0] == '<'
 		|| sh->lex[i + 1][0] == '>' || sh->lex[i + 1][0] == '|')
 		new->name = NULL;
-	else
-		new->name = ft_strdup(sh->lex[i + 1]);
-	new->next = NULL;
-	if (cmd->in == NULL)
-		cmd->in = new;
 	else
 	{
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;
+		new->name = ft_strdup(sh->lex[i + 1]);
+		if (new->name == NULL)
+			ft_error(sh, 1);
 	}
+	new->fd = -42;
+	new->next = NULL;
 }
 
-void	add_out_redir(t_sh *sh, t_comm *cmd, int i)
+void	add_redir(t_sh *sh, t_comm *cmd, int i)
 {
 	t_redir	*new;
 	t_redir	*tmp;
 
-	tmp = cmd->out;
+	tmp = cmd->redir;
 	new = malloc(sizeof(t_redir));
 	if (new == NULL)
 		ft_error(sh, 1);
-	if (ft_strlen(sh->lex[i]) == 1)
-		new->doubl = 0;
-	else
-		new->doubl = 1;
-	if (sh->lex[i + 1] == NULL || sh->lex[i + 1][0] == '<'
-		|| sh->lex[i + 1][0] == '>' || sh->lex[i + 1][0] == '|')
-		new->name = NULL;
-	else
-		new->name = ft_strdup(sh->lex[i + 1]);
-	new->next = NULL;
-	if (cmd->out == NULL)
-		cmd->out = new;
+	assign_redir_values(sh, new, i);
+	if (new->output == 0)
+		cmd->infile = 1;
+	if (new->output == 1)
+		cmd->outfile = 1;
+	if (cmd->redir == NULL)
+	{
+		cmd->redir = new;
+	}
 	else
 	{
 		while (tmp->next != NULL)
@@ -77,15 +68,8 @@ void	get_redirections(t_sh *sh, t_comm *cmd, int i)
 	j = i;
 	while (sh->lex[j] != NULL && sh->lex[j][0] != '|')
 	{
-		if (sh->lex[j][0] == '<')
-			add_in_redir(sh, cmd, j);
-		j++;
-	}
-	j = i;
-	while (sh->lex[j] != NULL && sh->lex[j][0] != '|')
-	{
-		if (sh->lex[j][0] == '>')
-			add_out_redir(sh, cmd, j);
+		if (sh->lex[j][0] == '<' || sh->lex[j][0] == '>')
+			add_redir(sh, cmd, j);
 		j++;
 	}
 }
@@ -108,10 +92,11 @@ void	add_command(t_sh *sh, int i)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	new->in = NULL;
-	new->out = NULL;
+	new->redir = NULL;
 	new->argv = NULL;
 	new->file = NULL;
+	new->infile = 0;
+	new->outfile = 0;
 	get_redirections(sh, new, i);
 	get_command_args(sh, new, get_command_name(sh, new, i));
 }

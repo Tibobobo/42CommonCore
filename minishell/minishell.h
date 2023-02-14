@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 18:07:06 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 19:47:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@
 typedef struct s_redir
 {
 	char			*name;
+	int				output;
 	int				doubl;
+	int				fd;
 	struct s_redir	*next;
 }			t_redir;
 
@@ -46,9 +48,11 @@ typedef struct s_comm
 {
 	char			*file;
 	char			**argv;
-	t_redir			*in;
-	t_redir			*out;
+	t_redir			*redir;
+	pid_t			pid;
 	struct s_comm	*next;
+	int				infile;
+	int				outfile;
 }			t_comm;
 
 typedef struct s_sh
@@ -78,5 +82,7 @@ void	clean_paired_quotes(t_sh *sh);
 void	skip_quotes(char *s, int *i, int type);
 int		check_syntax(char **lex, int i);
 void	free_all(t_sh *sh);
+int		redirections(t_comm *cmd, t_sh *sh);
+void	execution(t_sh *sh, char **env);
 
 #endif

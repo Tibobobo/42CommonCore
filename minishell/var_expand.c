@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 12:42:06 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:56:31 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,7 @@ void	expand_variables(t_sh *sh)
 		tmp->file = var_check(tmp->file, sh);
 		while (tmp->argv[++i] != NULL)
 			tmp->argv[i] = var_check(tmp->argv[i], sh);
-		tmp2 = tmp->in;
-		while (tmp2 != NULL)
-		{
-			tmp2->name = var_check(tmp2->name, sh);
-			tmp2 = tmp2->next;
-		}
-		tmp2 = tmp->out;
+		tmp2 = tmp->redir;
 		while (tmp2 != NULL)
 		{
 			tmp2->name = var_check(tmp2->name, sh);

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:32:23 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 20:06:40 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:45:33 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ int	get_command_name(t_sh *sh, t_comm *new, int i)
 	if (sh->lex[j] == NULL || sh->lex[j][0] == '|')
 		new->file = NULL;
 	else
+	{
 		new->file = ft_strdup(sh->lex[j]);
+		if (new->file == NULL)
+			ft_error(sh, 1);
+	}
 	return (j);
 }
 
@@ -63,6 +67,8 @@ void	get_command_args(t_sh *sh, t_comm *new, int i)
 				&& sh->lex[i - 1][0] != '<' && sh->lex[i - 1][0] != '>')
 		{
 			new->argv[j] = ft_strdup(sh->lex[i]);
+			if (new->argv[j] == NULL)
+				ft_error(sh, 1);
 			j++;
 		}
 		i++;

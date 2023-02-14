@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:20:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 17:19:05 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:58:13 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,7 @@ void	clean_paired_quotes(t_sh *sh)
 		tmp->file = quote_remove(tmp->file, sh);
 		while (tmp->argv[++i] != NULL)
 			tmp->argv[i] = quote_remove(tmp->argv[i], sh);
-		tmp2 = tmp->in;
-		while (tmp2 != NULL)
-		{
-			tmp2->name = quote_remove(tmp2->name, sh);
-			tmp2 = tmp2->next;
-		}
-		tmp2 = tmp->out;
+		tmp2 = tmp->redir;
 		while (tmp2 != NULL)
 		{
 			tmp2->name = quote_remove(tmp2->name, sh);
