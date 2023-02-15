@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 14:56:31 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:47:31 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,30 @@ static char	*replace_2(char *str, char *exp, int start, int end)
 	return (new);
 }
 
+int	get_var_name_len(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
+		&& str[i] != '$' && str[i] != 34 && str[i] != 39)
+		i++;
+	return (i);
+}
+
 static char	*replace_var(char *str, t_sh *sh, int start)
 {
 	int		end;
-	char	var_name[1024];
+	char	*var_name;
 	char	*exp;
 
 	end = start + 1;
+	var_name = malloc(sizeof(char) * (get_var_name_len(&str[end]) + 1));
 	while (str[end] && str[end] != ' ' && str[end] != '\t' && str[end] != '\n'
 		&& str[end] != '$' && str[end] != 34 && str[end] != 39)
 	{
 		var_name[end - start - 1] = str[end];
 		end++;
-		if (end - start > 1023)
-			return (str + end);
 	}
 	var_name[end - start - 1] = '\0';
 	exp = getenv(var_name);

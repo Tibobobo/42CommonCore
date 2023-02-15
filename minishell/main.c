@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 18:48:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:47:32 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	sig_handler_prompt(int signum)
 	}
 	if (signum == SIGQUIT)
 	{
-		printf("\33[2K\r");
-		rl_on_new_line();
-		rl_redisplay();
+			printf("\33[2K\r");
+			rl_on_new_line();
+			rl_redisplay();
 	}
 }
 
@@ -60,26 +60,3 @@ int	main(int ac, char **av, char **env)
 	}
 	return (0);
 }
-
-		// i = 1;
-		// while (sh.comm != NULL)
-		// {
-		// 	j = 0;
-		// 	printf("COMMAND %d :\n", i);
-		// 	printf("%s\n", sh.comm->file);
-		// 	printf("OPTIONS :\n");
-		// 	while (sh.comm->argv[j] != NULL)
-		// 	{
-		// 		printf("%s\n", sh.comm->argv[j]);
-		// 		j++;
-		// 	}
-		// 	printf("REDIRECT\n");
-		// 	while (sh.comm->redir != NULL)
-		// 	{
-		// 		printf("double: %d  output: %d   %s\n", sh.comm->redir->doubl, sh.comm->redir->output, sh.comm->redir->name);
-		// 		sh.comm->redir = sh.comm->redir->next;
-		// 	}
-		// 	printf("\n");
-		// 	sh.comm = sh.comm->next;
-		// 	i++;
-		// }

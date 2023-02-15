@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:06:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 19:47:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:54:00 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	free_comm(t_comm *comm)
 	{
 		next_elem = elem->next;
 		free_lex(elem->argv);
+		close_fds(elem);
 		free_redir(elem->redir);
 		if (elem->file != NULL)
 			free(elem->file);
@@ -66,6 +67,19 @@ int	ft_error(t_sh *sh, int n)
 	else if (n == 5)
 		ft_putendl_fd("Fork error", 2);
 	exit(-1);
+}
+
+void	close_fds(t_comm *cmd)
+{
+	t_redir	*redir;
+
+	redir = cmd->redir;
+	while (redir != NULL)
+	{
+		if (redir->fd != -42)
+			close (redir->fd);
+		redir = redir->next;
+	}
 }
 
 void	free_all(t_sh *sh)

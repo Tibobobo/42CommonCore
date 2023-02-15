@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 19:47:52 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:26:23 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ typedef struct s_sh
 	char	*buf;
 	char	**lex;
 	t_comm	*comm;
+	int		pipe_number;
 }			t_sh;
 
 int		ft_error(t_sh *sh, int n);
 void	lexing(t_sh *sh);
 int		token_count(char *s);
 void	free_lex(char **lex);
+void	close_fds(t_comm *cmd);
 void	pipe_token(t_sh *sh, int *i, int *j);
 void	in_redir_token(t_sh *sh, int *i, int *j);
 void	out_redir_token(t_sh *sh, int *i, int *j);

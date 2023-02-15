@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 19:50:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:28:50 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,18 @@ void    exec_command_2(t_comm *cmd, t_sh *sh, char **env)
 
 void    exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 {
+	if (cmd->file == NULL || cmd->file[0] == '\0')
+		return ;
 	cmd->pid = fork();
 	if (cmd->pid < 0)
-		ft_error(sh, 5);                    //mieux proteger
+		ft_error(sh, 5);
 	else if (cmd->pid == 0)
 	{
 		if (pipe_fd != NULL)
 		{
 			close(pipe_fd[0]);
 			if (dup2(pipe_fd[1], 1) < 0)
-				ft_error(sh, 3);            //mieux proteger
+				ft_error(sh, 3);
 			close(pipe_fd[1]);
 		}
 		exec_command_2(cmd, sh, env);
@@ -102,8 +104,21 @@ void    exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 	{
 		close(pipe_fd[1]);
 		if (dup2(pipe_fd[0], 0) < 0)
-			ft_error(sh, 3);                //mieux proteger
+			ft_error(sh, 3);
 		close(pipe_fd[0]);
+	}
+}
+
+void	wait_for_children(t_sh *sh)
+{
+	t_comm	*tmp;
+
+	tmp = sh->comm;
+	while (tmp != NULL)
+	{
+		if (tmp->file != NULL && tmp->file[0] != '\0')
+			waitpid(tmp->pid, NULL, 0);
+		tmp = tmp->next;
 	}
 }
 
@@ -124,12 +139,14 @@ void    execution(t_sh *sh, char **env)
 		if (cmd->outfile == 0 && cmd->next != NULL)
 		{
 			if (pipe(pipe_fd) < 0)
-				ft_error(sh, 4);            //mieux proteger
+				ft_error(sh, 4);
 			exec_command(cmd, sh, pipe_fd, env);
 		}
 		else
+		{
 			exec_command(cmd, sh, NULL, env);
+		}
 		cmd = cmd->next;
 	}
-	// wait_for_children(sh);
+	wait_for_children(sh);
 }

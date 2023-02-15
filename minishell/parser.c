@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 17:32:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:27:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	parsing(t_sh *sh)
 	int	i;
 
 	i = 0;
+	sh->pipe_number = 0;
 	if (sh->lex[0] != NULL && check_syntax(sh->lex, 1) != 0)
 		return ;
 	while (sh->lex[i] != NULL)
@@ -114,7 +115,10 @@ void	parsing(t_sh *sh)
 		while (sh->lex[i] != NULL && sh->lex[i][0] != '|')
 			i++;
 		if (sh->lex[i] != NULL)
+		{
 			i++;
+			sh->pipe_number++;
+		}
 	}
 	expand_variables(sh);
 	clean_paired_quotes(sh);

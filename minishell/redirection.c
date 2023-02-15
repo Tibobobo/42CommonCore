@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 19:49:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 14:24:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	input_file_check(t_sh *sh, t_redir *redir)
 	{
 		redir->fd = open(redir->name, O_RDONLY);
 		if (redir->fd < 0)
-			ft_error(sh, 2);            //mieux proteger
+			ft_error(sh, 2);
 		if (dup2(redir->fd, 0) < 0)
-			ft_error(sh, 3);            //mieux proteger
+			ft_error(sh, 3);
 		close(redir->fd);
 	}
 	return (0);
@@ -60,32 +60,37 @@ void	output_file_create(t_sh *sh, t_redir *redir)
 	{
 		redir->fd = open(redir->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (redir->fd < 0)
-			ft_error(sh, 2);            //mieux proteger
+			ft_error(sh, 2);
 	}
 	else
 	{
 		redir->fd = open(redir->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (redir->fd < 0)
-			ft_error(sh, 2);           //mieux proteger
+			ft_error(sh, 2);
 	}
 	if (is_last_redir(redir))
 	{
 		if (dup2(redir->fd, 1) < 0)
-			ft_error(sh, 3);            //mieux proteger
+			ft_error(sh, 3);
 		close(redir->fd);
 	}
 }
 
-void	close_fds(t_comm *cmd)
+void	here_doc(t_redir *redir)
 {
-	t_redir	*redir;
-
-	redir = cmd->redir;
-	while (redir != NULL)
+	char *line;
+	
+	while (1)
 	{
-		if (redir->fd != -42)
-			close (redir->fd);
-		redir = redir->next;
+		line = readline(">");
+		if (line != NULL && ft_strncmp(line, redir->name, ft_strlen(redir->name + 1)) == 0)
+		{
+			free(line);
+			break ;
+		}
+		if (is_last_redir(redir))
+			ft_putstr_fd(line, 1);
+		free(line);
 	}
 }
 
@@ -106,8 +111,8 @@ int	redirections(t_comm *cmd, t_sh *sh)
 				return (1);
 			}
 		}   
-		// else if (redir->doubl == 1 && redir->output == 0)       //here_doc a lancer meme si un input file est faux avant
-		//     here_doc(sh, redir);
+		else if (redir->doubl == 1 && redir->output == 0)       //here_doc a lancer meme si un input file est faux avant
+		    here_doc(redir);
 		else
 			output_file_create(sh, redir);
 		redir = redir->next;
