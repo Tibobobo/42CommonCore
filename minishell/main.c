@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 21:17:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:07:16 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	lex_parse_execute_free(t_sh *sh, char **env)
 	dup2(sh->stdin_save, 0);
 	if (sh->stdin_save < 0)
 		ft_error(sh, 3);
+	close(sh->stdin_save);
 }
 
 int	main(int ac, char **av, char **env)

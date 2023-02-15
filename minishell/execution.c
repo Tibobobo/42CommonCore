@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 21:08:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:13:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	execution(t_sh *sh, char **env)
 	cmd = sh->comm;
 	while (cmd != NULL)
 	{
-		if ((cmd->infile == 1 || cmd->outfile) == 1
+		if ((cmd->infile == 1 || cmd->outfile == 1)
 			&& redirections(cmd, sh) != 0)
 		{
 			cmd = cmd->next;

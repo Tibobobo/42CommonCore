@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 20:42:23 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:16:49 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	output_file_create(t_sh *sh, t_redir *redir)
 	{
 		if (dup2(redir->fd, 1) < 0)
 			ft_error(sh, 3);
-		close(redir->fd);
 	}
+	close(redir->fd);
 	return (0);
 }
 
