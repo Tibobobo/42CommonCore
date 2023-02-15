@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 20:54:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:43:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*copy_token(char *s, int flag);
 void	parsing(t_sh *sh);
 void	free_comm(t_comm *comm);
 int		get_command_name(t_sh *sh, t_comm *new, int i);
-void	get_command_args(t_sh *sh, t_comm *new, int i);
+void	get_command_args(t_sh *sh, t_comm *new, int i, int j);
 void	expand_variables(t_sh *sh);
 int		get_var_name_len(char *str);
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start);

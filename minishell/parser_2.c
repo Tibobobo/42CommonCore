@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:32:23 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 10:36:34 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:43:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ int	get_command_name(t_sh *sh, t_comm *new, int i)
 	return (j);
 }
 
-void	get_command_args(t_sh *sh, t_comm *new, int i)
+void	get_command_args(t_sh *sh, t_comm *new, int i, int j)
 {
-	int	j;
-
-	j = 0;
 	new->argv = NULL;
 	new->argv = malloc(sizeof(char *) * (option_nbr(sh->lex, i) + 1));
 	if (new->argv == NULL)

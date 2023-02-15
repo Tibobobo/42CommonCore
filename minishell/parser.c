@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 18:22:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:43:33 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	add_command(t_sh *sh, int i)
 	new->infile = 0;
 	new->outfile = 0;
 	get_redirections(sh, new, i);
-	get_command_args(sh, new, get_command_name(sh, new, i));
+	get_command_args(sh, new, get_command_name(sh, new, i), 0);
 }
 
 void	parsing(t_sh *sh)
