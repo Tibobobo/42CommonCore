@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 19:02:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:54:11 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,18 @@ void	free_comm(t_comm *comm);
 int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i);
 void	expand_variables(t_sh *sh);
+int		get_var_name_len(char *str);
+void	copy_nobrackets_var(char *str, char *var_name, int *end, int start);
 int		remainder_length(char *str, int end);
 void	clean_paired_quotes(t_sh *sh);
 void	skip_quotes(char *s, int *i, int type);
 int		check_syntax(char **lex, int i);
 void	free_all(t_sh *sh);
 int		redirections(t_comm *cmd, t_sh *sh);
+int		check_if_empty_str(char *str);
+int		is_last_redir(t_redir *redir);
 void	execution(t_sh *sh, char **env);
+void	command_error(t_sh *sh, char *cmd, int num);
+void	wait_for_children(t_sh *sh);
 
 #endif

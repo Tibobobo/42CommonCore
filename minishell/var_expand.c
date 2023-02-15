@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 11:47:31 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:24:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static char	*replace_2(char *str, char *exp, int start, int end)
 		new[i] = str[i];
 	if (exp != NULL)
 		append_exp(new, exp, &i);
+	if (str[end] && str[end] == '}')
+		end++;
 	while (str[end] != '\0')
 	{
 		new[i] = str[end];
@@ -50,17 +52,6 @@ static char	*replace_2(char *str, char *exp, int start, int end)
 	return (new);
 }
 
-int	get_var_name_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
-		&& str[i] != '$' && str[i] != 34 && str[i] != 39)
-		i++;
-	return (i);
-}
-
 static char	*replace_var(char *str, t_sh *sh, int start)
 {
 	int		end;
@@ -69,13 +60,18 @@ static char	*replace_var(char *str, t_sh *sh, int start)
 
 	end = start + 1;
 	var_name = malloc(sizeof(char) * (get_var_name_len(&str[end]) + 1));
-	while (str[end] && str[end] != ' ' && str[end] != '\t' && str[end] != '\n'
-		&& str[end] != '$' && str[end] != 34 && str[end] != 39)
+	if (str[end] == '{' && ft_strchr(str, '}') != NULL)
 	{
-		var_name[end - start - 1] = str[end];
 		end++;
+		while (str[end] != '}')
+		{
+			var_name[end - start - 2] = str[end];
+			end++;
+		}
+		var_name[end - start - 2] = '\0';
 	}
-	var_name[end - start - 1] = '\0';
+	else
+		copy_nobrackets_var(str, var_name, &end, start);
 	exp = getenv(var_name);
 	str = replace_2(str, exp, start, end);
 	if (str == NULL)

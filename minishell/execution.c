@@ -6,45 +6,34 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 18:16:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:08:45 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    command_error(t_sh *sh, char *cmd, int num)
+char	**split_paths(t_sh *sh, char *temp, char **paths, char *file)
 {
-	if (num == 1)
-	{
-		ft_putstr_fd("msh: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": Permission denied", 2);
-		free_all(sh);
-		exit (126);
-	}
-	else if (num == 2)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", 2);
-		free_all(sh);
-		exit (127);
-	}
-}
-
-char    *get_path(t_sh *sh, char *file, char **env)
-{
-	char    **paths;
-	char    *temp;
-	char    *path_try;
-	int     i;
-
-	(void)env;
 	temp = getenv("PATH");
 	if (temp == NULL)
 		command_error(sh, file, 2);
 	paths = ft_split(temp, ':');
 	if (paths == NULL)
 		ft_error(sh, 1);
+	return (paths);
+}
+
+char	*get_path(t_sh *sh, char *file, char **env)
+{
+	char	**paths;
+	char	*temp;
+	char	*path_try;
+	int		i;
+
+	(void)env;
+	temp = NULL;
+	paths = NULL;
+	paths = split_paths(sh, temp, paths, file);
 	i = 0;
 	while (paths[i] != NULL)
 	{
@@ -63,9 +52,9 @@ char    *get_path(t_sh *sh, char *file, char **env)
 	return (free_lex(paths), NULL);
 }
 
-void    exec_command_2(t_comm *cmd, t_sh *sh, char **env)
+void	exec_command_2(t_comm *cmd, t_sh *sh, char **env)
 {
-	char    *path;
+	char	*path;
 
 	if (ft_strchr(cmd->file, '/') != NULL)
 		path = cmd->file;
@@ -82,7 +71,7 @@ void    exec_command_2(t_comm *cmd, t_sh *sh, char **env)
 		command_error(sh, cmd->file, 2);
 }
 
-void    exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
+void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 {
 	if (cmd->file == NULL || cmd->file[0] == '\0')
 		return ;
@@ -104,40 +93,27 @@ void    exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 	{
 		close(pipe_fd[1]);
 		if (dup2(pipe_fd[0], 0) < 0)
-				ft_error(sh, 3);
+			ft_error(sh, 3);
 		close(pipe_fd[0]);
 	}
 	else
 		close(0);
 }
 
-void	wait_for_children(t_sh *sh)
+void	execution(t_sh *sh, char **env)
 {
-	t_comm	*tmp;
-
-	tmp = sh->comm;
-	while (tmp != NULL)
-	{
-		if (tmp->file != NULL && tmp->file[0] != '\0')
-			waitpid(tmp->pid, NULL, 0);
-		tmp = tmp->next;
-	}
-}
-
-void    execution(t_sh *sh, char **env)
-{
-	t_comm  *cmd;
-	int pipe_fd[2];
+	t_comm	*cmd;
+	int		pipe_fd[2];
 
 	cmd = sh->comm;
 	while (cmd != NULL)
 	{
-		if (cmd->infile == 1 || cmd->outfile == 1)
-			if (redirections(cmd, sh) != 0)
-			{
-				cmd = cmd->next;
-				continue ;
-			}
+		if ((cmd->infile == 1 || cmd->outfile) == 1
+			&& redirections(cmd, sh) != 0)
+		{
+			cmd = cmd->next;
+			continue ;
+		}
 		if (cmd->outfile == 0 && cmd->next != NULL)
 		{
 			if (pipe(pipe_fd) < 0)

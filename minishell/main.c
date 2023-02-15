@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 19:02:37 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:17:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,25 @@ void	sig_handler_prompt(int signum)
 	}
 	if (signum == SIGQUIT)
 	{
-			printf("\33[2K\r");
-			rl_on_new_line();
-			rl_redisplay();
+		printf("\33[2K\r");
+		rl_on_new_line();
+		rl_redisplay();
 	}
+}
+
+void	lex_parse_execute_free(t_sh *sh, char **env)
+{
+	lexing(sh);
+	parsing(sh);
+	sh->stdin_save = dup(0);
+	if (sh->stdin_save < 0)
+		ft_error(sh, 3);
+	if (sh->comm != NULL)
+		execution(sh, env);
+	free_all(sh);
+	dup2(sh->stdin_save, 0);
+	if (sh->stdin_save < 0)
+		ft_error(sh, 3);
 }
 
 int	main(int ac, char **av, char **env)
@@ -46,21 +61,11 @@ int	main(int ac, char **av, char **env)
 			if (sh.buf != NULL)
 				free(sh.buf);
 			printf("exit\n");
-			return (0);
+			break ;
 		}
 		if (sh.buf[0] != '\0')
 			add_history(sh.buf);
-		lexing(&sh);
-		parsing(&sh);
-		sh.stdin_save = dup(0);
-		if (sh.stdin_save < 0)
-			ft_error(&sh, 3);
-		if (sh.comm != NULL)
-			execution(&sh, env);
-		free_all(&sh);
-		dup2(sh.stdin_save, 0);
-		if (sh.stdin_save < 0)
-			ft_error(&sh, 3);
+		lex_parse_execute_free(&sh, env);
 	}
 	return (0);
 }

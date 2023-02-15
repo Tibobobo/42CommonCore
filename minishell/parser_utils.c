@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:20:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/14 14:58:13 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:09:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,4 @@ void	clean_paired_quotes(t_sh *sh)
 		}
 		tmp = tmp->next;
 	}
-}
-
-int	remainder_length(char *str, int end)
-{
-	int	i;
-	int	j;
-
-	i = end;
-	j = 0;
-	while (str[end] != '\0')
-	{
-		end++;
-		j++;
-	}
-	return (j);
 }
