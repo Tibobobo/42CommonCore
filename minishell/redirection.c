@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 14:24:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:00:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,15 @@ int	input_file_check(t_sh *sh, t_redir *redir)
 	return (0);
 }
 
-void	output_file_create(t_sh *sh, t_redir *redir)
+int	output_file_create(t_sh *sh, t_redir *redir)
 {
+	if (redir->name != NULL && redir->name[0] == '\0')
+	{
+		ft_putstr_fd("msh: ", 2);
+		ft_putstr_fd(redir->name, 2);
+		ft_putendl_fd(": No such file or directory", 2);  // $? = 1
+		return (1);
+	}
 	if (redir->doubl == 0)
 	{
 		redir->fd = open(redir->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -74,6 +81,7 @@ void	output_file_create(t_sh *sh, t_redir *redir)
 			ft_error(sh, 3);
 		close(redir->fd);
 	}
+	return (0);
 }
 
 void	here_doc(t_redir *redir)
@@ -111,10 +119,14 @@ int	redirections(t_comm *cmd, t_sh *sh)
 				return (1);
 			}
 		}   
-		else if (redir->doubl == 1 && redir->output == 0)       //here_doc a lancer meme si un input file est faux avant
+		else if (redir->doubl == 1 && redir->output == 0)
 		    here_doc(redir);
 		else
-			output_file_create(sh, redir);
+			if (output_file_create(sh, redir) != 0)
+			{
+				close_fds(cmd);
+				return (1);
+			}
 		redir = redir->next;
 	} 
 	return (0);

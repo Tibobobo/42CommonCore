@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 15:28:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:16:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ void    exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 	{
 		close(pipe_fd[1]);
 		if (dup2(pipe_fd[0], 0) < 0)
-			ft_error(sh, 3);
+				ft_error(sh, 3);
 		close(pipe_fd[0]);
 	}
+	else
+		close(0);
 }
 
 void	wait_for_children(t_sh *sh)
@@ -143,9 +145,7 @@ void    execution(t_sh *sh, char **env)
 			exec_command(cmd, sh, pipe_fd, env);
 		}
 		else
-		{
 			exec_command(cmd, sh, NULL, env);
-		}
 		cmd = cmd->next;
 	}
 	wait_for_children(sh);

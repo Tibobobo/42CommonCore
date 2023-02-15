@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 15:27:34 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:22:15 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	parsing(t_sh *sh)
 
 	i = 0;
 	sh->pipe_number = 0;
+	sh->comm = NULL;
 	if (sh->lex[0] != NULL && check_syntax(sh->lex, 1) != 0)
 		return ;
 	while (sh->lex[i] != NULL)

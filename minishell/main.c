@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 13:47:32 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:02:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, sig_handler_prompt);
 	while (1)
 	{
-		sh.lex = NULL;
-		sh.comm = NULL;
 		sh.buf = readline("minishell $> ");
 		if (sh.buf == NULL || ft_strncmp(sh.buf, "exit", 5) == 0)
 		{
@@ -54,9 +52,15 @@ int	main(int ac, char **av, char **env)
 			add_history(sh.buf);
 		lexing(&sh);
 		parsing(&sh);
+		sh.stdin_save = dup(0);
+		if (sh.stdin_save < 0)
+			ft_error(&sh, 3);
 		if (sh.comm != NULL)
 			execution(&sh, env);
 		free_all(&sh);
+		dup2(sh.stdin_save, 0);
+		if (sh.stdin_save < 0)
+			ft_error(&sh, 3);
 	}
 	return (0);
 }

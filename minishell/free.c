@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:06:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 10:54:00 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:37:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,7 @@ void	free_all(t_sh *sh)
 		free(sh->buf);
 	if (sh->lex != NULL)
 		free_lex(sh->lex);
+	sh->lex = NULL;
+	sh->comm = NULL;
+	sh->buf = NULL;
 }
