@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 15:23:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:58:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,66 @@ void	exec_in_pipe(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env)
 	exec_command(cmd, sh, pipe_fd, env);
 }
 
+void	exec_outfile_pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env)
+{
+	if (cmd->file == NULL || cmd->file[0] == '\0')
+		return ;
+	cmd->pid = fork();
+	if (cmd->pid < 0)
+		ft_error(sh, 5);
+	else if (cmd->pid == 0)
+		exec_command_2(cmd, sh, env);
+	else
+	{
+		if (pipe(pipe_fd) < 0)
+			ft_error(sh, 4);
+		cmd->pid = fork();
+		if (cmd->pid < 0)
+			ft_error(sh, 5);
+		else if (cmd->pid == 0)
+		{
+			close(pipe_fd[0]);
+			if (dup2(pipe_fd[1], 1) < 0)
+				ft_error(sh, 3);
+			close(pipe_fd[1]);
+			write(1, "", 0);
+			exit(0);
+		}
+		else
+		{
+			close(pipe_fd[1]);
+			if (dup2(pipe_fd[0], 0) < 0)
+				ft_error(sh, 3);
+			close(pipe_fd[0]);
+		}
+	}
+}
+
+// void	pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd)
+// {
+// 	if (cmd->file == NULL || cmd->file[0] == '\0')
+// 		return ;
+// 	cmd->pid = fork();
+// 	if (cmd->pid < 0)
+// 		ft_error(sh, 5);
+// 	else if (cmd->pid == 0)
+// 	{
+// 		close(pipe_fd[0]);
+// 		if (dup2(pipe_fd[1], 1) < 0)
+// 			ft_error(sh, 3);									MARCHE PAS
+// 		close(pipe_fd[1]);
+// 		write(1, "", 0);
+// 		exit(0);
+// 	}
+// 	else if (cmd->pid != 0 && pipe_fd != NULL)
+// 	{
+// 		close(pipe_fd[1]);
+// 		if (dup2(pipe_fd[0], 0) < 0)
+// 			ft_error(sh, 3);
+// 		close(pipe_fd[0]);
+// 	}
+// }
+
 void	execution(t_sh *sh, char **env)
 {
 	t_comm	*cmd;
@@ -116,10 +176,13 @@ void	execution(t_sh *sh, char **env)
 		if ((cmd->infile == 1 || cmd->outfile == 1)
 			&& redirections(cmd, sh) != 0)
 		{
+			pipe_0(sh, pipe_fd, cmd);					//MARCHE PASSSS
 			cmd = cmd->next;
 			continue ;
 		}
-		if (cmd->outfile == 0 && cmd->next != NULL)
+		if (cmd->outfile == 1 && cmd->next != NULL)
+			exec_outfile_pipe_0(sh, pipe_fd, cmd, env);
+		else if (cmd->outfile == 0 && cmd->next != NULL)
 			exec_in_pipe(sh, pipe_fd, cmd, env);
 		else
 			exec_command(cmd, sh, NULL, env);
