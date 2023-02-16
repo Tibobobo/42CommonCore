@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:06:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 17:37:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:31:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ int	ft_error(t_sh *sh, int n)
 	else if (n == 2)
 		ft_putendl_fd("Open error", 2);
 	else if (n == 3)
-		ft_putendl_fd("Dup2 error", 2);
+		ft_putendl_fd("Dup error", 2);
 	else if (n == 4)
 		ft_putendl_fd("Pipe error", 2);
 	else if (n == 5)
 		ft_putendl_fd("Fork error", 2);
+	else if (n == 6)
+		ft_putendl_fd("Stat error", 2);
 	exit(-1);
 }
 

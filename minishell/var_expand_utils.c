@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:08:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 20:27:17 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 11:10:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@ int	get_var_name_len(char *str)
 		&& str[i] != '$' && str[i] != 34 && str[i] != 39)
 		i++;
 	return (i);
+}
+
+void	copy_brackets_var(char *str, char *var_name, int *end, int start)
+{
+	(*end)++;
+	while (str[*end] != '}')
+	{
+		var_name[*end - start - 2] = str[*end];
+		(*end)++;
+	}
+	var_name[*end - start - 2] = '\0';
 }
 
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start)

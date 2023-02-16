@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 22:07:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:28:22 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ void	lex_parse_execute_free(t_sh *sh, char **env)
 	if (sh->stdin_save < 0)
 		ft_error(sh, 3);
 	if (sh->comm != NULL)
+	{
 		execution(sh, env);
+		wait_for_children(sh);
+	}
 	free_all(sh);
-	dup2(sh->stdin_save, 0);
-	if (sh->stdin_save < 0)
+	if (dup2(sh->stdin_save, 0) < 0)
 		ft_error(sh, 3);
 	close(sh->stdin_save);
 }
@@ -51,11 +53,12 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	sh.stdin_save = -42;
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
 	while (1)
 	{
-		sh.buf = readline("minishell $> ");
+		sh.buf = readline("\033[0;32mminishell $> \033[0;m");
 		if (sh.buf == NULL || ft_strncmp(sh.buf, "exit", 5) == 0)
 		{
 			rl_clear_history();

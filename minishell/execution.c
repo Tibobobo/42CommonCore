@@ -6,22 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 22:13:39 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:28:14 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**split_paths(t_sh *sh, char *temp, char **paths, char *file)
-{
-	temp = getenv("PATH");
-	if (temp == NULL)
-		command_error(sh, file, 2);
-	paths = ft_split(temp, ':');
-	if (paths == NULL)
-		ft_error(sh, 1);
-	return (paths);
-}
 
 char	*get_path(t_sh *sh, char *file, char **env)
 {
@@ -56,19 +45,25 @@ void	exec_command_2(t_comm *cmd, t_sh *sh, char **env)
 {
 	char	*path;
 
+	close(cmd->stdout_save);
+	close(sh->stdin_save);
 	if (ft_strchr(cmd->file, '/') != NULL)
-		path = cmd->file;
+	{
+		path = ft_strdup(cmd->file);
+		if (path == NULL)
+			ft_error(sh, 1);
+	}
 	else
 		path = get_path(sh, cmd->file, env);
 	if (path != NULL && access(path, X_OK) == 0)
-		execve(path, cmd->argv, env);
-	else if (path != NULL && access(path, F_OK) == 0)
 	{
-		free(path);
-		command_error(sh, cmd->file, 1);
+		execve(path, cmd->argv, env);
+		command_error(sh, cmd->file, 3, path);
 	}
+	else if (path != NULL && access(path, F_OK) == 0)
+		command_error(sh, cmd->file, 1, path);
 	else
-		command_error(sh, cmd->file, 2);
+		command_error(sh, cmd->file, 2, path);
 }
 
 void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
@@ -100,6 +95,13 @@ void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 		close(0);
 }
 
+void	exec_in_pipe(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env)
+{
+	if (pipe(pipe_fd) < 0)
+		ft_error(sh, 4);
+	exec_command(cmd, sh, pipe_fd, env);
+}
+
 void	execution(t_sh *sh, char **env)
 {
 	t_comm	*cmd;
@@ -108,6 +110,9 @@ void	execution(t_sh *sh, char **env)
 	cmd = sh->comm;
 	while (cmd != NULL)
 	{
+		cmd->stdout_save = dup(1);
+		if (cmd->stdout_save < 0)
+			ft_error(sh, 3);
 		if ((cmd->infile == 1 || cmd->outfile == 1)
 			&& redirections(cmd, sh) != 0)
 		{
@@ -115,14 +120,13 @@ void	execution(t_sh *sh, char **env)
 			continue ;
 		}
 		if (cmd->outfile == 0 && cmd->next != NULL)
-		{
-			if (pipe(pipe_fd) < 0)
-				ft_error(sh, 4);
-			exec_command(cmd, sh, pipe_fd, env);
-		}
+			exec_in_pipe(sh, pipe_fd, cmd, env);
 		else
 			exec_command(cmd, sh, NULL, env);
+		close(1);
+		if (dup2(cmd->stdout_save, 1) < 0)
+			ft_error(sh, 3);
+		close(cmd->stdout_save);
 		cmd = cmd->next;
 	}
-	wait_for_children(sh);
 }

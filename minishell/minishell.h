@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 22:09:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:08:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_comm
 	struct s_comm	*next;
 	int				infile;
 	int				outfile;
+	int				stdout_save;
 }			t_comm;
 
 typedef struct s_sh
@@ -81,6 +82,7 @@ int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i, int j);
 void	expand_variables(t_sh *sh);
 int		get_var_name_len(char *str);
+void	copy_brackets_var(char *str, char *var_name, int *end, int start);
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start);
 int		remainder_length(char *str, int end);
 void	clean_paired_quotes(t_sh *sh);
@@ -91,7 +93,8 @@ int		redirections(t_comm *cmd, t_sh *sh);
 int		check_if_empty_str(char *str);
 int		is_last_redir(t_redir *redir);
 void	execution(t_sh *sh, char **env);
-void	command_error(t_sh *sh, char *cmd, int num);
+char	**split_paths(t_sh *sh, char *temp, char **paths, char *file);
+void	command_error(t_sh *sh, char *cmd, int num, char *path);
 void	wait_for_children(t_sh *sh);
 
 #endif

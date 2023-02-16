@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 20:24:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 11:09:45 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,14 @@ static char	*replace_var(char *str, t_sh *sh, int start)
 
 	end = start + 1;
 	var_name = malloc(sizeof(char) * (get_var_name_len(&str[end]) + 1));
+	if (var_name == NULL)
+		ft_error(sh, 1);
 	if (str[end] == '{' && ft_strchr(str, '}') != NULL)
-	{
-		end++;
-		while (str[end] != '}')
-		{
-			var_name[end - start - 2] = str[end];
-			end++;
-		}
-		var_name[end - start - 2] = '\0';
-	}
+		copy_brackets_var(str, var_name, &end, start);
 	else
 		copy_nobrackets_var(str, var_name, &end, start);
 	exp = getenv(var_name);
+	free(var_name);
 	str = replace_2(str, exp, start, end);
 	if (str == NULL)
 		ft_error(sh, 1);
