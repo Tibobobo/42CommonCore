@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 15:24:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:27:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	redirections(t_comm *cmd, t_sh *sh)
 			if (input_file_check(sh, redir) != 0)
 			{
 				close_fds(cmd);
+				close(cmd->stdout_save);
 				return (1);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 12:28:22 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:23:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
-	sh.stdin_save = -42;
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
 	while (1)
