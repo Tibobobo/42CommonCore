@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 14:24:58 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:32:02 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_comm
 	struct s_comm	*next;
 	int				infile;
 	int				outfile;
+	int				in_out_fail;
 	int				stdout_save;
 }			t_comm;
 
@@ -78,6 +79,7 @@ void	word_token(t_sh *sh, int *i, int *j);
 char	*copy_token(char *s, int flag);
 void	parsing(t_sh *sh);
 void	free_comm(t_comm *comm);
+void	assign_cmd_value(t_comm *new);
 int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i, int j);
 void	expand_variables(t_sh *sh);

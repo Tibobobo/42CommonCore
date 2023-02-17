@@ -6,11 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 16:23:41 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:32:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_ret_val = 0;
 
 void	sig_handler_prompt(int signum)
 {
@@ -19,7 +21,8 @@ void	sig_handler_prompt(int signum)
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();         //$? = 130
+		rl_redisplay();
+		g_ret_val = 130;
 	}
 	if (signum == SIGQUIT)
 	{
@@ -53,6 +56,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	g_ret_val = 0;
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
 	while (1)

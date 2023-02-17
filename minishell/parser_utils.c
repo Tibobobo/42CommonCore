@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:20:53 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/15 20:09:18 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:32:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,16 @@ void	clean_paired_quotes(t_sh *sh)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	assign_cmd_value(t_comm *new)
+{
+	new->redir = NULL;
+	new->argv = NULL;
+	new->file = NULL;
+	new->in_out_fail = 0;
+	new->infile = 0;
+	new->outfile = 0;
+	new->pid = -42;
+	new->stdout_save = -42;
 }

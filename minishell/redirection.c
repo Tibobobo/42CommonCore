@@ -6,11 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 14:24:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:28:30 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_ret_val;
 
 int	input_file_check(t_sh *sh, t_redir *redir)
 {
@@ -18,14 +20,14 @@ int	input_file_check(t_sh *sh, t_redir *redir)
 	{
 		ft_putstr_fd("msh: ", 2);
 		ft_putstr_fd(redir->name, 2);
-		ft_putendl_fd(": No such file or directory", 2);  // $? = 1
+		ft_putendl_fd(": No such file or directory", 2);
 		return (1);
 	}
 	else if (access(redir->name, R_OK) != 0)
 	{
 		ft_putstr_fd("msh: ", 2);
 		ft_putstr_fd(redir->name, 2);
-		ft_putendl_fd(": Permission denied", 2);          // $? = 1
+		ft_putendl_fd(": Permission denied", 2);
 		return (1);
 	}
 	if (is_last_redir(redir))
@@ -42,7 +44,7 @@ int	input_file_check(t_sh *sh, t_redir *redir)
 
 int	output_file_create(t_sh *sh, t_redir *redir, t_comm *cmd)
 {
-	if (check_if_empty_str(redir->name) != 0)			// $? = 1
+	if (check_if_empty_str(redir->name) != 0)
 		return (1);
 	if (redir->doubl == 0)
 		redir->fd = open(redir->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -52,7 +54,7 @@ int	output_file_create(t_sh *sh, t_redir *redir, t_comm *cmd)
 	{
 		ft_putstr_fd("msh: ", 2);
 		ft_putstr_fd(redir->name, 2);
-		ft_putendl_fd(": Permission denied", 2);          // $? = 1
+		ft_putendl_fd(": Permission denied", 2);
 		return (1);
 	}
 	if (is_last_redir(redir))
@@ -75,6 +77,8 @@ int	check_output_redir(t_comm *cmd, t_sh *sh)
 		{
 			close_fds(cmd);
 			close(cmd->stdout_save);
+			cmd->in_out_fail = 1;
+			g_ret_val = 1;
 			return (1);
 		}
 		redir = redir->next;
@@ -97,6 +101,8 @@ int	redirections(t_comm *cmd, t_sh *sh)
 			{
 				close_fds(cmd);
 				close(cmd->stdout_save);
+				cmd->in_out_fail = 1;
+				g_ret_val = 1;
 				return (1);
 			}
 		}

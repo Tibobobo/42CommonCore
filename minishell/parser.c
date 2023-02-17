@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 13:03:03 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:31:40 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,7 @@ void	add_command(t_sh *sh, int i)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	new->redir = NULL;
-	new->argv = NULL;
-	new->file = NULL;
-	new->infile = 0;
-	new->outfile = 0;
-	new->stdout_save = -42;
+	assign_cmd_value(new);
 	get_redirections(sh, new, i);
 	get_command_args(sh, new, get_command_name(sh, new, i), 0);
 }

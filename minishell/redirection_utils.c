@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:33:56 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 14:25:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:29:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	here_doc(t_sh *sh, t_redir *redir)
 	redir->fd = open("/tmp/hd", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (redir->fd < 0)
 	{
-		ft_putendl_fd("msh: heredoc: Permission denied", 2);          // $? = 1
+		ft_putendl_fd("msh: heredoc: Permission denied", 2);
 		return ;
 	}
 	dup2(sh->stdin_save, 0);

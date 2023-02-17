@@ -6,34 +6,29 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 11:19:54 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:26:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern int	g_ret_val;
+
 void	wait_for_children(t_sh *sh)
 {
 	t_comm	*tmp;
-	int		i;
+	int		status;
 
-	i = 0;
 	tmp = sh->comm;
 	while (tmp != NULL)
 	{
-		if (tmp->file != NULL
-			&& tmp->outfile == 1 && tmp->next != NULL)
-			i = i + 2;
-		else if (tmp->file != NULL)
-			i++;
-		else if (tmp->next != NULL)
-			i++;
+		if (tmp->pid != -42)
+			waitpid(tmp->pid, &status, 0);
+		if (tmp->outfile == 1 && tmp->next != NULL)
+			wait(NULL);
+		if (tmp->next == NULL && tmp->in_out_fail == 0)
+			g_ret_val = WEXITSTATUS(status);
 		tmp = tmp->next;
-	}
-	while (i > 0)
-	{
-		wait(NULL);
-		i--;
 	}
 }
 
