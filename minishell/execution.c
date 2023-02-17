@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 11:14:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:24:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ void	execution(t_sh *sh, char **env)
 		cmd->stdout_save = dup(1);
 		if (cmd->stdout_save < 0)
 			ft_error(sh, 3);
-		if (redirections(cmd, sh) != 0 || cmd->file == NULL)
+		if (redirections(cmd, sh) != 0 || cmd->file == NULL
+			|| (cmd->outfile == 0 && cmd->next != NULL && cmd->next->infile == 1))
 		{
 			if (cmd->next != NULL)
 				pipe_0(sh, pipe_fd, cmd);

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 11:29:37 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 13:42:11 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,33 +67,37 @@ int	output_file_create(t_sh *sh, t_redir *redir, t_comm *cmd)
 void	here_doc(t_sh *sh, t_redir *redir)
 {
 	char	*line;
-	pid_t	pid;
-
+	
 	line = NULL;
-	if (is_last_redir(redir))
+	if (is_last_redir(redir) == 0)
+		return ;
+	redir->fd = open("/tmp/hd", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (redir->fd < 0)
 	{
-		pid = fork();
-		if (pid < 0)
-			ft_error(sh, 4);
-		if (pid != 0)
-		{
-			waitpid(pid, NULL, 0);
-			return ;
-		}
+		ft_putendl_fd("msh: heredoc: Permission denied", 2);          // $? = 1
+		return ;
 	}
+	dup2(sh->stdin_save, 0);
 	while (1)
 	{
 		line = readline(">");
-		if (line != NULL
+		if (line != NULL 
 			&& ft_strncmp(line, redir->name, ft_strlen(redir->name + 1)) == 0)
 		{
 			free(line);
-			exit (0);
+			break ;
 		}
-		if (is_last_redir(redir))
-			ft_putstr_fd(line, 1);
+		ft_putendl_fd(line, redir->fd);
 		free(line);
 	}
+	close(redir->fd);
+	redir->fd = open("/tmp/hd", O_RDONLY);
+	if (redir->fd < 0)
+		ft_error(sh, 2);
+	if (dup2(redir->fd, 0) < 0)
+		ft_error(sh, 3);
+	close(redir->fd);
+	unlink("/tmp/hd");
 }
 
 int	redirections(t_comm *cmd, t_sh *sh)
@@ -116,9 +120,15 @@ int	redirections(t_comm *cmd, t_sh *sh)
 		}
 		else if (redir->doubl == 1 && redir->output == 0)
 			here_doc(sh, redir);
-		else if (output_file_create(sh, redir, cmd) != 0)
+		redir = redir->next;
+	}
+	redir = cmd->redir;
+	while (redir != NULL)
+	{
+		if (redir->output == 1 && output_file_create(sh, redir, cmd) != 0)
 		{
 			close_fds(cmd);
+			close(cmd->stdout_save);
 			return (1);
 		}
 		redir = redir->next;
