@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:06:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 15:28:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:56:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	ft_error(t_sh *sh, int n)
 		ft_putendl_fd("Fork error", 2);
 	else if (n == 6)
 		ft_putendl_fd("Stat error", 2);
+	else if (n == 7)
+		ft_putendl_fd("Wait error", 2);
 	exit(-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 17:39:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:21:12 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*replace_var(char *str, t_sh *sh, int start)
 	if (var_name[0] == '?' && var_name[1] == '\0')
 	{
 		free(var_name);
-		return (replace_by_ret_value(sh, str, start, start + 2));
+		return (replace_by_ret_value(sh, str, start, end));
 	}
 	exp = getenv(var_name);
 	free(var_name);

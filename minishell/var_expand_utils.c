@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:08:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 17:39:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:23:22 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ char	*replace_by_ret_value(t_sh *sh, char *str, int start, int end)
 	exp = ft_itoa(g_ret_val);
 	if (exp == NULL)
 		ft_error(sh, 1);
+	if (str[start + 1] == '?')
+		end++;
 	str = replace_2(str, exp, start, end);
 	if (str == NULL)
 		ft_error(sh, 1);
