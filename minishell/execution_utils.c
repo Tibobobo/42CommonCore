@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 17:47:39 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:19:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ void	wait_for_children(t_sh *sh)
 	tmp = sh->comm;
 	while (tmp != NULL)
 	{
-		if (tmp->file != NULL && tmp->file[0] != '\0'
+		if (tmp->file != NULL
 			&& tmp->outfile == 1 && tmp->next != NULL)
 			i = i + 2;
-		else if (tmp->file != NULL && tmp->file[0] != '\0')
+		else if (tmp->file != NULL)
+			i++;
+		else if (tmp->next != NULL)
 			i++;
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 16:27:12 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 11:29:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,24 @@ int	input_file_check(t_sh *sh, t_redir *redir)
 	return (0);
 }
 
-int	output_file_create(t_sh *sh, t_redir *redir)
+int	output_file_create(t_sh *sh, t_redir *redir, t_comm *cmd)
 {
 	if (check_if_empty_str(redir->name) != 0)			// $? = 1
 		return (1);
 	if (redir->doubl == 0)
-	{
 		redir->fd = open(redir->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (redir->fd < 0)
-			ft_error(sh, 2);
-	}
 	else
-	{
 		redir->fd = open(redir->name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (redir->fd < 0)
-			ft_error(sh, 2);
+	if (redir->fd < 0)
+	{
+		ft_putstr_fd("msh: ", 2);
+		ft_putstr_fd(redir->name, 2);
+		ft_putendl_fd(": Permission denied", 2);          // $? = 1
+		return (1);
 	}
 	if (is_last_redir(redir))
 	{
-		if (dup2(redir->fd, 1) < 0)
+		if (cmd->file != NULL && dup2(redir->fd, 1) < 0)
 			ft_error(sh, 3);
 	}
 	close(redir->fd);
@@ -117,7 +116,7 @@ int	redirections(t_comm *cmd, t_sh *sh)
 		}
 		else if (redir->doubl == 1 && redir->output == 0)
 			here_doc(sh, redir);
-		else if (output_file_create(sh, redir) != 0)
+		else if (output_file_create(sh, redir, cmd) != 0)
 		{
 			close_fds(cmd);
 			return (1);
