@@ -6,11 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:08:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 13:12:04 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:39:42 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_ret_val;
 
 int	remainder_length(char *str, int end)
 {
@@ -40,6 +42,8 @@ int	get_var_name_len(char *str)
 			i++;
 		return (i);
 	}
+	if (str[i] == '?')
+		return (1);
 	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
 		&& str[i] != '$' && str[i] != ']' && str[i] != 34 && str[i] != 39)
 		i++;
@@ -59,6 +63,12 @@ void	copy_brackets_var(char *str, char *var_name, int *end, int start)
 
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start)
 {
+	if (str[*end] == '?')
+	{
+		var_name[0] = '?';
+		var_name[1] = '\0';
+		return ;
+	}
 	while (str[*end] && str[*end] != ' ' && str[*end] != '\t'
 		&& str[*end] != '\n' && str[*end] != '$' && str[*end] != 34
 		&& str[*end] != 39 && str[*end] != ']')
@@ -67,4 +77,17 @@ void	copy_nobrackets_var(char *str, char *var_name, int *end, int start)
 		(*end)++;
 	}
 	var_name[*end - start - 1] = '\0';
+}
+
+char	*replace_by_ret_value(t_sh *sh, char *str, int start, int end)
+{
+	char	*exp;
+
+	exp = ft_itoa(g_ret_val);
+	if (exp == NULL)
+		ft_error(sh, 1);
+	str = replace_2(str, exp, start, end);
+	if (str == NULL)
+		ft_error(sh, 1);
+	return (str);
 }

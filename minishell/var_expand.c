@@ -6,13 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/16 11:09:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:39:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	append_exp(char *new, char *exp, int *i)
+void	append_exp(char *new, char *exp, int *i)
 {
 	int	j;
 
@@ -25,7 +25,7 @@ static void	append_exp(char *new, char *exp, int *i)
 	}
 }
 
-static char	*replace_2(char *str, char *exp, int start, int end)
+char	*replace_2(char *str, char *exp, int start, int end)
 {
 	char	*new;
 	int		i;
@@ -66,6 +66,11 @@ static char	*replace_var(char *str, t_sh *sh, int start)
 		copy_brackets_var(str, var_name, &end, start);
 	else
 		copy_nobrackets_var(str, var_name, &end, start);
+	if (var_name[0] == '?' && var_name[1] == '\0')
+	{
+		free(var_name);
+		return (replace_by_ret_value(sh, str, start, start + 2));
+	}
 	exp = getenv(var_name);
 	free(var_name);
 	str = replace_2(str, exp, start, end);

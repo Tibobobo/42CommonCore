@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 16:32:02 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:20:26 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i, int j);
 void	expand_variables(t_sh *sh);
 int		get_var_name_len(char *str);
+char	*replace_2(char *str, char *exp, int start, int end);
 void	copy_brackets_var(char *str, char *var_name, int *end, int start);
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start);
+char	*replace_by_ret_value(t_sh *sh, char *str, int start, int end);
 int		remainder_length(char *str, int end);
 void	clean_paired_quotes(t_sh *sh);
 void	skip_quotes(char *s, int *i, int type);
