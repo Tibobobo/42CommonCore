@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 13:42:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:24:26 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,40 +64,22 @@ int	output_file_create(t_sh *sh, t_redir *redir, t_comm *cmd)
 	return (0);
 }
 
-void	here_doc(t_sh *sh, t_redir *redir)
+int	check_output_redir(t_comm *cmd, t_sh *sh)
 {
-	char	*line;
-	
-	line = NULL;
-	if (is_last_redir(redir) == 0)
-		return ;
-	redir->fd = open("/tmp/hd", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (redir->fd < 0)
+	t_redir	*redir;
+
+	redir = cmd->redir;
+	while (redir != NULL)
 	{
-		ft_putendl_fd("msh: heredoc: Permission denied", 2);          // $? = 1
-		return ;
-	}
-	dup2(sh->stdin_save, 0);
-	while (1)
-	{
-		line = readline(">");
-		if (line != NULL 
-			&& ft_strncmp(line, redir->name, ft_strlen(redir->name + 1)) == 0)
+		if (redir->output == 1 && output_file_create(sh, redir, cmd) != 0)
 		{
-			free(line);
-			break ;
+			close_fds(cmd);
+			close(cmd->stdout_save);
+			return (1);
 		}
-		ft_putendl_fd(line, redir->fd);
-		free(line);
+		redir = redir->next;
 	}
-	close(redir->fd);
-	redir->fd = open("/tmp/hd", O_RDONLY);
-	if (redir->fd < 0)
-		ft_error(sh, 2);
-	if (dup2(redir->fd, 0) < 0)
-		ft_error(sh, 3);
-	close(redir->fd);
-	unlink("/tmp/hd");
+	return (0);
 }
 
 int	redirections(t_comm *cmd, t_sh *sh)
@@ -122,16 +104,7 @@ int	redirections(t_comm *cmd, t_sh *sh)
 			here_doc(sh, redir);
 		redir = redir->next;
 	}
-	redir = cmd->redir;
-	while (redir != NULL)
-	{
-		if (redir->output == 1 && output_file_create(sh, redir, cmd) != 0)
-		{
-			close_fds(cmd);
-			close(cmd->stdout_save);
-			return (1);
-		}
-		redir = redir->next;
-	}
+	if (check_output_redir(cmd, sh) != 0)
+		return (1);
 	return (0);
 }

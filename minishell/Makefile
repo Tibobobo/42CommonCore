@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 14:58:06 by tgrasset          #+#    #+#              #
-#    Updated: 2023/02/16 14:27:44 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/02/17 14:11:23 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS	=	./main.c \
 			./parser_syntax_check.c \
 			./free.c \
 			./execution.c \
+			./execution_cases.c \
 			./execution_utils.c \
 			./redirection.c \
 			./redirection_utils.c \

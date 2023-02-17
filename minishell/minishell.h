@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 13:03:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:24:58 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,16 @@ void	skip_quotes(char *s, int *i, int type);
 int		check_syntax(char **lex, int i);
 void	free_all(t_sh *sh);
 int		redirections(t_comm *cmd, t_sh *sh);
+void	here_doc(t_sh *sh, t_redir *redir);
+void	here_doc_loop(char *line, t_redir *redir);
 int		check_if_empty_str(char *str);
 int		is_last_redir(t_redir *redir);
 void	execution(t_sh *sh, char **env);
+void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env);
+void	exec_command_2(t_comm *cmd, t_sh *sh, char **env);
+void	exec_in_pipe(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env);
+void	pipe_0(t_sh *sh, int	*pipe_fd, t_comm *cmd);
+void	exec_outfile_pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env);
 char	**split_paths(t_sh *sh, char *temp, char **paths, char *file);
 void	command_error(t_sh *sh, char *cmd, int num, char *path);
 void	wait_for_children(t_sh *sh);
