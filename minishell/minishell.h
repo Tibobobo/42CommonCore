@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 16:54:54 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:02:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ typedef struct s_sh
 	t_comm	*comm;
 	int		pipe_number;
 	int		stdin_save;
+	char	**env;
 }			t_sh;
 
 int		ft_error(t_sh *sh, int n);
+char    **setup_env(char **envp);
 void	lexing(t_sh *sh);
 int		token_count(char *s);
 void	free_lex(char **lex);
@@ -116,5 +118,6 @@ void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked);
 void	my_pwd(t_sh *sh);
 void	my_exit(t_sh *sh, t_comm *cmd, int forked);
 void	my_env(t_sh *sh, t_comm *cmd, char **env);
+char    *ft_getenv(char *var_name, char **env);
 
 #endif

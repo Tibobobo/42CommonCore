@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 16:32:04 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:30:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	lex_parse_execute_free(t_sh *sh, char **env)
 	close(sh->stdin_save);
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	t_sh	sh;
 
 	(void)av;
 	(void)ac;
 	g_ret_val = 0;
+	sh.env = setup_env(envp);
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
 	signal(SIGTSTP, SIG_IGN);
@@ -76,12 +77,14 @@ int	main(int ac, char **av, char **env)
 		if (sh.buf == NULL)
 		{
 			rl_clear_history();
-			ft_putendl_fd("Readline error", 2);
+			free_all(&sh);
+			free_lex(sh.env);
+			ft_putendl_fd("exit", 1);
 			break ;
 		}
 		if (sh.buf[0] != '\0')
 			add_history(sh.buf);
-		lex_parse_execute_free(&sh, env);
+		lex_parse_execute_free(&sh, sh.env);
 	}
-	return (-1);
+	return (0);
 }

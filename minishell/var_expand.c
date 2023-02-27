@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 18:21:12 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:15:08 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ static char	*replace_var(char *str, t_sh *sh, int start)
 		free(var_name);
 		return (replace_by_ret_value(sh, str, start, end));
 	}
-	exp = getenv(var_name);
+	exp = ft_getenv(var_name, sh->env);
 	free(var_name);
 	str = replace_2(str, exp, start, end);
+	if (exp != NULL)
+		free(exp);
 	if (str == NULL)
 		ft_error(sh, 1);
 	return (str);

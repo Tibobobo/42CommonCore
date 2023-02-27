@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 15:20:21 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 19:17:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ void	wait_for_children(t_sh *sh)
 
 char	**split_paths(t_sh *sh, char *temp, char **paths, char *file)
 {
-	temp = getenv("PATH");
+	temp = ft_getenv("PATH", sh->env);
 	if (temp == NULL)
 		command_error(sh, file, 2, NULL);
 	paths = ft_split(temp, ':');
+	free(temp);
 	if (paths == NULL)
 		ft_error(sh, 1);
 	return (paths);
