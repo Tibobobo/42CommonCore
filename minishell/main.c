@@ -6,13 +6,21 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 16:32:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:08:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_ret_val = 0;
+
+void	sig_handler_command(int signum)
+{
+	if (signum == SIGINT)
+		printf("\n");
+	if (signum == SIGQUIT)
+		printf("Quit (core dumped)\n");
+}
 
 void	sig_handler_prompt(int signum)
 {
@@ -43,6 +51,8 @@ void	lex_parse_execute_free(t_sh *sh, char **env)
 	{
 		execution(sh, env);
 		wait_for_children(sh);
+		signal(SIGINT, sig_handler_prompt);
+		signal(SIGQUIT, sig_handler_prompt);
 	}
 	free_all(sh);
 	if (dup2(sh->stdin_save, 0) < 0)
@@ -59,6 +69,7 @@ int	main(int ac, char **av, char **env)
 	g_ret_val = 0;
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
+	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
 		sh.buf = readline("\033[0;32mminishell $> \033[0;m");

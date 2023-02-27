@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 17:20:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:06:42 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void	exec_outfile_pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env);
 char	**split_paths(t_sh *sh, char *temp, char **paths, char *file);
 void	command_error(t_sh *sh, char *cmd, int num, char *path);
 void	wait_for_children(t_sh *sh);
+void	sig_handler_command(int signum);
 
 #endif
