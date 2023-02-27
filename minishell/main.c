@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 15:06:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:32:04 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,15 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		sh.buf = readline("\033[0;32mminishell $> \033[0;m");
-		if (sh.buf == NULL || ft_strncmp(sh.buf, "exit", 5) == 0)
+		if (sh.buf == NULL)
 		{
 			rl_clear_history();
-			if (sh.buf != NULL)
-				free(sh.buf);
-			printf("exit\n");
+			ft_putendl_fd("Readline error", 2);
 			break ;
 		}
 		if (sh.buf[0] != '\0')
 			add_history(sh.buf);
 		lex_parse_execute_free(&sh, env);
 	}
-	return (0);
+	return (-1);
 }

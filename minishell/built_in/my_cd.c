@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:35:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 16:02:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:34:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	change_directory(t_sh *sh, t_comm *cmd, int forked)
 	{
 		chdir(cmd->argv[1]);
 		if (forked == 1)
+		{
+			free_all(sh);
 			exit (0);
+		}
 		g_ret_val = 0;
 		return ;
 	}
