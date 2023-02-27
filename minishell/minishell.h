@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 11:35:50 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:36:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ char	**split_paths(t_sh *sh, char *temp, char **paths, char *file);
 void	command_error(t_sh *sh, char *cmd, int num, char *path);
 void	wait_for_children(t_sh *sh);
 void	sig_handler_command(int signum);
-void    check_built_in(t_sh *sh, t_comm *cmd, char **env);
-void    my_echo(t_sh *sh, t_comm *cmd, char **env);
+void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked);
+int		env_built_in(t_sh *sh, char **env, t_comm *cmd);
+int		is_unpiped_env_builtin(t_comm *cmd);
+void	my_echo(t_sh *sh, t_comm *cmd);
+void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked);
 
 #endif

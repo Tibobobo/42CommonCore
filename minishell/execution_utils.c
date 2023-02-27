@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 10:07:24 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:20:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	wait_for_children(t_sh *sh)
 	tmp = sh->comm;
 	signal(SIGINT, sig_handler_command);
 	signal(SIGQUIT, sig_handler_command);
+	if (is_unpiped_env_builtin(tmp) == 1)
+		return ;
 	while (tmp != NULL)
 	{
 		if (tmp->pid != -42)

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 10:37:06 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:44:09 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	exec_command_2(t_comm *cmd, t_sh *sh, char **env)
 	close(sh->stdin_save);
 	if (cmd->file != NULL && cmd->file[0] == '\0')
 		command_error(sh, cmd->file, 2, NULL);
-	check_built_in(sh, cmd, env);
+	check_built_in(sh, cmd, env, 1);
 	if (ft_strchr(cmd->file, '/') != NULL)
 	{
 		path = ft_strdup(cmd->file);
@@ -118,6 +118,8 @@ void	execution(t_sh *sh, char **env)
 	int		pipe_fd[2];
 
 	cmd = sh->comm;
+	if (cmd != NULL && cmd->next == NULL && env_built_in(sh, env, cmd) == 0)
+		return ;
 	while (cmd != NULL)
 	{
 		cmd->stdout_save = dup(1);

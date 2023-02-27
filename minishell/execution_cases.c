@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:10:03 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 15:28:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:30:35 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,17 @@ void	exec_outfile_pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env)
 		exec_command_2(cmd, sh, env);
 	else
 		pipe_0(sh, pipe_fd, cmd);
+}
+
+int	is_unpiped_env_builtin(t_comm *cmd)
+{
+	if (cmd != NULL && cmd->next == NULL)
+	{
+		if (ft_strncmp(cmd->file, "cd", 3) == 0
+			|| ft_strncmp(cmd->file, "export", 7) == 0
+			|| ft_strncmp(cmd->file, "unset", 6) == 0
+			|| ft_strncmp(cmd->file, "exit", 5) == 0)
+			return (1);
+	}
+	return (0);
 }
