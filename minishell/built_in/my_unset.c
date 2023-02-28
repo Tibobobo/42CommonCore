@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:33:51 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 16:37:07 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:45:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,41 @@ int	env_len(char **env)
 	return (i);
 }
 
-void	remove_var_from_env(t_sh *sh, int pos)
+void	copy_and_remove_var(t_sh *sh, int pos, char **newenv)
 {
-	char	**newenv;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	newenv = malloc(sizeof(char *) * env_len(sh->env));
-	if (newenv == NULL)
-		ft_error(sh, 1);
 	i = 0;
 	j = 0;
 	while (sh->env[i] != NULL)
 	{
 		if (i != pos)
-			newenv[j] = sh->env[i];
+		{
+			newenv[j] = ft_strdup(sh->env[i]);
+			if (newenv[j] == NULL)
+			{
+				free_lex(newenv);
+				ft_error(sh, 1);
+			}
+		}
 		else
 			j--;
 		i++;
 		j++;
 	}
 	newenv[j] = NULL;
-	free(sh->env);
+}
+
+void	remove_var_from_env(t_sh *sh, int pos)
+{
+	char	**newenv;
+
+	newenv = malloc(sizeof(char *) * env_len(sh->env));
+	if (newenv == NULL)
+		ft_error(sh, 1);
+	copy_and_remove_var(sh, pos, newenv);
+	free_lex(sh->env);
 	sh->env = newenv;
 }
 

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 15:41:43 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:25:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 extern int	g_ret_val;
 
-int	check_export_cmd_format(t_sh *sh, t_comm *cmd, char **env, int forked)
+int	check_export_cmd_format(t_sh *sh, t_comm *cmd, int forked)
 {
 	int	i;
 
 	i = 0;
 	while (cmd->argv[i] != NULL)
 		i++;
-	if (i == 1 || i > 2)
+	if (i == 1)
 	{
 		ft_putendl_fd("msh: export: Usage : export name[=value]", 2);
 		if (forked == 1)
 		{
-			free_lex(env);
+			free_lex(sh->env);
 			free_all(sh);
 			exit (1);
 		}
@@ -36,22 +36,22 @@ int	check_export_cmd_format(t_sh *sh, t_comm *cmd, char **env, int forked)
 	return (0);
 }
 
-int	check_export_var_name(t_sh *sh, t_comm *cmd, char **env, int forked)
+int	check_export_var_name(t_sh *sh, char *arg, int forked)
 {
 	int	i;
 
 	i = 1;
-	while (cmd->argv[1][i] != '\0' && cmd->argv[1][i] != '=')
+	while (arg[i] != '\0' && arg[i] != '=')
 	{
-		if ((!(ft_isalpha(cmd->argv[1][0])) && cmd->argv[1][0] != '_')
-			|| (!(ft_isalnum(cmd->argv[1][i])) && cmd->argv[1][i] != '_'))
+		if ((!(ft_isalpha(arg[0])) && arg[0] != '_')
+			|| (!(ft_isalnum(arg[i])) && arg[i] != '_'))
 		{
 			ft_putstr_fd("msh: export: `", 2);
-			ft_putstr_fd(cmd->argv[1], 2);
+			ft_putstr_fd(arg, 2);
 			ft_putendl_fd("': not a valid identifier", 2);
 			if (forked == 1)
 			{
-				free_lex(env);
+				free_lex(sh->env);
 				free_all(sh);
 				exit (1);
 			}
@@ -63,7 +63,7 @@ int	check_export_var_name(t_sh *sh, t_comm *cmd, char **env, int forked)
 	return (0);
 }
 
-void	replace_existing_var(t_sh *sh, t_comm *cmd, char *name, char *val)
+void	replace_existing_var(t_sh *sh, char *arg, char *name, char *val)
 {
 	int	i;
 
@@ -71,7 +71,7 @@ void	replace_existing_var(t_sh *sh, t_comm *cmd, char *name, char *val)
 	while (ft_strnstr(sh->env[i], name, ft_strlen(name) + 1) == NULL)
 		i++;
 	free(sh->env[i]);
-	val = get_new_value(sh, cmd, name);
+	val = get_new_value(sh, arg, name);
 	sh->env[i] = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(val) + 2));
 	if (sh->env[i] == NULL)
 	{
@@ -82,13 +82,13 @@ void	replace_existing_var(t_sh *sh, t_comm *cmd, char *name, char *val)
 	copy_new_var(sh->env[i], name, val);
 }
 
-void	add_new_env_var(t_sh *sh, t_comm *cmd, char *name, char *value)
+void	add_new_env_var(t_sh *sh, char *arg, char *name, char *value)
 {
 	char	*new;
 	char	**newenv;
 	int		i;
 
-	value = get_new_value(sh, cmd, name);
+	value = get_new_value(sh, arg, name);
 	new = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(value) + 2));
 	if (new == NULL)
 	{
@@ -110,29 +110,31 @@ void	add_new_env_var(t_sh *sh, t_comm *cmd, char *name, char *value)
 	replace_env(sh, newenv, new);
 }
 
-void	my_export(t_sh *sh, t_comm *cmd, char **env, int forked)
+void	my_export(t_sh *sh, t_comm *cmd, int forked)
 {
 	char	*name;
 	char	*value;
+	int		i;
 
 	value = NULL;
-	if (check_export_cmd_format(sh, cmd, env, forked)
-		|| check_export_var_name(sh, cmd, env, forked))
+	if (check_export_cmd_format(sh, cmd, forked) == 1)
 		return ;
-	name = get_var_name(sh, cmd);
-	value = ft_getenv(name, env);
-	if (value != NULL)
+	i = 1;
+	while (cmd->argv[i] != NULL)
 	{
-		free(value);
-		replace_existing_var(sh, cmd, name, value);
+		if (check_export_var_name(sh, cmd->argv[i], forked) == 1)
+			return ;
+		name = get_var_name(sh, cmd->argv[i]);
+		value = ft_getenv(name, sh->env);
+		if (value != NULL)
+		{
+			free(value);
+			replace_existing_var(sh, cmd->argv[i], name, value);
+		}
+		else
+			add_new_env_var(sh, cmd->argv[i], name, value);
+		i++;
 	}
-	else
-		add_new_env_var(sh, cmd, name, value);
-	if (forked == 1)
-	{
-		free_lex(sh->env);
-		free_all(sh);
-		exit (0);
-	}
+	finish_forked_export(sh, forked);
 	g_ret_val = 0;
 }

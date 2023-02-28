@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 16:34:54 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:21:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,12 @@ void	my_pwd(t_sh *sh);
 void	my_exit(t_sh *sh, t_comm *cmd, int forked);
 void	my_env(t_sh *sh, t_comm *cmd, char **env);
 char	*ft_getenv(char *var_name, char **env);
-void	my_export(t_sh *sh, t_comm *cmd, char **env, int forked);
-char	*get_var_name(t_sh *sh, t_comm *cmd);
-char	*get_new_value(t_sh *sh, t_comm *cmd, char *name);
+void	my_export(t_sh *sh, t_comm *cmd, int forked);
+char	*get_var_name(t_sh *sh, char *arg);
+char	*get_new_value(t_sh *sh, char *arg, char *name);
 void	copy_new_var(char *new, char *name, char *value);
 void	replace_env(t_sh *sh, char **newenv, char *new);
+void	finish_forked_export(t_sh *sh, int forked);
 void	my_unset(t_sh *sh, t_comm *cmd, int forked);
 
 #endif
