@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 17:25:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:02:15 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	replace_existing_var(t_sh *sh, char *arg, char *name, char *val)
 	int	i;
 
 	i = 0;
-	while (ft_strnstr(sh->env[i], name, ft_strlen(name) + 1) == NULL)
+	while (sh->env[i] != NULL
+		&& !(ft_strncmp(sh->env[i], name, ft_strlen(name)) == 0
+			&& sh->env[i][ft_strlen(name)] == '='))
 		i++;
 	free(sh->env[i]);
 	val = get_new_value(sh, arg, name);

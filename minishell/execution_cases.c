@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:10:03 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 15:30:35 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:47:29 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	is_unpiped_env_builtin(t_comm *cmd)
 {
 	if (cmd != NULL && cmd->next == NULL)
 	{
+		if (cmd->file == NULL || cmd->file[0] == '\0')
+			return (0);
 		if (ft_strncmp(cmd->file, "cd", 3) == 0
 			|| ft_strncmp(cmd->file, "export", 7) == 0
 			|| ft_strncmp(cmd->file, "unset", 6) == 0
