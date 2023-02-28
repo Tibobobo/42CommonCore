@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 14:44:09 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:01:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,12 @@ void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 
 void	choose_exec_case(t_sh *sh, t_comm *cmd, int *pipe_fd, char **env)
 {
-	if (cmd->outfile == 1 && cmd->next != NULL)
+	if (cmd->next == NULL && env_built_in(cmd) == 0)
+	{
+		check_built_in(sh, cmd, env, 0);
+		return ;
+	}
+	else if (cmd->outfile == 1 && cmd->next != NULL)
 		exec_outfile_pipe_0(sh, pipe_fd, cmd, env);
 	else if (cmd->outfile == 0 && cmd->next != NULL)
 		exec_in_pipe(sh, pipe_fd, cmd, env);
@@ -118,13 +123,14 @@ void	execution(t_sh *sh, char **env)
 	int		pipe_fd[2];
 
 	cmd = sh->comm;
-	if (cmd != NULL && cmd->next == NULL && env_built_in(sh, env, cmd) == 0)
-		return ;
 	while (cmd != NULL)
 	{
-		cmd->stdout_save = dup(1);
-		if (cmd->stdout_save < 0)
-			ft_error(sh, 3);
+		if (!(cmd->next == NULL && env_built_in(cmd) == 0))
+		{
+			cmd->stdout_save = dup(1);
+			if (cmd->stdout_save < 0)
+				ft_error(sh, 3);
+		}
 		if (redirections(cmd, sh) != 0 || cmd->file == NULL
 			|| (cmd->outfile == 0 && cmd->next != NULL
 				&& cmd->next->infile == 1))

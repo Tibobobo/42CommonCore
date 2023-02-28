@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:30:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 18:30:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:12:40 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	my_exit(t_sh *sh, t_comm *cmd, int forked)
 		{
 			printf("exit\n");
 			close (sh->stdin_save);
-            free_lex(sh->env);
+			free_lex(sh->env);
 			rl_clear_history();
 		}
 		exit (0);

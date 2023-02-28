@@ -6,16 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:39:32 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 19:12:19 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:02:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// void	my_export(t_sh *sh, t_comm *cmd, char **env, int forked)
-// {
-	
-// }
 
 void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked)
 {
@@ -25,8 +20,8 @@ void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked)
 		my_cd(sh, cmd, env, forked);//env ? peut etre pour modif PWD et OLDPWD attention a cd ""
 	else if (ft_strncmp(cmd->file, "pwd", 4) == 0)
 		my_pwd(sh);
-	// else if (ft_strncmp(cmd->file, "export", 7) == 0)
-	//     my_export(sh, cmd, env, forked);
+	else if (ft_strncmp(cmd->file, "export", 7) == 0)
+	    my_export(sh, cmd, env, forked);
 	// else if (ft_strncmp(cmd->file, "unset", 6) == 0)
 	//     my_unset(sh, cmd, env);
 	else if (ft_strncmp(cmd->file, "env", 4) == 0)
@@ -35,15 +30,12 @@ void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked)
 		my_exit(sh, cmd, forked);
 }
 
-int	env_built_in(t_sh *sh, char **env, t_comm *cmd)
+int	env_built_in(t_comm *cmd)
 {
 	if (ft_strncmp(cmd->file, "cd", 3) == 0
 		|| ft_strncmp(cmd->file, "export", 7) == 0
 		|| ft_strncmp(cmd->file, "unset", 6) == 0
 		|| ft_strncmp(cmd->file, "exit", 5) == 0)
-	{
-		check_built_in(sh, cmd, env, 0);
 		return (0);
-	}
 	return (1);
 }

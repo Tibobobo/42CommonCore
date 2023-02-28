@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 19:02:44 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:09:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_sh
 }			t_sh;
 
 int		ft_error(t_sh *sh, int n);
-char    **setup_env(char **envp);
+char	**setup_env(char **envp);
 void	lexing(t_sh *sh);
 int		token_count(char *s);
 void	free_lex(char **lex);
@@ -111,13 +111,18 @@ void	command_error(t_sh *sh, char *cmd, int num, char *path);
 void	wait_for_children(t_sh *sh);
 void	sig_handler_command(int signum);
 void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked);
-int		env_built_in(t_sh *sh, char **env, t_comm *cmd);
+int		env_built_in(t_comm *cmd);
 int		is_unpiped_env_builtin(t_comm *cmd);
 void	my_echo(t_sh *sh, t_comm *cmd);
 void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked);
 void	my_pwd(t_sh *sh);
 void	my_exit(t_sh *sh, t_comm *cmd, int forked);
 void	my_env(t_sh *sh, t_comm *cmd, char **env);
-char    *ft_getenv(char *var_name, char **env);
+char	*ft_getenv(char *var_name, char **env);
+void	my_export(t_sh *sh, t_comm *cmd, char **env, int forked);
+char	*get_var_name(t_sh *sh, t_comm *cmd);
+char	*get_new_value(t_sh *sh, t_comm *cmd, char *name);
+void	copy_new_var(char *new, char *name, char *value);
+void	replace_env(t_sh *sh, char **newenv, char *new);
 
 #endif

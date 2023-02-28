@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 14:58:06 by tgrasset          #+#    #+#              #
-#    Updated: 2023/02/27 18:24:37 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/02/28 13:59:09 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRCS	=	./main.c \
 			./built_in/my_pwd.c \
 			./built_in/my_exit.c \
 			./built_in/my_env.c \
+			./built_in/my_export.c \
+			./built_in/my_export_utils.c \
 			
 			
 OBJS	=	$(SRCS:%.c=%.o)

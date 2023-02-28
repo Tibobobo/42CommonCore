@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 18:06:17 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 18:29:52 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 11:23:51 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	free_comm(t_comm *comm)
 
 int	ft_error(t_sh *sh, int n)
 {
+	free_lex(sh->env);
 	free_all(sh);
 	rl_clear_history();
 	if (n == 1)

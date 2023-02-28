@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 19:15:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 13:50:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ static char	*var_check(char *str, t_sh *sh)
 			&& str[i + 1] != '\0')
 		{
 			str = replace_var(str, sh, i);
-			i--;
+			if (i != 0)
+				i--;
 		}
-		i++;
+		if (str[i] != '\0')
+			i++;
 	}
 	return (str);
 }
