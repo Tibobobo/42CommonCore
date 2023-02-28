@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:35:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 16:34:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:24:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked)
 		if (arg_nb > 2)
 			ft_putendl_fd("msh: cd: too many arguments", 2);
 		else
-			ft_putendl_fd("msh: cd: missing argument", 2);
+			ft_putendl_fd("msh: cd: missing argument: path to directory", 2);
 		if (forked == 1)
 		{
 			free_all(sh);

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 15:11:58 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:41:43 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	check_export_cmd_format(t_sh *sh, t_comm *cmd, char **env, int forked)
 		ft_putendl_fd("msh: export: Usage : export name[=value]", 2);
 		if (forked == 1)
 		{
-			free_all(sh);
 			free_lex(env);
+			free_all(sh);
 			exit (1);
 		}
 		g_ret_val = 1;
@@ -51,8 +51,8 @@ int	check_export_var_name(t_sh *sh, t_comm *cmd, char **env, int forked)
 			ft_putendl_fd("': not a valid identifier", 2);
 			if (forked == 1)
 			{
-				free_all(sh);
 				free_lex(env);
+				free_all(sh);
 				exit (1);
 			}
 			g_ret_val = 1;

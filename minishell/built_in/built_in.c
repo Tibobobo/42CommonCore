@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:39:32 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 15:02:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:34:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked)
 		my_pwd(sh);
 	else if (ft_strncmp(cmd->file, "export", 7) == 0)
 	    my_export(sh, cmd, env, forked);
-	// else if (ft_strncmp(cmd->file, "unset", 6) == 0)
-	//     my_unset(sh, cmd, env);
+	else if (ft_strncmp(cmd->file, "unset", 6) == 0)
+	    my_unset(sh, cmd, forked);
 	else if (ft_strncmp(cmd->file, "env", 4) == 0)
 	    my_env(sh, cmd, env);
 	else if (ft_strncmp(cmd->file, "exit", 5) == 0)

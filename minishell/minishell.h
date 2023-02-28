@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 15:09:48 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:34:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ char	*get_var_name(t_sh *sh, t_comm *cmd);
 char	*get_new_value(t_sh *sh, t_comm *cmd, char *name);
 void	copy_new_var(char *new, char *name, char *value);
 void	replace_env(t_sh *sh, char **newenv, char *new);
+void	my_unset(t_sh *sh, t_comm *cmd, int forked);
 
 #endif
