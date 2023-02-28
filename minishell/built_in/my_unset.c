@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:33:51 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 17:45:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:18:10 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	var_position(char *name, char **env)
 
 	i = 0;
 	while (env[i] != NULL
-		&& ft_strnstr(env[i], name, ft_strlen(name) + 1) == NULL)
+		&& !(ft_strncmp(env[i], name, ft_strlen(name)) == 0
+			&& env[i][ft_strlen(name)] == '='))
 		i++;
 	if (env[i] == NULL)
 		return (-1);

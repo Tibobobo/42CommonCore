@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:22:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 15:16:25 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:17:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*ft_getenv(char *var_name, char **env)
 
 	i = 0;
 	while (env[i] != NULL
-		&& ft_strnstr(env[i], var_name, ft_strlen(var_name) + 1) == NULL)
+		&& !(ft_strncmp(env[i], var_name, ft_strlen(var_name)) == 0
+			&& env[i][ft_strlen(var_name)] == '='))
 		i++;
 	if (env[i] == NULL)
 		return (NULL);

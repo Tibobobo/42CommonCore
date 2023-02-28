@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 19:17:37 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:54:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ void	wait_for_children(t_sh *sh)
 		if (tmp->pid != -42)
 		{
 			if (waitpid(tmp->pid, &status, 0) < 0)
-				ft_error(sh, 7);
-		}
-		if (tmp->outfile == 1 && tmp->next != NULL)
-		{
-			if (wait(NULL) < 0)
 				ft_error(sh, 7);
 		}
 		if (tmp->next == NULL && tmp->in_out_fail == 0)
