@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:47:04 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 09:56:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void	expand_variables(t_sh *sh)
 			skip_quotes(sh->buf, &i, 39);
 		if (sh->buf[i] && sh->buf[i] == '$' && sh->buf[i + 1] != '$'
 			&& sh->buf[i + 1] != ' ' && sh->buf[i + 1] != '\t'
-			&& sh->buf[i + 1] != '\n' && sh->buf[i + 1] != '\0')
+			&& sh->buf[i + 1] != '\n' && sh->buf[i + 1] != '\0'
+			&& sh->buf[i + 1] != '"')
 		{
 			sh->buf = replace_var(sh->buf, sh, i, &exp_len);
 			i = i + exp_len - 1;
