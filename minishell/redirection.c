@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 16:28:30 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:32:56 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	output_file_create(t_sh *sh, t_redir *redir, t_comm *cmd)
 		ft_putendl_fd(": Permission denied", 2);
 		return (1);
 	}
-	if (is_last_redir(redir))
+	if (is_last_redir(redir) && is_unpiped_env_builtin(cmd) == 0)
 	{
 		if (cmd->file != NULL && dup2(redir->fd, 1) < 0)
 			ft_error(sh, 3);

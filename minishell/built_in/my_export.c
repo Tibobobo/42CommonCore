@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 19:02:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:10:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int	check_export_var_name(t_sh *sh, char *arg, int forked)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (arg[i] != '\0' && arg[i] != '=')
 	{
-		if ((!(ft_isalpha(arg[0])) && arg[0] != '_')
-			|| (!(ft_isalnum(arg[i])) && arg[i] != '_'))
+		if ((ft_isalpha(arg[0]) == 0 && arg[0] != '_')
+			|| (i > 0 && ft_isalnum(arg[i]) == 0 && arg[i] != '_'))
 		{
 			ft_putstr_fd("msh: export: `", 2);
 			ft_putstr_fd(arg, 2);
