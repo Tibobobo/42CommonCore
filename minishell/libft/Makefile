@@ -6,12 +6,13 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 10:48:17 by tgrasset          #+#    #+#              #
-#    Updated: 2023/02/28 18:26:50 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/03/01 12:47:08 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	=	./ft_isalpha.c \
 			./ft_isalnum.c \
+			./ft_isdigit.c \
 			./ft_strlen.c	\
 			./ft_strchr.c \
 			./ft_strncmp.c \

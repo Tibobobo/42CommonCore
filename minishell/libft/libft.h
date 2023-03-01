@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:05:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 18:28:10 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 13:10:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);
+int		ft_isdigit(int c);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
