@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:35:16 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 15:32:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:00:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	my_echo(t_sh *sh, t_comm *cmd)
 	}
 	if (no_nl == 0)
 		ft_putchar_fd('\n', 1);
+	free_lex(sh->env);
 	free_all(sh);
 	exit (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:54:24 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/27 16:56:59 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:10:36 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	my_env(t_sh *sh, t_comm *cmd, char **env)
 		ft_putendl_fd(env[i], 1);
 		i++;
 	}
+	free_lex(sh->env);
 	free_all(sh);
 	exit (0);
 }

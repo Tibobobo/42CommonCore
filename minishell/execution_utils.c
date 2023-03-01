@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 12:04:31 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:56:32 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	check_if_dir(t_sh *sh, char *path, char *cmd)
 		ft_putstr_fd("msh: ", 2);
 		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": Is a directory", 2);
+		free_lex(sh->env);
 		free_all(sh);
 		if (path != NULL)
 			free(path);
@@ -69,6 +70,7 @@ void	check_if_dir(t_sh *sh, char *path, char *cmd)
 	ft_putendl_fd(": Execve failed", 2);
 	if (path != NULL)
 		free(path);
+	free_lex(sh->env);
 	free_all(sh);
 	exit (126);
 }
@@ -82,32 +84,31 @@ void	check_no_such_file(t_sh *sh, char *path, char *cmd)
 	ft_putendl_fd(": No such file or directory", 2);
 	if (path != NULL)
 		free(path);
+	free_lex(sh->env);
 	free_all(sh);
 	exit (127);
 }
 
 void	command_error(t_sh *sh, char *cmd, int num, char *path)
 {
-	if (num == 1)
+	if (num == 1 || num == 2)
 	{
+		if (num == 2)
+			check_no_such_file(sh, path, cmd);
 		ft_putstr_fd("msh: ", 2);
 		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": Permission denied", 2);
+		if (num == 1)
+			ft_putendl_fd(": Permission denied", 2);
+		else if (num == 2)
+			ft_putendl_fd(": command not found", 2);
 		if (path != NULL)
 			free(path);
+		free_lex(sh->env);
 		free_all(sh);
-		exit (126);
-	}
-	else if (num == 2)
-	{
-		check_no_such_file(sh, path, cmd);
-		ft_putstr_fd("msh: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", 2);
-		if (path != NULL)
-			free(path);
-		free_all(sh);
-		exit (127);
+		if (num == 1)
+			exit (126);
+		else if (num == 2)
+			exit (127);
 	}
 	check_if_dir(sh, path, cmd);
 }

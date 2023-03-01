@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:10:03 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 18:47:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:04:41 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_in_pipe(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env)
 	exec_command(cmd, sh, pipe_fd, env);
 }
 
-void	pipe_0(t_sh *sh, int	*pipe_fd, t_comm *cmd)
+void	pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd)
 {
 	if (pipe(pipe_fd) < 0)
 		ft_error(sh, 4);
@@ -35,6 +35,8 @@ void	pipe_0(t_sh *sh, int	*pipe_fd, t_comm *cmd)
 			ft_error(sh, 3);
 		close(pipe_fd[1]);
 		write(1, "", 0);
+		free_lex(sh->env);
+		free_all(sh);
 		exit(0);
 	}
 	else if (cmd->pid != 0)
