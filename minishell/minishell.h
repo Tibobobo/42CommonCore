@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:20:16 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 09:44:43 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char	*replace_2(char *str, char *exp, int start, int end);
 void	copy_brackets_var(char *str, char *var_name, int *end, int start);
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start);
 char	*replace_by_ret_value(t_sh *sh, char *str, int start, int end);
-void	free_var_expansion(char *exp, char *str, t_sh *sh);
 int		remainder_length(char *str, int end);
 void	clean_paired_quotes(t_sh *sh);
 void	skip_quotes(char *s, int *i, int type);

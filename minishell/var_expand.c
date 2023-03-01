@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:20:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 09:47:04 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ char	*replace_2(char *str, char *exp, int start, int end)
 	return (new);
 }
 
+void	free_var_expansion(char *exp, char *str, t_sh *sh)
+{
+	if (exp != NULL)
+		free(exp);
+	if (str == NULL)
+		ft_error(sh, 1);
+}
+
 static char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
 {
 	int		end;
@@ -69,6 +77,7 @@ static char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
 	if (var_name[0] == '?' && var_name[1] == '\0')
 	{
 		free(var_name);
+		*exp_len = 1;
 		return (replace_by_ret_value(sh, str, start, end));
 	}
 	exp = ft_getenv(var_name, sh->env);
@@ -79,51 +88,27 @@ static char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
 	return (str);
 }
 
-static char	*var_check(char *str, t_sh *sh)
+void	expand_variables(t_sh *sh)
 {
 	int	i;
 	int	exp_len;
 
 	i = 0;
 	exp_len = 0;
-	if (str == NULL)
-		return (str);
-	while (str[i] != '\0')
+	if (sh->buf == NULL)
+		return ;
+	while (sh->buf[i] != '\0')
 	{
-		if (str[i] == 39 && ft_strchr(&str[i + 1], 39) != NULL)
-			skip_quotes(str, &i, 39);
-		if (str[i] && str[i] == '$' && str[i + 1] != '$' && str[i + 1] != ' '
-			&& str[i + 1] != '\t' && str[i + 1] != '\n'
-			&& str[i + 1] != '\0')
+		if (sh->buf[i] == 39 && ft_strchr(&sh->buf[i + 1], 39) != NULL)
+			skip_quotes(sh->buf, &i, 39);
+		if (sh->buf[i] && sh->buf[i] == '$' && sh->buf[i + 1] != '$'
+			&& sh->buf[i + 1] != ' ' && sh->buf[i + 1] != '\t'
+			&& sh->buf[i + 1] != '\n' && sh->buf[i + 1] != '\0')
 		{
-			str = replace_var(str, sh, i, &exp_len);
+			sh->buf = replace_var(sh->buf, sh, i, &exp_len);
 			i = i + exp_len - 1;
 		}
-		if (str[i] != '\0')
+		if (sh->buf[i] != '\0')
 			i++;
-	}
-	return (str);
-}
-
-void	expand_variables(t_sh *sh)
-{
-	t_comm	*tmp;
-	t_redir	*tmp2;
-	int		i;
-
-	tmp = sh->comm;
-	while (tmp != NULL)
-	{
-		i = -1;
-		tmp->file = var_check(tmp->file, sh);
-		while (tmp->argv[++i] != NULL)
-			tmp->argv[i] = var_check(tmp->argv[i], sh);
-		tmp2 = tmp->redir;
-		while (tmp2 != NULL)
-		{
-			tmp2->name = var_check(tmp2->name, sh);
-			tmp2 = tmp2->next;
-		}
-		tmp = tmp->next;
 	}
 }
