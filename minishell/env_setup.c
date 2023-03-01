@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:22:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 18:17:34 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 09:20:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,12 @@ char	**setup_env(char **envp)
 	}
 	res[i] = NULL;
 	return (res);
+}
+
+void	free_var_expansion(char *exp, char *str, t_sh *sh)
+{
+	if (exp != NULL)
+		free(exp);
+	if (str == NULL)
+		ft_error(sh, 1);
 }

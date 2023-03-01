@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 13:50:46 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 09:20:28 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*replace_2(char *str, char *exp, int start, int end)
 	return (new);
 }
 
-static char	*replace_var(char *str, t_sh *sh, int start)
+static char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
 {
 	int		end;
 	char	*var_name;
@@ -73,19 +73,19 @@ static char	*replace_var(char *str, t_sh *sh, int start)
 	}
 	exp = ft_getenv(var_name, sh->env);
 	free(var_name);
+	*exp_len = ft_strlen(exp);
 	str = replace_2(str, exp, start, end);
-	if (exp != NULL)
-		free(exp);
-	if (str == NULL)
-		ft_error(sh, 1);
+	free_var_expansion(exp, str, sh);
 	return (str);
 }
 
 static char	*var_check(char *str, t_sh *sh)
 {
 	int	i;
+	int	exp_len;
 
 	i = 0;
+	exp_len = 0;
 	if (str == NULL)
 		return (str);
 	while (str[i] != '\0')
@@ -96,9 +96,8 @@ static char	*var_check(char *str, t_sh *sh)
 			&& str[i + 1] != '\t' && str[i + 1] != '\n'
 			&& str[i + 1] != '\0')
 		{
-			str = replace_var(str, sh, i);
-			if (i != 0)
-				i--;
+			str = replace_var(str, sh, i, &exp_len);
+			i = i + exp_len - 1;
 		}
 		if (str[i] != '\0')
 			i++;
