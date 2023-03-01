@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:44:43 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:09:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	free_comm(t_comm *comm);
 void	assign_cmd_value(t_comm *new);
 int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i, int j);
-void	expand_variables(t_sh *sh);
+void	expand_variables(t_sh *sh, int in_d_quotes, int i, int exp_len);
 int		get_var_name_len(char *str);
 char	*replace_2(char *str, char *exp, int start, int end);
 void	copy_brackets_var(char *str, char *var_name, int *end, int start);

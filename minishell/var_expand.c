@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:56:52 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:10:18 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,19 @@ static char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
 	return (str);
 }
 
-void	expand_variables(t_sh *sh)
+void	expand_variables(t_sh *sh, int in_d_quotes, int i, int exp_len)
 {
-	int	i;
-	int	exp_len;
-
-	i = 0;
-	exp_len = 0;
 	if (sh->buf == NULL)
 		return ;
 	while (sh->buf[i] != '\0')
 	{
-		if (sh->buf[i] == 39 && ft_strchr(&sh->buf[i + 1], 39) != NULL)
+		if (in_d_quotes == 0 && sh->buf[i] == '"'
+			&& ft_strchr(&sh->buf[i + 1], '"') != NULL)
+			in_d_quotes = 1;
+		else if (in_d_quotes == 1 && sh->buf[i] == '"')
+			in_d_quotes = 0;
+		if (in_d_quotes == 0 && sh->buf[i] == 39
+			&& ft_strchr(&sh->buf[i + 1], 39) != NULL)
 			skip_quotes(sh->buf, &i, 39);
 		if (sh->buf[i] && sh->buf[i] == '$' && sh->buf[i + 1] != '$'
 			&& sh->buf[i + 1] != ' ' && sh->buf[i + 1] != '\t'

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 10:45:36 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:28:56 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:09:40 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	lexing(t_sh *sh)
 
 	i = 0;
 	j = 0;
-	expand_variables(sh);
+	expand_variables(sh, 0, 0, 0);
 	sh->lex = malloc(sizeof(char *) * (token_count(sh->buf) + 1));
 	if (sh->lex == NULL)
 		ft_error(sh, 1);
