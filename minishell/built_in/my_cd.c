@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:35:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 11:57:14 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/01 16:29:10 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked)
 			ft_putendl_fd("msh: cd: missing argument: path to directory", 2);
 		if (forked == 1)
 		{
+			free_lex(sh->env);
 			free_all(sh);
 			exit (1);
 		}
@@ -102,6 +103,5 @@ void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked)
 			return ;
 		}
 	}
-	else
-		change_directory(sh, cmd, forked);
+	change_directory(sh, cmd, forked);
 }
