@@ -6,42 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:35:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 16:55:31 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:22:21 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern int	g_ret_val;
-
-void	cd_error(t_sh *sh, t_comm *cmd, int forked, int type)
-{
-	if (type == 1)
-	{
-		ft_putstr_fd("msh: cd : ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
-	}
-	else if (type == 2)
-	{
-		ft_putstr_fd("msh: cd : ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putendl_fd(": Not a directory", 2);
-	}
-	else if (type == 3)
-	{
-		ft_putstr_fd("msh: cd : ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putendl_fd(": Permission denied", 2);
-	}
-	if (forked == 1)
-	{
-		free_lex(sh->env);
-		free_all(sh);
-		exit (1);
-	}
-	g_ret_val = 1;
-}
 
 void	update_pwd_vars(t_sh *sh, char *dir)
 {
@@ -80,22 +51,22 @@ void	cd_exit_child_process(t_sh *sh, char *current_dir)
 	exit (0);
 }
 
-void	change_directory(t_sh *sh, t_comm *cmd, int forked, char *current_dir)
+void	change_directory(t_sh *sh, char *dest, int forked, char *current_dir)
 {
 	struct stat	buf;
 
-	if (stat(cmd->argv[1], &buf) < 0 && errno == EACCES)
-		cd_error(sh, cmd, forked, 3);
-	else if (access(cmd->argv[1], F_OK) != 0)
-		cd_error(sh, cmd, forked, 1);
+	if (stat(dest, &buf) < 0 && errno == EACCES)
+		cd_error(sh, dest, forked, 3);
+	else if (access(dest, F_OK) != 0)
+		cd_error(sh, dest, forked, 1);
 	else if (S_ISDIR(buf.st_mode))
 	{
 		current_dir = getcwd(current_dir, 0);
-		if (chdir(cmd->argv[1]) == -1)
+		if (chdir(dest) == -1)
 		{
 			if (current_dir != NULL)
 				free(current_dir);
-			cd_error(sh, cmd, forked, 3);
+			cd_error(sh, dest, forked, 3);
 			return ;
 		}
 		if (forked == 1)
@@ -105,7 +76,28 @@ void	change_directory(t_sh *sh, t_comm *cmd, int forked, char *current_dir)
 		return ;
 	}
 	else
-		cd_error(sh, cmd, forked, 2);
+		cd_error(sh, dest, forked, 2);
+}
+
+void	go_to_home_dir(t_sh *sh, int forked, char *current_dir)
+{
+	char	*home;
+
+	home = ft_getenv("HOME", sh->env);
+	if (home == NULL)
+	{
+		ft_putendl_fd("msh: cd: HOME not set", 2);
+		if (forked == 1)
+		{
+			free_lex(sh->env);
+			free_all(sh);
+			exit (1);
+		}
+		g_ret_val = 1;
+		return ;
+	}
+	change_directory(sh, home, forked, current_dir);
+	free(home);
 }
 
 void	my_cd(t_sh *sh, t_comm *cmd, int forked)
@@ -115,23 +107,20 @@ void	my_cd(t_sh *sh, t_comm *cmd, int forked)
 
 	current_dir = NULL;
 	arg_nb = check_cd_arg(cmd->argv);
-	if (arg_nb > 2 || arg_nb == 1)
+	if (arg_nb > 2)
 	{
-		if (arg_nb > 2)
-			ft_putendl_fd("msh: cd: too many arguments", 2);
-		else
-			ft_putendl_fd("msh: cd: missing argument: path to directory", 2);
+		ft_putendl_fd("msh: cd: too many arguments", 2);
 		if (forked == 1)
 		{
 			free_lex(sh->env);
 			free_all(sh);
 			exit (1);
 		}
-		else
-		{
-			g_ret_val = 1;
-			return ;
-		}
+		g_ret_val = 1;
+		return ;
 	}
-	change_directory(sh, cmd, forked, current_dir);
+	else if (arg_nb == 1)
+		go_to_home_dir(sh, forked, current_dir);
+	else
+		change_directory(sh, cmd->argv[1], forked, current_dir);
 }
