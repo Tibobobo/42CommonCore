@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:33:56 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 18:50:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 19:12:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	here_doc_loop(char *line, t_redir *redir)
 		line = readline(">");
 		if (g_ret_val == 130 || (line != NULL
 				&& ft_strncmp(line, redir->name,
-					ft_strlen(redir->name + 1)) == 0))
+					ft_strlen(redir->name)) == 0))
 		{
 			free(line);
 			break ;
