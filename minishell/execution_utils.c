@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 15:56:32 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:37:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	wait_for_children(t_sh *sh)
 	int		status;
 
 	tmp = sh->comm;
+	if (g_ret_val == 130)
+		return ;
 	signal(SIGINT, sig_handler_command);
 	signal(SIGQUIT, sig_handler_command);
 	while (tmp != NULL)

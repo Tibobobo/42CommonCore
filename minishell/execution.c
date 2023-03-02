@@ -6,11 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 10:26:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:57:48 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_ret_val;
 
 char	*get_path(t_sh *sh, char *file, char **env)
 {
@@ -98,31 +100,8 @@ void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env)
 		close(0);
 }
 
-void	choose_exec_case(t_sh *sh, t_comm *cmd, int *pipe_fd, char **env)
+void	execution_loop(t_sh *sh, char **env, t_comm *cmd, int *pipe_fd)
 {
-	if (cmd->next == NULL && env_built_in(cmd) == 0)
-	{
-		check_built_in(sh, cmd, env, 0);
-		return ;
-	}
-	else if (cmd->outfile == 1 && cmd->next != NULL)
-		exec_outfile_pipe_0(sh, pipe_fd, cmd, env);
-	else if (cmd->outfile == 0 && cmd->next != NULL)
-		exec_in_pipe(sh, pipe_fd, cmd, env);
-	else
-		exec_command(cmd, sh, NULL, env);
-	close(1);
-	if (dup2(cmd->stdout_save, 1) < 0)
-		ft_error(sh, 3);
-	close(cmd->stdout_save);
-}
-
-void	execution(t_sh *sh, char **env)
-{
-	t_comm	*cmd;
-	int		pipe_fd[2];
-
-	cmd = sh->comm;
 	while (cmd != NULL)
 	{
 		if (!(cmd->next == NULL && env_built_in(cmd) == 0))
@@ -135,6 +114,11 @@ void	execution(t_sh *sh, char **env)
 			|| (cmd->outfile == 0 && cmd->next != NULL
 				&& cmd->next->infile == 1))
 		{
+			if (g_ret_val == 130)
+			{
+				close(cmd->stdout_save);
+				return ;
+			}
 			if (cmd->next != NULL)
 				pipe_0(sh, pipe_fd, cmd);
 			close(cmd->stdout_save);
@@ -143,4 +127,14 @@ void	execution(t_sh *sh, char **env)
 			choose_exec_case(sh, cmd, pipe_fd, env);
 		cmd = cmd->next;
 	}
+}
+
+void	execution(t_sh *sh, char **env)
+{
+	t_comm	*cmd;
+	int		pipe_fd[2];
+
+	cmd = sh->comm;
+	g_ret_val = 0;
+	execution_loop(sh, env, cmd, pipe_fd);
 }

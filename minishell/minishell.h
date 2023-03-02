@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 17:22:44 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:58:24 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	here_doc_loop(char *line, t_redir *redir);
 int		check_if_empty_str(char *str);
 int		is_last_redir(t_redir *redir);
 void	execution(t_sh *sh, char **env);
+void	choose_exec_case(t_sh *sh, t_comm *cmd, int *pipe_fd, char **env);
 void	exec_command(t_comm *cmd, t_sh *sh, int *pipe_fd, char **env);
 void	exec_command_2(t_comm *cmd, t_sh *sh, char **env);
 void	exec_in_pipe(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env);
@@ -109,6 +110,7 @@ void	exec_outfile_pipe_0(t_sh *sh, int *pipe_fd, t_comm *cmd, char **env);
 char	**split_paths(t_sh *sh, char *temp, char **paths, char *file);
 void	command_error(t_sh *sh, char *cmd, int num, char *path);
 void	wait_for_children(t_sh *sh);
+void	sig_handler_prompt(int signum);
 void	sig_handler_command(int signum);
 void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked);
 int		env_built_in(t_comm *cmd);

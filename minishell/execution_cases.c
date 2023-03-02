@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 14:10:03 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 16:04:41 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:58:06 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,23 @@ int	is_unpiped_env_builtin(t_comm *cmd)
 			return (1);
 	}
 	return (0);
+}
+
+void	choose_exec_case(t_sh *sh, t_comm *cmd, int *pipe_fd, char **env)
+{
+	if (cmd->next == NULL && env_built_in(cmd) == 0)
+	{
+		check_built_in(sh, cmd, env, 0);
+		return ;
+	}
+	else if (cmd->outfile == 1 && cmd->next != NULL)
+		exec_outfile_pipe_0(sh, pipe_fd, cmd, env);
+	else if (cmd->outfile == 0 && cmd->next != NULL)
+		exec_in_pipe(sh, pipe_fd, cmd, env);
+	else
+		exec_command(cmd, sh, NULL, env);
+	close(1);
+	if (dup2(cmd->stdout_save, 1) < 0)
+		ft_error(sh, 3);
+	close(cmd->stdout_save);
 }

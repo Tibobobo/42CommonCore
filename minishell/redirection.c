@@ -6,13 +6,27 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 16:55:35 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 10:32:56 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:43:52 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_ret_val;
+
+int	is_last_redir(t_redir *redir)
+{
+	t_redir	*temp;
+
+	temp = redir->next;
+	while (temp != NULL)
+	{
+		if (temp->output == redir->output)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}
 
 int	input_file_check(t_sh *sh, t_redir *redir)
 {
@@ -110,7 +124,7 @@ int	redirections(t_comm *cmd, t_sh *sh)
 			here_doc(sh, redir);
 		redir = redir->next;
 	}
-	if (check_output_redir(cmd, sh) != 0)
+	if (g_ret_val == 130 || check_output_redir(cmd, sh) != 0)
 		return (1);
 	return (0);
 }

@@ -6,25 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:33:56 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/17 16:29:29 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:50:45 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_last_redir(t_redir *redir)
-{
-	t_redir	*temp;
-
-	temp = redir->next;
-	while (temp != NULL)
-	{
-		if (temp->output == redir->output)
-			return (0);
-		temp = temp->next;
-	}
-	return (1);
-}
+extern int	g_ret_val;
 
 int	check_if_empty_str(char *str)
 {
@@ -38,13 +26,32 @@ int	check_if_empty_str(char *str)
 	return (0);
 }
 
+void	sig_handler_heredoc(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		g_ret_val = 130;
+		close(0);
+	}
+	if (signum == SIGQUIT)
+	{
+		printf("\33[2K\r");
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
 void	here_doc_loop(char *line, t_redir *redir)
 {
+	signal(SIGINT, sig_handler_heredoc);
+	signal(SIGQUIT, sig_handler_heredoc);
 	while (1)
 	{
 		line = readline(">");
-		if (line != NULL
-			&& ft_strncmp(line, redir->name, ft_strlen(redir->name + 1)) == 0)
+		if (g_ret_val == 130 || (line != NULL
+				&& ft_strncmp(line, redir->name,
+					ft_strlen(redir->name + 1)) == 0))
 		{
 			free(line);
 			break ;
@@ -52,6 +59,8 @@ void	here_doc_loop(char *line, t_redir *redir)
 		ft_putendl_fd(line, redir->fd);
 		free(line);
 	}
+	signal(SIGINT, sig_handler_prompt);
+	signal(SIGQUIT, sig_handler_prompt);
 }
 
 void	here_doc(t_sh *sh, t_redir *redir)
@@ -70,11 +79,14 @@ void	here_doc(t_sh *sh, t_redir *redir)
 	dup2(sh->stdin_save, 0);
 	here_doc_loop(line, redir);
 	close(redir->fd);
-	redir->fd = open("/tmp/hd", O_RDONLY);
-	if (redir->fd < 0)
-		ft_error(sh, 2);
-	if (dup2(redir->fd, 0) < 0)
-		ft_error(sh, 3);
-	close(redir->fd);
+	if (g_ret_val != 130)
+	{
+		redir->fd = open("/tmp/hd", O_RDONLY);
+		if (redir->fd < 0)
+			ft_error(sh, 2);
+		if (dup2(redir->fd, 0) < 0)
+			ft_error(sh, 3);
+		close(redir->fd);
+	}
 	unlink("/tmp/hd");
 }
