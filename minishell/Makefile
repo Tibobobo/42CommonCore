@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 14:58:06 by tgrasset          #+#    #+#              #
-#    Updated: 2023/02/28 16:35:08 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/03/02 16:51:43 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS	=	./main.c \
 			./built_in/built_in.c \
 			./built_in/my_echo.c \
 			./built_in/my_cd.c \
+			./built_in/my_cd_utils.c \
 			./built_in/my_pwd.c \
 			./built_in/my_exit.c \
 			./built_in/my_env.c \

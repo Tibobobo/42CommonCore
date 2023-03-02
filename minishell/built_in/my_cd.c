@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:35:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 16:29:10 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:55:31 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,51 @@ void	cd_error(t_sh *sh, t_comm *cmd, int forked, int type)
 	}
 	if (forked == 1)
 	{
+		free_lex(sh->env);
 		free_all(sh);
 		exit (1);
 	}
 	g_ret_val = 1;
 }
 
-void	change_directory(t_sh *sh, t_comm *cmd, int forked)
+void	update_pwd_vars(t_sh *sh, char *dir)
+{
+	char	*var;
+
+	if (dir == NULL)
+		return ;
+	var = ft_getenv("OLDPWD", sh->env);
+	if (var == NULL)
+		cd_add_env_var(sh, "OLDPWD", dir);
+	else
+	{
+		cd_replace_env_var(sh, "OLDPWD", dir);
+		free(var);
+	}
+	dir = NULL;
+	dir = getcwd(dir, 0);
+	if (dir == NULL)
+		return ;
+	var = ft_getenv("PWD", sh->env);
+	if (var == NULL)
+		cd_add_env_var(sh, "PWD", dir);
+	else
+	{
+		cd_replace_env_var(sh, "PWD", dir);
+		free(var);
+	}
+}
+
+void	cd_exit_child_process(t_sh *sh, char *current_dir)
+{
+	free_lex(sh->env);
+	free_all(sh);
+	if (current_dir != NULL)
+		free(current_dir);
+	exit (0);
+}
+
+void	change_directory(t_sh *sh, t_comm *cmd, int forked, char *current_dir)
 {
 	struct stat	buf;
 
@@ -52,16 +90,17 @@ void	change_directory(t_sh *sh, t_comm *cmd, int forked)
 		cd_error(sh, cmd, forked, 1);
 	else if (S_ISDIR(buf.st_mode))
 	{
+		current_dir = getcwd(current_dir, 0);
 		if (chdir(cmd->argv[1]) == -1)
 		{
+			if (current_dir != NULL)
+				free(current_dir);
 			cd_error(sh, cmd, forked, 3);
 			return ;
 		}
 		if (forked == 1)
-		{
-			free_all(sh);
-			exit (0);
-		}
+			cd_exit_child_process(sh, current_dir);
+		update_pwd_vars(sh, current_dir);
 		g_ret_val = 0;
 		return ;
 	}
@@ -69,21 +108,12 @@ void	change_directory(t_sh *sh, t_comm *cmd, int forked)
 		cd_error(sh, cmd, forked, 2);
 }
 
-int	check_cd_arg(char **argv)
+void	my_cd(t_sh *sh, t_comm *cmd, int forked)
 {
-	int	i;
+	int		arg_nb;
+	char	*current_dir;
 
-	i = 0;
-	while (argv[i] != NULL)
-		i++;
-	return (i);
-}
-
-void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked)
-{
-	int	arg_nb;
-
-	(void)env;
+	current_dir = NULL;
 	arg_nb = check_cd_arg(cmd->argv);
 	if (arg_nb > 2 || arg_nb == 1)
 	{
@@ -103,5 +133,5 @@ void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked)
 			return ;
 		}
 	}
-	change_directory(sh, cmd, forked);
+	change_directory(sh, cmd, forked, current_dir);
 }

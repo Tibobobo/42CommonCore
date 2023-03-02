@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 10:10:54 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:33:42 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,26 @@ int	check_export_var_name(t_sh *sh, char *arg, int forked)
 
 void	replace_existing_var(t_sh *sh, char *arg, char *name, char *val)
 {
-	int	i;
+	int		i;
+	char	*new;
 
 	i = 0;
 	while (sh->env[i] != NULL
 		&& !(ft_strncmp(sh->env[i], name, ft_strlen(name)) == 0
 			&& sh->env[i][ft_strlen(name)] == '='))
 		i++;
-	free(sh->env[i]);
 	val = get_new_value(sh, arg, name);
-	sh->env[i] = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(val) + 2));
-	if (sh->env[i] == NULL)
+	new = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(val) + 2));
+	if (new == NULL)
 	{
 		free(name);
 		free(val);
 		ft_error(sh, 1);
 	}
-	copy_new_var(sh->env[i], name, val);
+	free(sh->env[i]);
+	copy_new_var(new, name, val);
+	free(name);
+	sh->env[i] = new;
 }
 
 void	add_new_env_var(t_sh *sh, char *arg, char *name, char *value)
@@ -109,6 +112,7 @@ void	add_new_env_var(t_sh *sh, char *arg, char *name, char *value)
 		free(value);
 		ft_error(sh, 1);
 	}
+	free(name);
 	replace_env(sh, newenv, new);
 }
 

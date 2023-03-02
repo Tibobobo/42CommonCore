@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 11:09:34 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:56:00 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ void	check_built_in(t_sh *sh, t_comm *cmd, char **env, int forked);
 int		env_built_in(t_comm *cmd);
 int		is_unpiped_env_builtin(t_comm *cmd);
 void	my_echo(t_sh *sh, t_comm *cmd);
-void	my_cd(t_sh *sh, t_comm *cmd, char **env, int forked);
+void	my_cd(t_sh *sh, t_comm *cmd, int forked);
+int		check_cd_arg(char **argv);
+void	cd_replace_env_var(t_sh *sh, char *name, char *value);
+void	cd_add_env_var(t_sh *sh, char *name, char *value);
 void	my_pwd(t_sh *sh);
 void	my_exit(t_sh *sh, t_comm *cmd, int forked);
 void	my_env(t_sh *sh, t_comm *cmd, char **env);

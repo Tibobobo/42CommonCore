@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:54:08 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/28 17:27:39 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:33:15 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	copy_new_var(char *new, char *name, char *value)
 		j++;
 	}
 	new[i] = '\0';
-	free(name);
 	free(value);
 }
 
