@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:08:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 10:38:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:07:35 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	get_var_name_len(char *str)
 	if (str[i] == '?')
 		return (1);
 	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
-		&& str[i] != '$' && str[i] != ']' && str[i] != 34 && str[i] != 39)
+		&& str[i] != '$' && str[i] != 34 && str[i] != 39 && str[i] != ']'
+		&& str[i] != '=' && str[i] != '/')
 		i++;
 	return (i);
 }
@@ -71,7 +72,8 @@ void	copy_nobrackets_var(char *str, char *var_name, int *end, int start)
 	}
 	while (str[*end] && str[*end] != ' ' && str[*end] != '\t'
 		&& str[*end] != '\n' && str[*end] != '$' && str[*end] != 34
-		&& str[*end] != 39 && str[*end] != ']')
+		&& str[*end] != 39 && str[*end] != '=' && str[*end] != '/'
+		&& str[*end] != ']')
 	{
 		var_name[*end - start - 1] = str[*end];
 		(*end)++;

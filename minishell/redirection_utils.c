@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:33:56 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 19:12:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:31:47 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,34 @@ void	sig_handler_heredoc(int signum)
 	}
 }
 
-void	here_doc_loop(char *line, t_redir *redir)
+int	in_hd_delimiter(char *buf, int i, int in_d_quotes)
+{
+	if (in_d_quotes == 1)
+	{
+		while (buf[i] != '"')
+			i--;
+	}
+	while (i > 1 && buf[i] != ' ' && buf[i] != '\t' && buf[i] != '\n'
+		&& buf[i] != '|' && buf[i] != '>' && buf[i] != '<')
+		i--;
+	while (i > 1 && (buf[i] == ' ' || buf[i] == '\t' || buf[i] == '\n'))
+		i--;
+	if (buf[i] == '<' && buf[i - 1] == '<')
+		return (1);
+	return (0);
+}
+
+void	here_doc_loop(t_sh *sh, char *line, t_redir *redir)
 {
 	signal(SIGINT, sig_handler_heredoc);
 	signal(SIGQUIT, sig_handler_heredoc);
+	(void)sh;
 	while (1)
 	{
 		line = readline(">");
 		if (g_ret_val == 130 || (line != NULL
-				&& ft_strncmp(line, redir->name,
-					ft_strlen(redir->name)) == 0))
+				&& ft_strncmp(line, redir->name, ft_strlen(redir->name)) == 0
+				&& line[ft_strlen(redir->name)] == '\0'))
 		{
 			free(line);
 			break ;
@@ -77,7 +95,7 @@ void	here_doc(t_sh *sh, t_redir *redir)
 		return ;
 	}
 	dup2(sh->stdin_save, 0);
-	here_doc_loop(line, redir);
+	here_doc_loop(sh, line, redir);
 	close(redir->fd);
 	if (g_ret_val != 130)
 	{

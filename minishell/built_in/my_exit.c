@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:30:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 13:08:03 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 12:44:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int	is_numeric(char *arg)
 	int	i;
 
 	i = 0;
+	if (arg[0] == '+' || arg[0] == '-')
+	{
+		i++;
+		if (arg[i] == '\0')
+			return (0);
+	}
 	while (arg[i] != '\0')
 	{
 		if (ft_isdigit(arg[i]) != 1)

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:54:08 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 16:33:15 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:32:54 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,12 @@ void	replace_env(t_sh *sh, char **newenv, char *new)
 	sh->env = newenv;
 }
 
-void	finish_forked_export(t_sh *sh, int forked)
+void	finish_forked_export(t_sh *sh, int forked, int ret_value)
 {
 	if (forked == 1)
 	{
 		free_lex(sh->env);
 		free_all(sh);
-		exit (0);
+		exit (ret_value);
 	}
 }

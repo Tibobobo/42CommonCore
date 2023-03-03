@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 16:33:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 13:41:57 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,28 @@ int	check_export_cmd_format(t_sh *sh, t_comm *cmd, int forked)
 	return (0);
 }
 
-int	check_export_var_name(t_sh *sh, char *arg, int forked)
+int	check_export_var_name(t_sh *sh, char *arg, int forked, int name_ok)
 {
 	int	i;
 
 	i = 0;
-	while (arg[i] != '\0' && arg[i] != '=')
+	if (arg[0] == '=' || arg[0] == '\0')
+		name_ok = 0;
+	while (name_ok == 1 && arg[i] != '\0' && arg[i] != '=')
 	{
 		if ((ft_isalpha(arg[0]) == 0 && arg[0] != '_')
 			|| (i > 0 && ft_isalnum(arg[i]) == 0 && arg[i] != '_'))
-		{
-			ft_putstr_fd("msh: export: `", 2);
-			ft_putstr_fd(arg, 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			if (forked == 1)
-			{
-				free_lex(sh->env);
-				free_all(sh);
-				exit (1);
-			}
-			g_ret_val = 1;
-			return (1);
-		}
+			name_ok = 0;
 		i++;
 	}
+	if (name_ok == 1 && arg[i] == '\0')
+	{
+		finish_forked_export(sh, forked, 0);
+		g_ret_val = 0;
+		return (1);
+	}
+	if (name_ok == 0)
+		return (invalid_var_name(sh, arg, forked));
 	return (0);
 }
 
@@ -128,7 +126,7 @@ void	my_export(t_sh *sh, t_comm *cmd, int forked)
 	i = 1;
 	while (cmd->argv[i] != NULL)
 	{
-		if (check_export_var_name(sh, cmd->argv[i], forked) == 1)
+		if (check_export_var_name(sh, cmd->argv[i], forked, 1) == 1)
 			return ;
 		name = get_var_name(sh, cmd->argv[i]);
 		value = ft_getenv(name, sh->env);
@@ -141,6 +139,6 @@ void	my_export(t_sh *sh, t_comm *cmd, int forked)
 			add_new_env_var(sh, cmd->argv[i], name, value);
 		i++;
 	}
-	finish_forked_export(sh, forked);
+	finish_forked_export(sh, forked, 0);
 	g_ret_val = 0;
 }

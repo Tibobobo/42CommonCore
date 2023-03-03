@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 18:58:24 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:29:05 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		get_command_name(t_sh *sh, t_comm *new, int i);
 void	get_command_args(t_sh *sh, t_comm *new, int i, int j);
 void	expand_variables(t_sh *sh, int in_d_quotes, int i, int exp_len);
 int		get_var_name_len(char *str);
+char	*replace_var(char *str, t_sh *sh, int start, int *exp_len);
 char	*replace_2(char *str, char *exp, int start, int end);
 void	copy_brackets_var(char *str, char *var_name, int *end, int start);
 void	copy_nobrackets_var(char *str, char *var_name, int *end, int start);
@@ -97,7 +98,7 @@ int		check_syntax(char **lex, int i);
 void	free_all(t_sh *sh);
 int		redirections(t_comm *cmd, t_sh *sh);
 void	here_doc(t_sh *sh, t_redir *redir);
-void	here_doc_loop(char *line, t_redir *redir);
+int		in_hd_delimiter(char *buf, int i, int in_d_quotes);
 int		check_if_empty_str(char *str);
 int		is_last_redir(t_redir *redir);
 void	execution(t_sh *sh, char **env);
@@ -127,10 +128,11 @@ void	my_env(t_sh *sh, t_comm *cmd, char **env);
 char	*ft_getenv(char *var_name, char **env);
 void	my_export(t_sh *sh, t_comm *cmd, int forked);
 char	*get_var_name(t_sh *sh, char *arg);
+int		invalid_var_name(t_sh *sh, char *arg, int forked);
 char	*get_new_value(t_sh *sh, char *arg, char *name);
 void	copy_new_var(char *new, char *name, char *value);
 void	replace_env(t_sh *sh, char **newenv, char *new);
-void	finish_forked_export(t_sh *sh, int forked);
+void	finish_forked_export(t_sh *sh, int forked, int ret_value);
 void	my_unset(t_sh *sh, t_comm *cmd, int forked);
 
 #endif

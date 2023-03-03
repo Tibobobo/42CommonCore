@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 16:14:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 11:10:18 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:28:34 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_var_expansion(char *exp, char *str, t_sh *sh)
 		ft_error(sh, 1);
 }
 
-static char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
+char	*replace_var(char *str, t_sh *sh, int start, int *exp_len)
 {
 	int		end;
 	char	*var_name;
@@ -105,7 +105,9 @@ void	expand_variables(t_sh *sh, int in_d_quotes, int i, int exp_len)
 		if (sh->buf[i] && sh->buf[i] == '$' && sh->buf[i + 1] != '$'
 			&& sh->buf[i + 1] != ' ' && sh->buf[i + 1] != '\t'
 			&& sh->buf[i + 1] != '\n' && sh->buf[i + 1] != '\0'
-			&& sh->buf[i + 1] != '"')
+			&& sh->buf[i + 1] != '"' && sh->buf[i + 1] != '='
+			&& sh->buf[i + 1] != '/'
+			&& in_hd_delimiter(sh->buf, i, in_d_quotes) == 0)
 		{
 			sh->buf = replace_var(sh->buf, sh, i, &exp_len);
 			i = i + exp_len - 1;
