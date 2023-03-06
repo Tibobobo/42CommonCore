@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 12:06:42 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:37:55 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	lex_parse_execute_free(t_sh *sh, char **env)
 	lexing(sh);
 	parsing(sh);
 	sh->stdin_save = dup(0);
+	sh->interrupted_heredoc = 0;
 	if (sh->stdin_save < 0)
 		ft_error(sh, 3);
 	if (sh->comm != NULL)
@@ -89,8 +90,10 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		}
 		if (sh.buf[0] != '\0')
+		{
 			add_history(sh.buf);
-		lex_parse_execute_free(&sh, sh.env);
+			lex_parse_execute_free(&sh, sh.env);
+		}
 	}
 	return (0);
 }

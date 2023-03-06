@@ -6,9 +6,11 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:04:54 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/02/13 15:05:28 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:36:08 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+extern int	g_ret_val;
 
 #include "minishell.h"
 
@@ -26,6 +28,7 @@ void	syntax_error(int i)
 		ft_putendl_fd("msh: syntax error near unexpected token `<<'", 2);
 	if (i == 6)
 		ft_putendl_fd("msh: syntax error near unexpected token `>>'", 2);
+	g_ret_val = 2;
 }
 
 int	check_syntax_2(char **lex, int i)

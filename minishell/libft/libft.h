@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:05:11 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 13:10:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:53:05 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
 
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);

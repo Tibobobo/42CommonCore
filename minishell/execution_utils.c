@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 12:29:27 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:04:38 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	wait_for_children(t_sh *sh)
 	t_comm	*tmp;
 	int		status;
 
+	status = 0;
 	tmp = sh->comm;
-	if (g_ret_val == 130)
+	if (g_ret_val == 130 && sh->interrupted_heredoc == 1)
 		return ;
 	signal(SIGINT, sig_handler_command);
 	signal(SIGQUIT, sig_handler_command);

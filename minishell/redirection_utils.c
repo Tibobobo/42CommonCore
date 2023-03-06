@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:33:56 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 11:35:13 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:54:46 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	in_hd_delimiter(char *buf, int i, int in_d_quotes)
 	return (0);
 }
 
-void	here_doc_loop(char *line, t_redir *redir)
+void	here_doc_loop(char *line, t_redir *redir, t_sh *sh)
 {
 	signal(SIGINT, sig_handler_heredoc);
 	signal(SIGQUIT, sig_handler_heredoc);
@@ -70,6 +70,8 @@ void	here_doc_loop(char *line, t_redir *redir)
 				&& ft_strncmp(line, redir->name, ft_strlen(redir->name)) == 0
 				&& line[ft_strlen(redir->name)] == '\0'))
 		{
+			if (g_ret_val == 130)
+				sh->interrupted_heredoc = 1;
 			free(line);
 			break ;
 		}
@@ -87,6 +89,7 @@ void	here_doc(t_sh *sh, t_redir *redir)
 	line = NULL;
 	if (is_last_redir(redir) == 0)
 		return ;
+	g_ret_val = 0;
 	redir->fd = open("/tmp/hd", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (redir->fd < 0)
 	{
@@ -94,7 +97,7 @@ void	here_doc(t_sh *sh, t_redir *redir)
 		return ;
 	}
 	dup2(sh->stdin_save, 0);
-	here_doc_loop(line, redir);
+	here_doc_loop(line, redir, sh);
 	close(redir->fd);
 	if (g_ret_val != 130)
 	{

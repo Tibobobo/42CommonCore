@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:31:13 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/03 15:29:05 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:50:14 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_sh
 	char	**lex;
 	t_comm	*comm;
 	int		pipe_number;
+	int		interrupted_heredoc;
 	int		stdin_save;
 	char	**env;
 }			t_sh;

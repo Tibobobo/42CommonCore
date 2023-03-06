@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 12:11:04 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:05:07 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	execution(t_sh *sh, char **env)
 	t_comm	*cmd;
 	int		pipe_fd[2];
 
-	cmd = sh->comm;
 	g_ret_val = 0;
+	cmd = sh->comm;
 	execution_loop(sh, env, cmd, pipe_fd);
 }
