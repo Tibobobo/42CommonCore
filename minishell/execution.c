@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 20:23:55 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/03 15:41:11 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:11:04 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 extern int	g_ret_val;
 
-char	*get_path(t_sh *sh, char *file, char **env)
+char	*get_path(t_sh *sh, char *file)
 {
 	char	**paths;
 	char	*temp;
 	char	*path_try;
 	int		i;
 
-	(void)env;
 	temp = NULL;
 	paths = NULL;
 	paths = split_paths(sh, temp, paths, file);
@@ -59,7 +58,7 @@ void	exec_command_2(t_comm *cmd, t_sh *sh, char **env)
 			ft_error(sh, 1);
 	}
 	else
-		path = get_path(sh, cmd->file, env);
+		path = get_path(sh, cmd->file);
 	if (path != NULL && access(path, X_OK) == 0)
 	{
 		execve(path, cmd->argv, env);

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:49:07 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 18:37:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:29:27 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	wait_for_children(t_sh *sh)
 			if (waitpid(tmp->pid, &status, 0) < 0)
 				ft_error(sh, 7);
 		}
+		if (g_ret_val == 130 || g_ret_val == 131)
+			return ;
 		if (tmp->next == NULL && tmp->in_out_fail == 0
 			&& is_unpiped_env_builtin(tmp) == 0)
 			g_ret_val = WEXITSTATUS(status);

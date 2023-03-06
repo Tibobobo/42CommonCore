@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/02 18:41:45 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:06:42 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ int	g_ret_val = 0;
 void	sig_handler_command(int signum)
 {
 	if (signum == SIGINT)
+	{
 		printf("\n");
+		g_ret_val = 130;
+	}
 	if (signum == SIGQUIT)
+	{
 		printf("Quit (core dumped)\n");
+		g_ret_val = 131;
+	}
 }
 
 void	sig_handler_prompt(int signum)

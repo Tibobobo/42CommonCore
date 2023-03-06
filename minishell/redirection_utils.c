@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:33:56 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/03 15:31:47 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:35:13 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,10 @@ int	in_hd_delimiter(char *buf, int i, int in_d_quotes)
 	return (0);
 }
 
-void	here_doc_loop(t_sh *sh, char *line, t_redir *redir)
+void	here_doc_loop(char *line, t_redir *redir)
 {
 	signal(SIGINT, sig_handler_heredoc);
 	signal(SIGQUIT, sig_handler_heredoc);
-	(void)sh;
 	while (1)
 	{
 		line = readline(">");
@@ -95,7 +94,7 @@ void	here_doc(t_sh *sh, t_redir *redir)
 		return ;
 	}
 	dup2(sh->stdin_save, 0);
-	here_doc_loop(sh, line, redir);
+	here_doc_loop(line, redir);
 	close(redir->fd);
 	if (g_ret_val != 130)
 	{
