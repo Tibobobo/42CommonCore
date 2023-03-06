@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 10:28:12 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/01 09:46:26 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:48:20 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ void	add_redir(t_sh *sh, t_comm *cmd, int i)
 	if (new->output == 1)
 		cmd->outfile = 1;
 	if (cmd->redir == NULL)
-	{
 		cmd->redir = new;
-	}
 	else
 	{
 		while (tmp->next != NULL)

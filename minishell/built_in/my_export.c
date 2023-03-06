@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/03 13:41:57 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:12:22 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_export_cmd_format(t_sh *sh, t_comm *cmd, int forked)
 		i++;
 	if (i == 1)
 	{
-		ft_putendl_fd("msh: export: Usage : export name[=value]", 2);
+		ft_putendl_fd("msh: export: Usage : export name=[value]", 2);
 		if (forked == 1)
 		{
 			free_lex(sh->env);
