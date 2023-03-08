@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 20:08:40 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 15:58:49 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:28:39 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ extern int	g_ret_val;
 
 int	remainder_length(char *str, int end)
 {
-	int	i;
 	int	j;
 
-	i = end;
 	j = 0;
 	if (str[end] == '}')
 		end++;
