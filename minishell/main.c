@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/08 10:10:56 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:23:17 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	sig_handler_command(int signum)
 	}
 	if (signum == SIGQUIT)
 	{
-		printf("Quit (core dumped)\n");
+		ft_putendl_fd("Quit (core dumped)", 2);
 		g_ret_val = 131;
 	}
 }
@@ -72,7 +72,7 @@ void	quit_with_sigquit(t_sh *sh)
 	rl_clear_history();
 	free_all(sh);
 	free_lex(sh->env);
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("exit", 2);
 	exit(g_ret_val);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:30:44 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/03 12:44:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:20:44 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	my_exit(t_sh *sh, t_comm *cmd, int forked)
 		ret = ft_atoi(cmd->argv[1]);
 	if (forked == 0)
 	{
-		printf("exit\n");
+		ft_putendl_fd("exit", 2);
 		close (sh->stdin_save);
 		rl_clear_history();
 	}
