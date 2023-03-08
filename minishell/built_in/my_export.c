@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:52:50 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 18:12:22 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:33:16 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ void	my_export(t_sh *sh, t_comm *cmd, int forked)
 	value = NULL;
 	if (check_export_cmd_format(sh, cmd, forked) == 1)
 		return ;
-	i = 1;
-	while (cmd->argv[i] != NULL)
+	i = 0;
+	while (cmd->argv[++i] != NULL)
 	{
 		if (check_export_var_name(sh, cmd->argv[i], forked, 1) == 1)
-			return ;
+			continue ;
 		name = get_var_name(sh, cmd->argv[i]);
 		value = ft_getenv(name, sh->env);
 		if (value != NULL)
@@ -137,7 +137,6 @@ void	my_export(t_sh *sh, t_comm *cmd, int forked)
 		}
 		else
 			add_new_env_var(sh, cmd->argv[i], name, value);
-		i++;
 	}
 	finish_forked_export(sh, forked, 0);
 	g_ret_val = 0;
