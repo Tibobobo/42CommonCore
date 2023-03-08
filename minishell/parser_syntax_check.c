@@ -6,13 +6,13 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:04:54 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 14:36:08 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:16:01 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern int	g_ret_val;
-
 #include "minishell.h"
+
+extern int	g_ret_val;
 
 void	syntax_error(int i)
 {

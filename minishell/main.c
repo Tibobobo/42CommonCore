@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/06 15:37:55 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/08 10:10:56 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ void	lex_parse_execute_free(t_sh *sh, char **env)
 	close(sh->stdin_save);
 }
 
+void	quit_with_sigquit(t_sh *sh)
+{
+	rl_clear_history();
+	free_all(sh);
+	free_lex(sh->env);
+	ft_putendl_fd("exit", 1);
+	exit(g_ret_val);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_sh	sh;
@@ -75,6 +84,8 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	g_ret_val = 0;
 	sh.env = setup_env(envp);
+	sh.comm = NULL;
+	sh.lex = NULL;
 	signal(SIGINT, sig_handler_prompt);
 	signal(SIGQUIT, sig_handler_prompt);
 	signal(SIGTSTP, SIG_IGN);
@@ -82,13 +93,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		sh.buf = readline("\033[0;32mminishell $> \033[0;m");
 		if (sh.buf == NULL)
-		{
-			rl_clear_history();
-			free_all(&sh);
-			free_lex(sh.env);
-			ft_putendl_fd("exit", 1);
-			break ;
-		}
+			quit_with_sigquit(&sh);
 		if (sh.buf[0] != '\0')
 		{
 			add_history(sh.buf);
