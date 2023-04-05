@@ -6,7 +6,7 @@
 /*   By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 15:29:58 by tgrasset          #+#    #+#             */
-/*   Updated: 2023/03/08 14:44:01 by tgrasset         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:19:37 by tgrasset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
-		sh.buf = readline("\033[0;32mminishell $> \033[0;m");
+		sh.buf = readline("\1\033[0;32m\2minishell $> \1\033[0;m\2");
 		if (sh.buf == NULL)
 			quit_with_sigquit(&sh);
 		if (sh.buf[0] != '\0')
