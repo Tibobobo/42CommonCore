@@ -31,27 +31,27 @@ void	PhoneBook::addContact(void) {
 		std::cout << "New contact" << std::endl << std::endl;
 		while (first.compare("") == 0)
 		{
-			std::cout << "First Name :";
+			std::cout << "First Name : ";
 			std::getline(std::cin, first);
 		}
 		while (last.compare("") == 0)
 		{
-			std::cout << "Last Name :";
+			std::cout << "Last Name : ";
 			std::getline(std::cin, last);
 		}
 		while (nick.compare("") == 0)
 		{
-			std::cout << "Nickname :";
+			std::cout << "Nickname : ";
 			std::getline(std::cin, nick);
 		}
 		while (phone.compare("") == 0)
 		{
-			std::cout << "Phone Number :";
+			std::cout << "Phone Number : ";
 			std::getline(std::cin, phone);
 		}
 		while (secret.compare("") == 0)
 		{
-			std::cout << "Darkest Secret :";
+			std::cout << "Darkest Secret : ";
 			std::getline(std::cin, secret);
 		}
 		
@@ -90,7 +90,7 @@ void	PhoneBook::searchContact(void) const {
 			}
 			std::cout << std::setw(10) << i + 1  << "|" << std::setw(10) << first << "|" << std::setw(10) << last << "|" << std::setw(10) << nick << std::endl;
 		}
-		std::cout << "Please enter a contact index :";
+		std::cout << "Please enter a contact index : ";
 		std::getline(std::cin, buff);
 		index = atoi(buff.c_str());
 		if (index < 1 || index > 8)
