@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 15:58:48 by tgrasset          #+#    #+#              #
-#    Updated: 2023/04/11 09:26:17 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/04/11 09:26:12 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	=	./main.cpp \
 
 OBJS	=	$(SRCS:%.cpp=%.o)
 
-NAME	=	harl
+NAME	=	HarlFilter
 
 CPP		=	c++
 
