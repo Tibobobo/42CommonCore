@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 15:58:48 by tgrasset          #+#    #+#              #
-#    Updated: 2023/04/11 16:23:29 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/04/11 16:23:33 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	=	./main.cpp \
 
 OBJS	=	$(SRCS:%.cpp=%.o)
 
-NAME	=	fixed
+NAME	=	fixed3
 
 CPP		=	c++
 
