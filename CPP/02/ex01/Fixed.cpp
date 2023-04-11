@@ -1,8 +1,9 @@
 #include "Fixed.hpp"
 
-Fixed::Fixed(void) : _val(0){
+Fixed::Fixed(void) {
 
 	std:: cout << "Default constructor called" << std::endl;
+	this->_val = 0;
 }
 
 Fixed::Fixed(Fixed const &src) {
@@ -32,8 +33,5 @@ int	Fixed::getRawBits(void) const {
 
 void	Fixed::setRawBits(int const raw) {
 
-	std::cout << "setRawBits member function called" << std::endl;
 	this->_val = raw;
 }
-
-int const Fixed::_fract = 8;
