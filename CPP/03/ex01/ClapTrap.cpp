@@ -2,23 +2,23 @@
 
 ClapTrap::ClapTrap(void) : _name("Default"), _hp(10), _ep(10), _atk(0) {
 
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "Default CT constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name) : _name(name), _hp(10), _ep(10), _atk(0) {
 
-	std::cout << "Constructor called with name " << name << std::endl;
+	std::cout << "CT constructor called with name " << name << std::endl;
 }
 
 ClapTrap::ClapTrap(ClapTrap const &src) {
 
-	std::cout << "Copy constructor called, copying from "  << src.getName()  << std::endl;
+	std::cout << "CT copy constructor called, copying from "  << src.getName()  << std::endl;
 	*this = src;
 }
 
 ClapTrap::~ClapTrap(void) {
 
-	std::cout << "Destructor called " << std::endl;
+	std::cout << "CT Destructor called " << std::endl;
 }
 
 ClapTrap	&ClapTrap::operator=(ClapTrap const &rhs) {
@@ -76,33 +76,33 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 
 	if (this->_hp == 0)
 	{
-		std::cout << "ClapTrap " << this->_name << " is already dead..." << std::endl;
+		std::cout << this->_name << " is already dead..." << std::endl;
 		return ;
 	}
-	std::cout << "ClapTrap " << this->_name << " loses " << amount << " HP, going from " << this->_hp;
+	std::cout << this->_name << " loses " << amount << " HP, going from " << this->_hp;
 	this->_hp -= amount;
 	if (this->_hp < 0)
 		this->_hp = 0;
 	std::cout << " to " << this->_hp << " !" << std::endl;
 	if (this->_hp == 0)
-		std::cout << "ClapTrap " << this->_name << " is dead !    :(" << std::endl;
+		std::cout << this->_name << " is dead !    :(" << std::endl;
 }
 
 void	ClapTrap::beRepaired(unsigned int amount) {
 
 	if (this->_hp == 0)
 	{
-		std::cout << "ClapTrap " << this->_name << " can't repair itself";
+		std::cout << this->_name << " can't repair itself";
 		std::cout << " because it's dead..." << std::endl;
 		return ;
 	}
 	else if (this->_ep <= 0)
 	{
-		std::cout << "ClapTrap " << this->_name << " can't repair itself";
+		std::cout << this->_name << " can't repair itself";
 		std::cout << " because it has no EP left..." << std::endl;
 		return ;
 	}
-	std::cout << "ClapTrap " << this->_name << " repairs for " << amount << " HP, going from " << this->_hp;
+	std::cout << this->_name << " repairs for " << amount << " HP, going from " << this->_hp;
 	this->_hp += amount;
 	this->_ep--;
 	std::cout << " to " << this->_hp << " !" << std::endl;

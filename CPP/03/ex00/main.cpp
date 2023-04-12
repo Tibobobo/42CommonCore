@@ -10,6 +10,7 @@ int	main(void) {
 	def.beRepaired(10);
 	steph.takeDamage(5);
 	didier2.takeDamage(50);
+	didier2.takeDamage(1);
 	didier2.beRepaired(10000);
 	didier2.attack("the other Didier");
 	for (int i = 0; i < 12; i++)
