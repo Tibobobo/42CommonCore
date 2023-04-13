@@ -1,4 +1,5 @@
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int	main(void) {
 	{
@@ -29,7 +30,7 @@ int	main(void) {
 		ScavTrap wissam("Wissam");
 		ScavTrap shigeru2(shigeru);
 
-		scavDef.attack("someone");
+		scavDef.attack("someone randomly");
 		scavDef.takeDamage(56);
 		scavDef.beRepaired(30);
 		scavDef = wissam;
@@ -40,5 +41,24 @@ int	main(void) {
 		wissam.guardGate();
 		for (int i; i < 52; i++)
 			shigeru2.beRepaired(1);
+	}
+		std::cout << "_____________________________________________________" << std::endl;
+		std::cout << "_____________________________________________________" << std::endl << std::endl;
+	{
+		std::cout << "FragTrap tests" << std::endl << std::endl;
+		FragTrap fragDef;
+		FragTrap francois("Francois");
+		FragTrap houria("Houria");
+		FragTrap fragDef2(fragDef);
+
+		fragDef2.attack("himself");
+		fragDef2.takeDamage(30);
+		fragDef2 = fragDef;
+		fragDef2.beRepaired(5);
+		houria.highFivesGuys();
+		francois.attack("Houria");
+		francois.takeDamage(100);
+		francois.highFivesGuys();
+		francois.beRepaired(10000000);
 	}
 }
