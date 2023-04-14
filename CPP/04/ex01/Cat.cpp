@@ -9,7 +9,8 @@ Cat::Cat(void) {
 
 Cat::Cat(Cat const &src) {
 
-    *this = src;
+    this->_brain = new Brain(*src.getBrain());
+    this->_type = src.getType();
     std::cout << "Cat copy constructor called" << std::endl;
 }
 
@@ -25,8 +26,6 @@ Cat  &Cat::operator=(Cat const &rhs) {
     {
         this->_type = rhs.getType();
         *(this->_brain) = *(rhs.getBrain());
-        for (int i = 0; i < 100; i++)
-            this->getBrain()->setIdea(i, rhs.getBrain()->getIdea(i));
     }
     return (*this);
 }

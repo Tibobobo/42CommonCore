@@ -9,7 +9,8 @@ Brain::Brain(void)  {
 
 Brain::Brain(Brain const &src) {
 
-    *this = src;
+    for (int i = 0; i < 100; i++)
+            this->_ideas[i] = src.getIdea(i);
     std::cout << "Brain copy constructor called" << std::endl;
 }
 
