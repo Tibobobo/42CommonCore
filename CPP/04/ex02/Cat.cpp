@@ -40,36 +40,3 @@ Brain   *Cat::getBrain(void) const {
 
     return (this->_brain);
 }
-
-
-
-
-
-WrongCat::WrongCat(void) {
-
-    _type = "WrongCat";
-    std::cout << "WrongCat default constructor called" << std::endl;
-}
-
-WrongCat::WrongCat(WrongCat const &src) {
-
-    *this = src;
-    std::cout << "WrongCat copy constructor called" << std::endl;
-}
-
-WrongCat::~WrongCat(void) {
-
-    std::cout << "WrongCat destructor called" << std::endl;
-}
-
-WrongCat  &WrongCat::operator=(WrongCat const &rhs) {
-
-    if (this != &rhs)
-        this->_type = rhs.getType();
-    return (*this);
-}
-
-void    WrongCat::makeSound(void) const {
-
-    std::cout << "Wrong MEOW" << std::endl;
-}

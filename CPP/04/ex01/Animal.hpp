@@ -20,8 +20,6 @@ class Animal {
 
         virtual void    makeSound(void) const;
 
-        virtual Brain   *getBrain(void) const = 0;
-
     protected:
 
         std::string _type;
