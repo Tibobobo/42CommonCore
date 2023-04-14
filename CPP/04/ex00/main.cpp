@@ -20,4 +20,5 @@ int main(void) {
     delete j;
     delete i;
     delete test;
+    return (0);
 }
