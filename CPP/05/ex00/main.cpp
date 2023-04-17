@@ -58,7 +58,7 @@ int main(void) {
         copy = new Bureaucrat(manu);
     }
     catch (std::bad_alloc &ba) {
-        std::cerr << "bad_alloc exception caught, exiting program now\n";
+        std::cerr << "bad_alloc exception caught, exiting program now" << std::endl;
         exit (1);
     }
 

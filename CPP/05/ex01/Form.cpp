@@ -29,6 +29,7 @@ Form &Form::operator=(Form const &rhs) {
 
     this->_signed = rhs.getSigned();
     // only signed status can be assigned since everything else is const
+    return (*this);
 }
 
 std::string const Form::getName(void) const {
@@ -55,7 +56,7 @@ bool    Form::beSigned(Bureaucrat &b) {
 
     if (b.getGrade() > this->_sGrade)
     {
-        throw (Form::GradeTooLowException());
+        throw (Bureaucrat::GradeTooLowException());
         return (false);
     }
     this->_signed = 1;
@@ -77,7 +78,7 @@ std::ostream &operator<<(std::ostream &o, Form const &f) {
     o << "Form " << f.getName() << " , sign grade : " << f.getSGrade();
     o << ", execute grade : " << f.getEGrade() << ", is ";
     if (f.getSigned() == false)
-        o << "not yet";
+        o << "not yet ";
     o << "signed. ";
     return (o);
 }

@@ -62,7 +62,7 @@ void    Bureaucrat::downgrade(void) {
     this->setGrade(this->_grade + 1);
 }
 
-bool    Bureaucrat::signForm(Form &f) const {
+bool    Bureaucrat::signForm(Form &f) {
 
     if (f.getSigned() == true)
     {

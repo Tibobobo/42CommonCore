@@ -26,7 +26,7 @@ int main(void) {
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
-    std::cout << ref << std::endl;
+    std::cout << ref << "Its sign variable is now : " << ref.getSigned() << std::endl;
     manu.signForm(ref);
     std::cout <<std::endl << "------A few moments later------" << std::endl << std::endl;
     std::cout << abrogation << std::endl;
