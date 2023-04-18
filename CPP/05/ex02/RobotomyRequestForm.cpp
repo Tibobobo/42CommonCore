@@ -28,6 +28,7 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(RobotomyRequestForm const &r
 
 RobotomyRequestForm::~RobotomyRequestForm(void) {
 
+	std::cout << "Concrete robotomy request form instance destroyed" << std::endl;
 }
 
 int	RobotomyRequestForm::execute(Bureaucrat const &executor) const {
@@ -43,6 +44,7 @@ int	RobotomyRequestForm::execute(Bureaucrat const &executor) const {
 		std::cout << e.what() << std::endl;
 		return (2);
 	}
+	srand(time(NULL) - this->_target.length());
 	int	random = rand();
 	if (random % 2 == 0)
 		std::cout << "* CRRRRRRRRRRRRRRRRRRRRR * " << this->getTarget() << " was successfully robotomised " << std::endl;

@@ -17,9 +17,9 @@ int main(void) {
 
     AForm *shr = new ShrubberyCreationForm("test");
     AForm *rob = new RobotomyRequestForm("Zaphod Beeblebrox");
+    AForm *rob2 = new RobotomyRequestForm("Toto");
+    AForm *rob3 = new RobotomyRequestForm("Xavier Niel");
     AForm *pres = new PresidentialPardonForm("I");
-
-    std::cout << shr->getSigned() << "  " << shr->getEGrade() << "   " << shr->getSGrade() << std::endl;
 
     std::cout << std::endl << "__________________________________________________" << std::endl;
     std::cout << "__________________________________________________" << std::endl << std::endl;
@@ -54,12 +54,6 @@ int main(void) {
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
-    try {
-        b100.executeForm(*shr);
-    }
-    catch (std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
 
     std::cout << std::endl << "__________________________________________________" << std::endl;
     std::cout << "__________________________________________________" << std::endl << std::endl;
@@ -71,7 +65,25 @@ int main(void) {
         std::cout << e.what() << std::endl;
     }
     try {
+        b20.executeForm(*rob);
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+    try {
         b50.signForm(*rob);
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+    try {
+        b50.signForm(*rob2);
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+    try {
+        b50.signForm(*rob3);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
@@ -89,13 +101,13 @@ int main(void) {
         std::cout << e.what() << std::endl;
     }
     try {
-        b20.executeForm(*rob);
+        b20.executeForm(*rob2);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
     try {
-        b20.executeForm(*rob);
+        b20.executeForm(*rob3);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
@@ -110,14 +122,14 @@ int main(void) {
         std::cout << e.what() << std::endl;
     }
     try {
-        b6.executeForm(*rob);
+        b6.executeForm(*pres);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
     b6.upgrade();
     try {
-        b6.executeForm(*rob);
+        b6.executeForm(*pres);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;

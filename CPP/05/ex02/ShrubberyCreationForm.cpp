@@ -28,6 +28,7 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(ShrubberyCreationForm co
 
 ShrubberyCreationForm::~ShrubberyCreationForm(void) {
 
+	std::cout << "Concrete shrubbery creation form instance destroyed" << std::endl;
 }
 
 int	ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
@@ -48,8 +49,8 @@ int	ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
 	file.open(filename);
 	if (file.is_open())
 	{
-		file << "             ,@@@@@@@,\n"
-      << " ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
+		file << "               ,@@@@@@@,\n"
+      << "       ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
 << "    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o\n"
 << "   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'\n"
 << "   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'\n"

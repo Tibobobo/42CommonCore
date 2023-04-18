@@ -86,7 +86,7 @@ void    Bureaucrat::executeForm(AForm const &form) {
     else if (ret == 1)
         std::cout << this->getName() << " couldn't execute " << form.getName() << " Form because it isn't signed" << std::endl;
     else if (ret == 2)
-        std::cout << this->getName() << "couldn't execute " << form.getName() << " Form because their grade is inferior to the grade needed" << std::endl;
+        std::cout << this->getName() << " couldn't execute " << form.getName() << " Form because their grade is inferior to the grade needed" << std::endl;
 }
 
 const char *Bureaucrat::GradeTooLowException::what(void) const throw() {

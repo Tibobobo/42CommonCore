@@ -28,6 +28,7 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(PresidentialPardonForm
 
 PresidentialPardonForm::~PresidentialPardonForm(void) {
 
+	std::cout << "Concrete presidential pardon form instance destroyed" << std::endl;
 }
 
 int	PresidentialPardonForm::execute(Bureaucrat const &executor) const {
