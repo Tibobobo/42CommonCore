@@ -66,7 +66,7 @@ bool    Bureaucrat::signForm(AForm &f) {
 
     if (f.getSigned() == true)
     {
-        std::cout << "Bureaucrat " << this->_name << " couldn't sign " << f.getName() << "because it's already signed" << std::endl;
+        std::cout << "Bureaucrat " << this->_name << " couldn't sign " << f.getName() << " because it's already signed" << std::endl;
         return (false);
     }
     else if (f.beSigned(*this) == true)
