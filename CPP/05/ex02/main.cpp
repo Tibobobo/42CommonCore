@@ -136,6 +136,8 @@ int main(void) {
     }
     delete shr;
     delete rob;
+    delete rob2;
+    delete rob3;
     delete pres;
     return (0);
 }
