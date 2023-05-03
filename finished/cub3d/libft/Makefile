@@ -5,35 +5,42 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/05 15:58:48 by tgrasset          #+#    #+#              #
-#    Updated: 2023/05/03 13:42:25 by tgrasset         ###   ########.fr        #
+#    Created: 2022/11/09 10:48:17 by tgrasset          #+#    #+#              #
+#    Updated: 2023/04/03 18:12:00 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-################################################################################
-########### VARIABLES
+SRCS	=	./ft_isdigit.c \
+			./ft_strlen.c	\
+			./ft_strchr.c \
+			./ft_strnstr.c \
+			./ft_atoi.c \
+			./ft_strdup.c \
+			./ft_putchar_fd.c \
+			./ft_putstr_fd.c \
+			./ft_putendl_fd.c \
+			./get_next_line.c \
+			./get_next_line_utils.c \
+		
+OBJS	=	$(SRCS:%.c=%.o)
 
-SRCS	=	./main.cpp \
-			./Converter.cpp \
+NAME	=	libft.a
 
-OBJS	=	$(SRCS:%.cpp=%.o)
+CC		=	cc
 
-NAME	=	convert
-
-CPP		=	c++
-
-FLAGS	=	-Wall -Wextra -Werror -std=c++98
-
-###############################################################################
-########### RULES
+CFLAGS	=	-Wall -Wextra -Werror
 
 all:		$(NAME)
 
+%.o:		%.c
+	$(CC) $(CFLAGS) -c $< -o $(<:%.c=%.o)
+
 $(NAME):	$(OBJS)
-	$(CPP) $(FLAGS) -o $(NAME) $(OBJS)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(B_OBJS)
 
 fclean:		clean
 	rm -f $(NAME)
