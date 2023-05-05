@@ -1,6 +1,8 @@
 #ifndef ARRAY_HPP
 # define ARRAY_HPP
 
+# include <iostream>
+
 template<typename T>
 class Array {
 
@@ -53,15 +55,23 @@ class Array {
 
         T   &operator[](int const i) const {
 
-
+            if (i < 0 || i >= _size)
+                throw (Array::OutOfArrayException());
+            else
+                return (_array[i]);
         }
 
-        unsigned int size(void) const;
+        unsigned int size(void) const {
+
+            return (this->_size);
+        }
 
         class OutOfArrayException : public std::exception {
             public:
-		        virtual const char *what() const throw();
-        }
+		        virtual const char *what() const throw() {
+                    return ("Array Exception : index out of array");
+                }
+        };
 
     private:
 
