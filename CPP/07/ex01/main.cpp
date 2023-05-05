@@ -18,4 +18,5 @@ int main(void) {
     iter(test, 5, display);
     std::cout << std::endl;
     iter(test2, 3, display);
+    return (0);
 }
