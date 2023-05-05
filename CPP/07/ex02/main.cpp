@@ -32,6 +32,26 @@ int main(void) {
         intArray[2] = 42;
         for (int i = 0; i < 5; i++)
             std::cout << intArray[i] << std::endl;
+        std::cout << std::endl;
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+    try {
+        Array<int> intCopy(intArray);
+        for (int i = 0; i < 5; i++)
+            std::cout << intCopy[i] << std::endl;
+        std::cout << std::endl;
+        intCopy[2] = 4;
+        for (int i = 0; i < 5; i++)
+            std::cout << intCopy[i] << std::endl;
+        std::cout << std::endl;
+        for (int i = 0; i < 5; i++)
+            std::cout << intArray[i] << std::endl;
+        std::cout << std::endl;
+        intArray = intCopy;
+        for (int i = 0; i < 5; i++)
+            std::cout << intArray[i] << std::endl;
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
