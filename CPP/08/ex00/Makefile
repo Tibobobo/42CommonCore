@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 15:58:48 by tgrasset          #+#    #+#              #
-#    Updated: 2023/05/05 17:09:30 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/05/08 16:13:02 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ OBJS	=	$(SRCS:%.cpp=%.o)
 
 NAME	=	easyfind
 
-CPP		=	c++
+CXX		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++98
+CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 ###############################################################################
 ########### RULES
@@ -29,7 +29,7 @@ FLAGS	=	-Wall -Wextra -Werror -std=c++98
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CPP) $(FLAGS) -o $(NAME) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)

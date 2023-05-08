@@ -6,7 +6,7 @@
 #    By: tgrasset <tgrasset@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 15:58:48 by tgrasset          #+#    #+#              #
-#    Updated: 2023/05/08 16:13:21 by tgrasset         ###   ########.fr        #
+#    Updated: 2023/05/08 17:02:58 by tgrasset         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,10 @@
 ########### VARIABLES
 
 SRCS	=	./main.cpp \
-			./Span.cpp
 
 OBJS	=	$(SRCS:%.cpp=%.o)
 
-NAME	=	span
+NAME	=	mutant
 
 CXX		=	c++
 

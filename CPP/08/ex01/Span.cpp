@@ -16,6 +16,8 @@ Span::~Span(void) {
 
 Span &Span::operator=(Span const &rhs) {
 
+	if (this == &rhs)
+		return (*this);
 	_maxSize = rhs.size();
 	_v = rhs.getVect();
 	return (*this);
