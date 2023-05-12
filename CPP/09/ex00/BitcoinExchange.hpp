@@ -4,6 +4,8 @@
 # include <map>
 # include <string>
 # include <iostream>
+# include <fstream>
+#include <cstdlib>
 
 typedef std::pair<std::string, float> pair;
 
@@ -11,23 +13,22 @@ class BitcoinExchange {
 
 	public:
 
-		BitcoinExchange(std::string dbPath, std::string filePath);
-		BitcoinExchange(BitcoinExchange const &src);
+		BitcoinExchange(std::string path);
 
 		~BitcoinExchange(void);
 
-		BitcoinExchange &operator=(BitcoinExchange const &rhs);
-
-		std::map<std::string, float> getDb(void);
-		std::map<std::string, float> getFile(void);
-		void	setDb(std::string path);
-		void	setFile(std::string path);
+		void convert(void) const;
+		bool checkDateFormat(std::string str) const;
+		float getTotalFromDb(std::string date, float n) const;
+		bool isActually0(std::string str) const;
 
 	private:
 
 		BitcoinExchange(void);
+		BitcoinExchange(BitcoinExchange const &src);
+		BitcoinExchange &operator=(BitcoinExchange const &rhs);
 		std::map<std::string, float> _db;
-		std::map<std::string, float> _file;
+		std::string const _path;
 
 };
 
