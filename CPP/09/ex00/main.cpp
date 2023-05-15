@@ -9,12 +9,12 @@ int	main(int ac, char **av) {
 	(void)av;
 	if (ac == 1)
 	{
-		std::cerr << "Error: could not open file." << std::endl;
+		std::cout << "Error: could not open file." << std::endl;
 		return (-1);
 	}
 	else if (ac > 2)
 	{
-		std::cerr << "Error: too many arguments. Launch program with file path only." << std::endl;
+		std::cout << "Error: too many arguments. Launch program with file path only." << std::endl;
 		return (-1);
 	}
 	BitcoinExchange exchange(av[1]);

@@ -17,7 +17,7 @@ void RPN::calculate(void) {
     }
     if (checkFormat(_str) == false)
     {
-        std::cerr << "Error" << std::endl;
+        std::cout << "Error" << std::endl;
 		exit (-1);
     }
     int a = 0;
@@ -30,7 +30,7 @@ void RPN::calculate(void) {
         {
             if (_numbers.size() < 2)
             {
-                std::cerr << "Error" << std::endl;
+                std::cout << "Error" << std::endl;
 		        exit (-1);
             }
             a = _numbers.top();
@@ -88,8 +88,8 @@ int		RPN::operation(int a, int b, char op) const {
     {
         if (a == 0)
         {
-            std::cerr << "[1]     4242 floating point exception   ./RPN \"" << _str << "\"";
-            std::cerr << "Naaaaaah just kidding =)" << std::endl;
+            std::cout << "[1]     4242 floating point exception   ./RPN \"" << _str << "\"";
+            std::cout << "Nah just kidding, but please don't try dividing by 0 =)" << std::endl;
             exit (-1);
         }
         return (b / a);

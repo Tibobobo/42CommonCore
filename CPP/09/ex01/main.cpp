@@ -6,7 +6,7 @@ int	main(int ac, char **av) {
 
 	if (ac != 2)
 	{
-		std::cerr << "Error" << std::endl;
+		std::cout << "Error" << std::endl;
 		return (-1);
 	}
 	RPN calculator(av[1]);
