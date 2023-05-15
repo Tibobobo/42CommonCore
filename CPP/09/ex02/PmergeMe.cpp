@@ -79,21 +79,27 @@ void	PmergeMe::mergeInsertV(std::vector<int> &vect) {
 
 void	PmergeMe::sort(void) {
 
-	long long int start;
-	start = getTime();
+	std::cout << "Before:  ";
+	printSequence();
+	std::cout << std::endl;
+
+	struct timeval vStart, vEnd;
+	double timeTaken;
+	gettimeofday(&vStart, NULL);
 	mergeInsertV(_v);
+	gettimeofday(&vEnd, NULL);
+	timeTaken = (vEnd.tv_sec - vStart.tv_sec) * 1000000 + (vEnd.tv_usec - vStart.tv_usec);
+
+	std::cout << "After:  ";
+	printSequence();
+	std::cout << std::endl;
+	std::cout << "Time to process a range of " << _v.size() << " elements with std::vector : ";
+	std::cout << std::fixed << timeTaken << " us" << std::endl;
+
 }
 
 void	PmergeMe::printSequence(void) {
 
 	for (std::vector<int>::iterator it = _v.begin(); it != _v.end(); it++)
 		std::cout << " " << *it;
-}
-
-long long int PmergeMe::getTime(void) const {
-
-	std::time_t t;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

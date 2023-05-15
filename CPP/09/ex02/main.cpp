@@ -49,9 +49,6 @@ int	main(int ac, char **av) {
 		return (-1);
 	avToLst(ac, av, &lst);
 	PmergeMe test(vect, lst);
-	test.printSequence();
 	test.sort();
-	std::cout << std::endl;
-	test.printSequence();
 	return (0);
 }

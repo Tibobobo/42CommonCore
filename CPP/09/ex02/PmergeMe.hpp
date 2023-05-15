@@ -4,7 +4,7 @@
 # include <iostream>
 # include <vector>
 # include <list>
-# include <ctime>
+# include <sys/time.h>
 
 # define K 6
 
@@ -26,8 +26,6 @@ class PmergeMe {
 		void mergeInsertL(std::list<int> lst, std::list<int> temp, int l, int size, int threshold);
 		void mergeL(std::list<int> lst, std::list<int> temp, int l, int m, int size);
 		void insertL(std::list<int> lst, int l, int size);
-
-		long long int getTime(void) const;
 
 	private:
 
