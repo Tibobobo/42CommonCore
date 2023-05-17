@@ -88,7 +88,7 @@ int		RPN::operation(int a, int b, char op) const {
     {
         if (a == 0)
         {
-            std::cout << "[1]     4242 floating point exception   ./RPN \"" << _str << "\"";
+            std::cout << "[1]     42424242 floating point exception (core dumped)   ./RPN \"" << _str << "\"         ";
             std::cout << "Nah just kidding, but please don't try dividing by 0 =)" << std::endl;
             exit (-1);
         }

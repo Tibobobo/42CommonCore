@@ -1,6 +1,6 @@
 # include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(std::vector<int> v, std::deque<int> dq) : _v(v), _d(dq) {
+PmergeMe::PmergeMe(void) {
 
 }
 
@@ -146,24 +146,39 @@ void	PmergeMe::mergeInsertD(std::deque<int> &dq) {
 	mergeD(left, right, dq);
 }
 
-void	PmergeMe::sort(void) {
+void	PmergeMe::avToVect(int ac, char **av, std::vector<int> &v) {
 
-	std::cout << "Before:  ";
-	printSequence();
-	std::cout << std::endl;
+	for (int i = 1; i < ac; i++)
+		v.push_back(std::atoi(av[i]));
+}
+
+void	PmergeMe::avToDq(int ac, char **av, std::deque<int> &l) {
+
+	for (int i = 1; i < ac ; i++)
+		l.push_back(std::atoi(av[i]));
+}
+
+void	PmergeMe::sort(int ac, char **av) {
 
 	struct timespec vStart, vEnd, dStart, dEnd;
 	double timeTaken, sec, nano;
 
 	clock_gettime(CLOCK_REALTIME, &vStart);
+	avToVect(ac, av, _v);
 	mergeInsertV(_v);
 	clock_gettime(CLOCK_REALTIME, &vEnd);
 
 	clock_gettime(CLOCK_REALTIME, &dStart);
+	avToDq(ac, av, _d);
 	mergeInsertD(_d);
 	clock_gettime(CLOCK_REALTIME, &dEnd);
 
-	sec = (vEnd.tv_sec - vStart.tv_sec) * 1000000;
+	std::cout << "Before: ";
+	for (int i = 1; i < ac; i++)
+		std::cout << " " << std::atoi(av[i]);
+	std::cout << std::endl;
+
+	sec = (vEnd.tv_sec - vStart.tv_sec) * 1e+6;
 	nano = (vEnd.tv_nsec - vStart.tv_nsec) * 0.001;
 	timeTaken = sec + nano;
 	std::cout << "After:  ";

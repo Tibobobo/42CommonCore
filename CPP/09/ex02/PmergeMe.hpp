@@ -5,19 +5,23 @@
 # include <vector>
 # include <deque>
 # include <time.h>
+# include <cstdlib>
 
-# define K 6
+# define K 7
 
 class PmergeMe {
 
 	public:
 
-		PmergeMe(std::vector<int> v, std::deque<int> l);
+		PmergeMe(void);
 
 		~PmergeMe(void);
 
-		void	sort(void);
+		void	sort(int ac, char **av);
 		void	printSequence(void);
+
+		void	avToVect(int ac, char **av, std::vector<int> &v);
+		void	avToDq(int ac, char **av, std::deque<int> &l);
 
 		void mergeInsertV(std::vector<int> &vect);
 		void mergeV(std::vector<int> &left, std::vector<int> &right, std::vector<int> &result);
@@ -29,12 +33,12 @@ class PmergeMe {
 
 	private:
 
-		PmergeMe(void);
 		PmergeMe(PmergeMe const &src);
 		PmergeMe &operator=(PmergeMe const &rhs);
 		std::vector<int> _v;
 		std::deque<int> _d;
-		float _time;
+		float _vTime;
+		float _dTime;
 };
 
 #endif
