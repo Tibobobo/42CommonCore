@@ -29,7 +29,6 @@ class BitcoinExchange {
 		BitcoinExchange &operator=(BitcoinExchange const &rhs);
 		std::map<std::string, float> _db;
 		std::string const _path;
-
 };
 
 #endif
