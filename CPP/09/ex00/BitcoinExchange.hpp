@@ -17,7 +17,8 @@ class BitcoinExchange {
 
 		~BitcoinExchange(void);
 
-		void convert(void) const;
+		bool convert(void);
+		bool loadDb(void);
 		bool checkDateFormat(std::string str) const;
 		float getTotalFromDb(std::string date, float n) const;
 		bool isActually0(std::string str) const;

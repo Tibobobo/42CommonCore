@@ -18,6 +18,7 @@ int	main(int ac, char **av) {
 		return (-1);
 	}
 	BitcoinExchange exchange(av[1]);
-	exchange.convert();
+	if (exchange.convert() == false)
+		return (-1);
 	return (0);
 }

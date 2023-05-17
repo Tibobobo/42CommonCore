@@ -10,6 +10,7 @@ int	main(int ac, char **av) {
 		return (-1);
 	}
 	RPN calculator(av[1]);
-	calculator.calculate();
+	if (calculator.calculate() == false)
+		return (-1);
 	return (0);
 }

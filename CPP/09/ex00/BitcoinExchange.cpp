@@ -2,12 +2,20 @@
 
 BitcoinExchange::BitcoinExchange(std::string path) :_path(path) {
 	
+}
+
+BitcoinExchange::~BitcoinExchange(void) {
+
+}
+
+bool	BitcoinExchange::loadDb(void) {
+
 	std::ifstream stream;
 	stream.open("data.csv");
 	if (stream.is_open() == false)
 	{
 		std::cerr << "Error: could not open database." << std::endl;
-		exit (-1);
+		return (false);
 	}
 	_db.clear();
 	std::string line;
@@ -33,13 +41,15 @@ BitcoinExchange::BitcoinExchange(std::string path) :_path(path) {
 		_db.insert(p);
 	}
 	stream.close();
+	if (_db.find("2009-01-02") == _db.end())
+	{
+		std::cerr << "Please use this program with original unmodified data.csv database" << std::endl;
+		return (false);
+	}
+	return (true);
 }
 
-BitcoinExchange::~BitcoinExchange(void) {
-
-}
-
-void	BitcoinExchange::convert(void) const {
+bool	BitcoinExchange::convert(void) {
 
 	std::ifstream filestream;
 	std::string line;
@@ -49,11 +59,13 @@ void	BitcoinExchange::convert(void) const {
 	std::string delimiter = " | ";
 	size_t pos;
 
+	if (loadDb() == false)
+		return (false);
 	filestream.open(_path.c_str());
 	if (filestream.is_open() == false)
 	{
 		std::cerr << "Error: could not open file." << std::endl;
-		exit (-1);
+		return (false);
 	}
 	while (std::getline(filestream, line))
 	{
@@ -95,6 +107,7 @@ void	BitcoinExchange::convert(void) const {
 			std::cout << date << " => " << value << " = " << getTotalFromDb(date, fValue) << std::endl;
 	}
 	filestream.close();
+	return (true);
 }
 
 bool	BitcoinExchange::isActually0(std::string str) const {
@@ -165,5 +178,4 @@ float BitcoinExchange::getTotalFromDb(std::string date, float n) const {
 		it--;
 		return (n * it->second);
 	}
-
 }

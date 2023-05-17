@@ -8,17 +8,17 @@ RPN::~RPN(void) {
 
 }
 
-void RPN::calculate(void) {
+bool RPN::calculate(void) {
 
     if (_str.length() == 1 && std::isdigit(*_str.begin()))
     {
         std::cout << _str << std::endl;
-        exit (0);
+        return (true);
     }
     if (checkFormat(_str) == false)
     {
         std::cout << "Error" << std::endl;
-		exit (-1);
+		return (false);
     }
     int a = 0;
     int b = 0;
@@ -31,16 +31,23 @@ void RPN::calculate(void) {
             if (_numbers.size() < 2)
             {
                 std::cout << "Error" << std::endl;
-		        exit (-1);
+		        return (false);
             }
             a = _numbers.top();
             _numbers.pop();
             b = _numbers.top();
             _numbers.pop();
+            if (a == 0 && *it == '/')
+            {
+                std::cout << "[1]     42424242 floating point exception (core dumped)   ./RPN \"" << _str << "\"         ";
+                std::cout << "Nah just kidding, but please don't try dividing by 0 =)" << std::endl;
+                return (false);
+            }
             _numbers.push(operation(a, b, *it));
         }
     }
     std::cout << _numbers.top() << std::endl;
+    return (true);
 }
 
 bool	RPN::isOperator(char c) const {
@@ -85,13 +92,5 @@ int		RPN::operation(int a, int b, char op) const {
     else if (op == '*')
         return (b * a);
     else
-    {
-        if (a == 0)
-        {
-            std::cout << "[1]     42424242 floating point exception (core dumped)   ./RPN \"" << _str << "\"         ";
-            std::cout << "Nah just kidding, but please don't try dividing by 0 =)" << std::endl;
-            exit (-1);
-        }
         return (b / a);
-    }
 }

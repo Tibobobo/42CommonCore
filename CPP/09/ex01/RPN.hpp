@@ -12,7 +12,7 @@ class RPN {
 		RPN(std::string str);
 		~RPN(void);
 
-		void calculate(void);
+		bool calculate(void);
 		bool	checkFormat(std::string str) const;
 		bool	isOperator(char c) const;
 		int		operation(int a, int b, char op) const;
