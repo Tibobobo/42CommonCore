@@ -1,8 +1,6 @@
 #!/bin/bash
 #set -eux
 
-sleep 5
-
 cd /var/www/wordpress
 
 if ! wp core is-installed; then
