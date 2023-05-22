@@ -11,7 +11,6 @@ logs:
 
 clean:
 	docker container stop nginx mariadb wordpress
-	docker network rm inception
 
 fclean: clean
 	@sudo rm -rf /home/yatang/data/mariadb/*
@@ -20,4 +19,4 @@ fclean: clean
 
 re: fclean all
 
-.Phony: all logs clean fclean
+.PHONY: all logs clean fclean
