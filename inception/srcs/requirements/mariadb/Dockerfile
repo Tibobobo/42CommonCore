@@ -1,24 +1,27 @@
-FROM	debian:buster
+# use debian as the base image
+FROM debian:buster
 
-RUN	    apt-get update -y
-RUN	    apt-get upgrade -y
-RUN	    apt-get install -y mariadb-server
-RUN	    apt-get install -y mariadb-client
-# procps package contains system utilities that provide system information using the /proc file system
-RUN	    apt-get install -y procps
+# install MariaDB and other dependencies
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y mariadb-server
+RUN apt-get install -y mariadb-client
+RUN apt-get install -y procps
 
-COPY	./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN	    mkdir -p /var/run/mysqld
-RUN	    chmod -R 755 /var/run/mysqld/
-RUN	    chown mysql:mysql /var/run/mysqld/
-RUN	    mkdir -p /var/lib/mysql
-RUN	    chmod -R 755 /var/lib/mysql/
-RUN	    chown -R mysql:mysql /var/lib/mysql/
+# copy the provided config file to the container
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-EXPOSE	3306
+RUN mkdir -p /var/run/mysqld
+RUN mkdir -p /var/lib/mysql
+RUN chown mysql:mysql /var/run/mysqld/
+RUN chmod -R 755 /var/run/mysqld/
+RUN chown mysql:mysql /var/lib/mysql/
+RUN chmod -R 755 /var/lib/mysql/
 
-COPY	./tools/dbscript.sh ./
-RUN	    chmod +x ./dbscript.sh
+EXPOSE 3306
 
-ENTRYPOINT	["bash", "./dbscript.sh"]
+COPY ./tools/dbscript.sh ./
+RUN chmod +x ./dbscript.sh
+
+ENTRYPOINT ["bash", "./dbscript.sh"]

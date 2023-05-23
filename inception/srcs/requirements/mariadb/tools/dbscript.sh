@@ -1,4 +1,5 @@
 #!/bin/bash
+#set -eux
 
 service mysql start;
 
@@ -9,9 +10,9 @@ mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' I
 mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
 mysql -e "FLUSH PRIVILEGES;"
 
-# restart mariaDB server to apply the changes
-# mysqld_safe will add some features like restarting server when errors occur
 mysqladmin -u root -p${SQL_ROOT_PASSWORD} shutdown
+#mysqladmin -u root shutdown
 exec mysqld_safe
 
-echo "mariadb database and user created successfully! "
+#print status
+echo "MariaDB database and user were created successfully! "
