@@ -1,7 +1,6 @@
-# use debian as the base image
-FROM debian:buster
+FROM debian:bullseye
 
-# install MariaDB and other dependencies
+# installation de mariadb et autres utilitaires
 RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y mariadb-server
@@ -9,7 +8,7 @@ RUN apt-get install -y mariadb-client
 RUN apt-get install -y procps
 
 
-# copy the provided config file to the container
+# copie du fichier de config de la machine vers le container
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 RUN mkdir -p /var/run/mysqld
@@ -21,6 +20,7 @@ RUN chmod -R 755 /var/lib/mysql/
 
 EXPOSE 3306
 
+#copie et lancement du script shell qui va creer la database et un utilisateur
 COPY ./tools/dbscript.sh ./
 RUN chmod +x ./dbscript.sh
 

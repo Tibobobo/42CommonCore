@@ -1,11 +1,12 @@
-FROM debian:buster
+FROM debian:bullseye
 
+#installation de wget pour l'installation de wordpress depuis un lien de dl, puis de php
 RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y wget
-RUN apt-get install -y php7.3 php-fpm php-mysql
+RUN apt-get install -y php8.2 php-fpm php-mysql
 
-# a command-line interface for WordPress, you can manage WordPress once it's downloaded
+#
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \
 	&& mv wp-cli.phar /usr/local/bin/wp
