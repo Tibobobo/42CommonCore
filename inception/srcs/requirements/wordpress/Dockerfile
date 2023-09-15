@@ -1,32 +1,27 @@
-FROM debian:bullseye
+FROM	debian:bullseye
 
-#installation de wget pour l'installation de wordpress depuis un lien de dl, puis de php
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y wget
-RUN apt-get install -y php8.2 php-fpm php-mysql
+RUN		mkdir -p /var/www/html \
+		&& mkdir -p /run/php
 
-#
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-	&& chmod +x wp-cli.phar \
-	&& mv wp-cli.phar /usr/local/bin/wp
+RUN		apt update -y \
+		&& apt upgrade -y \
+		&& apt install wget -y \
+		&& apt install -y php7.4 php-fpm php-mysql php-common php-cgi php-cli mariadb-client vim
 
-RUN apt-get update && apt-get install -y default-mysql-client
-RUN apt-get install -y mariadb-client
-RUN wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html
-RUN cd /var/www/html \
-	&& tar -xzf /var/www/html/wordpress-6.1.1.tar.gz \
-	&& rm /var/www/html/wordpress-6.1.1.tar.gz
+EXPOSE	9000
 
-# ensure that the web server(nginx) has the necessary permissions to read and execute the files within the web root directory
-RUN chown -R www-data:www-data /var/www/*
-RUN chmod -R 755 /var/www/*
+RUN		wget https://fr.wordpress.org/wordpress-6.2.2-fr_FR.tar.gz -P /var/www
+RUN		tar -xzf /var/www/wordpress-6.2.2-fr_FR.tar.gz -C /var/www/.
+RUN 	cp -r /var/www/wordpress/. /var/www/html
+RUN 	rm /var/www/wordpress-6.2.2-fr_FR.tar.gz
 
-EXPOSE 9000
+RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN 	chmod +x wp-cli.phar
 
-COPY ./tools/wpscript.sh ./
-RUN chmod +x ./wpscript.sh
+COPY	conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-COPY ./tools/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY 	tools/config_wp.sh config_wp.sh
 
-ENTRYPOINT ["bash", "./wpscript.sh"]
+RUN		chmod +x config_wp.sh
+
+CMD ["./config_wp.sh"]

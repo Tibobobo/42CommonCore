@@ -1,76 +1,64 @@
-version: '3'
+version: '3.5'
+
+networks:
+  inception:
+    driver: bridge
 
 services:
   mariadb:
-    image: mariadb
     container_name: mariadb
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile
-    volumes:
-      - mariadb:/var/lib/mysql
+    image: mariadb:1.0
+    networks:
+      - inception
+    build: requirements/mariadb
+    env_file: .env
+    restart: unless-stopped
     expose:
       - "3306"
-    networks:
-      - inception
-    restart: unless-stopped
-    env_file: .env
-    healthcheck:
-      test: mysqladmin ping --host=localhost -p${SQL_ROOT_PASSWORD}
-      interval: 5s
-      timeout: 1s
-      retries: 20
-      start_period: 5s
+    volumes:
+      - mariadb_vol:/var/lib/mysql/
 
   wordpress:
-    image: wordpress
     container_name: wordpress
-    build:
-      context: ./requirements/wordpress
-      dockerfile: Dockerfile
+    image: wordpress:1.0
+    env_file: .env
     volumes:
-      - wordpress:/var/www/html/wordpress
-    expose:
-      - "9000"
+      - wordpress_vol:/var/www/html/
     networks:
       - inception
-    restart: unless-stopped
-    env_file: .env
+    build: requirements/wordpress
     depends_on:
-      mariadb:
-        condition: service_healthy    
+      - mariadb
+    restart: unless-stopped
+    expose: 
+      - "9000"
 
   nginx:
-    image: nginx
     container_name: nginx
-    build:
-      context: ./requirements/nginx
-      dockerfile: Dockerfile	
+    image: nginx:1.0
     volumes:
-      - wordpress:/var/www/html/wordpress
-    depends_on:
-      - wordpress
-    ports:
-      - "443:443"
+      - wordpress_vol:/var/www/html
     networks:
       - inception
-    restart: unless-stopped
+    depends_on:
+      - wordpress
+    build: requirements/nginx
     env_file: .env
+    ports:
+      - "443:443"
+    restart: on-failure
 
 volumes:
-  mariadb:
+  mariadb_vol:
     driver: local
     driver_opts:
-      type: 'none'
+      type: 'none' 
       o: 'bind'
       device: '/home/tgrasset/data/mariadb'
-  wordpress:
+
+  wordpress_vol:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       device: '/home/tgrasset/data/wordpress'
-
-networks:
-  inception:
-    name: inception

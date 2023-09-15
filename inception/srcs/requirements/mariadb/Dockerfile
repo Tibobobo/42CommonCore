@@ -1,27 +1,16 @@
-FROM debian:bullseye
+FROM	debian:bullseye
 
-# installation de mariadb et autres utilitaires
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install -y mariadb-server
-RUN apt-get install -y mariadb-client
-RUN apt-get install -y procps
+RUN		mkdir -p /var/lib/mysql
 
+RUN		apt update -y \
+		&& apt upgrade -y \
+		&& apt install mariadb-server -y
 
-# copie du fichier de config de la machine vers le container
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+EXPOSE	3306
 
-RUN mkdir -p /var/run/mysqld
-RUN mkdir -p /var/lib/mysql
-RUN chown mysql:mysql /var/run/mysqld/
-RUN chmod -R 755 /var/run/mysqld/
-RUN chown mysql:mysql /var/lib/mysql/
-RUN chmod -R 755 /var/lib/mysql/
+COPY 	conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
-EXPOSE 3306
+COPY 	tools/mariadb.sh	mariadb.sh
+RUN		chmod +x mariadb.sh
 
-#copie et lancement du script shell qui va creer la database et un utilisateur
-COPY ./tools/dbscript.sh ./
-RUN chmod +x ./dbscript.sh
-
-ENTRYPOINT ["bash", "./dbscript.sh"]
+CMD		["./mariadb.sh"]
