@@ -13,8 +13,6 @@ services:
     build: requirements/mariadb
     env_file: .env
     restart: unless-stopped
-    expose:
-      - "3306"
     volumes:
       - mariadb_vol:/var/lib/mysql/
 
@@ -30,8 +28,6 @@ services:
     depends_on:
       - mariadb
     restart: unless-stopped
-    expose: 
-      - "9000"
 
   nginx:
     container_name: nginx
