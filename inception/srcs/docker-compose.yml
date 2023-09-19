@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.8'
 
 networks:
   inception:
@@ -7,7 +7,7 @@ networks:
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb:1.0
+    image: mariadb
     networks:
       - inception
     build: requirements/mariadb
@@ -15,10 +15,16 @@ services:
     restart: unless-stopped
     volumes:
       - mariadb_vol:/var/lib/mysql/
+    healthcheck: 
+      test: mysqladmin ping --host=localhost -p${SQL_ROOT_PASSWORD}
+      interval: 5s
+      timeout: 1s
+      retries: 20
+      start_period: 5s
 
   wordpress:
     container_name: wordpress
-    image: wordpress:1.0
+    image: wordpress
     env_file: .env
     volumes:
       - wordpress_vol:/var/www/html/
@@ -26,12 +32,13 @@ services:
       - inception
     build: requirements/wordpress
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: unless-stopped
 
   nginx:
     container_name: nginx
-    image: nginx:1.0
+    image: nginx
     volumes:
       - wordpress_vol:/var/www/html
     networks:

@@ -5,7 +5,6 @@ then
 	echo "wordpress is already set !"
 else
 	echo "I will set wp"
-	sleep 10
 	./wp-cli.phar config create --allow-root --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306 --path='/var/www/html'
 	chmod 777 /var/www/html/wp-config.php
 	chown -R root:root /var/www/html
@@ -14,4 +13,4 @@ else
 	echo "Wordpress script run!"
 fi
 
-exec /usr/sbin/php-fpm7.4 -F;
+exec /usr/sbin/php-fpm7.4 --nodaemonize
