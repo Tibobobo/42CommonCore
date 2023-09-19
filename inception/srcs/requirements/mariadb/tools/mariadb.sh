@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -e "/var/lib/mysql/first_config_db_done" ]
+if [ -e "/var/lib/mysql/first_config_done" ]
 then
 	echo "Database already configured"
 else
@@ -26,8 +26,7 @@ else
 	echo "---> Removing temporary files"
 	rm /var/lib/mysql/change_root.sql /var/lib/mysql/config_db.sql
 
-	echo "Creating first_config_db_done"
-	touch /var/lib/mysql/first_config_db_done
+	touch /var/lib/mysql/first_config_done
 fi
 
 echo "---> Launching mysql service"
