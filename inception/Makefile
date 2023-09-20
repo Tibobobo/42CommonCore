@@ -27,7 +27,7 @@ env_file: /home/tgrasset/.env
 		@if [ ! -e "srcs/.env" ]; \
 		then \
 			cp /home/tgrasset/.env srcs/.env; \
-			echo "Env file added !"; \
+			echo "Env file added to srcs directory"; \
 		fi; \
 
 down:	$(SOURCES) env_file

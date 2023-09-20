@@ -8,10 +8,10 @@ RUN		apt update -y \
 		&& apt install wget -y \
 		&& apt install -y php7.4 php-fpm php-mysql php-common php-cgi php-cli mariadb-client vim
 
-RUN		wget https://fr.wordpress.org/wordpress-6.2.2-fr_FR.tar.gz -P /var/www
-RUN		tar -xzf /var/www/wordpress-6.2.2-fr_FR.tar.gz -C /var/www/.
+RUN		wget https://fr.wordpress.org/wordpress-6.3.1-fr_FR.tar.gz -P /var/www
+RUN		tar -xzf /var/www/wordpress-6.3.1-fr_FR.tar.gz -C /var/www/.
 RUN 	cp -r /var/www/wordpress/. /var/www/html
-RUN 	rm /var/www/wordpress-6.2.2-fr_FR.tar.gz
+RUN 	rm /var/www/wordpress-6.3.1-fr_FR.tar.gz
 
 RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN 	chmod +x wp-cli.phar
