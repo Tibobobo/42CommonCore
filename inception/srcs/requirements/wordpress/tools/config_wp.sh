@@ -13,6 +13,4 @@ else
 	echo "Wordpress configured successfully"
 fi
 
-unset DOMAIN_NAME SQL_DATABASE SQL_USER SQL_PASSWORD SQL_ROOT SQL_HOST SITE_TITLE ADMIN_USER ADMIN_PASSWORD ADMIN_EMAIL USER1_LOGIN USER1_MAIL USER1_PASS
-
 exec /usr/sbin/php-fpm7.4 --nodaemonize
