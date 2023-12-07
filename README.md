@@ -1,3 +1,3 @@
-# 42cursus
+# 42CommonCore
 
-Mes projets a 42 Paris.
+My common core projects at 42 Paris
